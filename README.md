@@ -1,7 +1,7 @@
 ProjetRD
 ========
 
-Université Évry - Projet VT2 bis (le seul, l'unique !)
+Université Évry - Projet VT2 bis
 
 ========
 Commit Nico
