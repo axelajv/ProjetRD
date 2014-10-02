@@ -164,6 +164,14 @@ class Curl
         return $this->exec();
     }
 
+    public function propfind($url, $data = array())
+    {
+        $this->unsetHeader('Content-Length');
+        $this->setOpt(CURLOPT_URL, $this->buildURL($url, $data));
+        $this->setOpt(CURLOPT_CUSTOMREQUEST, 'PROPFIND');
+        return $this->exec();
+    }
+
     public function setBasicAuthentication($username, $password = '')
     {
         $this->setOpt(CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
