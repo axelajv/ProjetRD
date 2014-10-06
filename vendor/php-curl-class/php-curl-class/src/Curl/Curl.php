@@ -175,6 +175,17 @@ class Curl
         return $this->exec();
     }
 
+    public function report($url,$body,$data = array())
+    {
+        $this->unsetHeader('Content-Length');
+        $this->setHeader('Content-Type','application/xml; charset=utf-8');
+
+        $this->setOpt(CURLOPT_URL, $this->buildURL($url, $data));
+        $this->setOpt(CURLOPT_CUSTOMREQUEST, 'REPORT');
+        $this->setOpt(CURLOPT_POSTFIELDS, $body);
+        return $this->exec();
+    }
+
     public function setBasicAuthentication($username, $password = '')
     {
         $this->setOpt(CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
