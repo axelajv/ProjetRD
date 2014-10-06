@@ -4,11 +4,18 @@ require_once 'functions.php';
 
 use \Curl\Curl;
 
+/*
+ * Paramétrage initial
+ */
+$server     = 'http://compri.me';   // serveur utilisé
+$user       = 'indy:indy';          // user utilisé
+$calendar   = 'm1g2';               // calendrier utilisé
+
 //
 // Premier objet cURL : OPTIONS
 //
 $curl = new Curl();
-$curl->options('http://compri.me:5232/radicale/');
+$curl->options("$server:5232/$user/$calendar/");
 $data = array(200); // http status
 
 $test1 = publishBehavior($curl, $data);
@@ -28,7 +35,7 @@ unset($curl);
 // Second objet cURL : GET
 //
 $curl = new Curl();
-$curl->get('http://compri.me:5232/radicale/');
+$curl->get("$server:5232/$user/$calendar/");
 $data = array(200, 201, 207);
 
 $test2 = publishBehavior($curl, $data);
@@ -48,7 +55,7 @@ unset($curl);
 // Second objet cURL : HEAD
 //
 $curl = new Curl();
-$curl->head('http://compri.me:5232/radicale/');
+$curl->head("$server:5232/$user/$calendar/");
 $data = array(200);
 
 $test3 = publishBehavior($curl, $data);
@@ -81,12 +88,11 @@ $body = <<<__EOD
 __EOD;
 
 $data = array(200, 207);
-$curl->propfind('http://compri.me:5232/radicale/',$body);
+$curl->propfind("$server:5232/$user/$calendar/", $body);
 
 $test4 = publishBehavior($curl, $data);
 echo "<h1>OBJET 3 : PROPFIND</h1>";
 echo $test4['requete'];
-echo '<br/>----- fok -----';
 echo $test4['contenu'];
 //
 // Fin second objet cURL : PROPFIND
