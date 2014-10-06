@@ -17,7 +17,7 @@ function publishBehavior($curl, $httpStatus = array(200)) {
             $behavior['requete'] = "La requête a échoué";
         }
     } else {
-        $behavior['requete'] = "cURL KO";
+        $behavior['requete'] = "cURL KO, erreur : ".$curl->curl_error;
     }
 
     // contenu de la requete

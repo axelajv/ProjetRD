@@ -68,12 +68,25 @@ unset($curl);
 // Second objet cURL : PROPFIND
 //
 $curl = new Curl();
-$curl->propfind('http://compri.me:5232/radicale/');
+
+$body = <<<__EOD
+<d:propfind xmlns:d="DAV:" xmlns:c="urn:ietf:params:xml:ns:caldav">
+  <d:prop>
+   <d:displayname/>
+   <d:owner/>
+   <d:getetag/>
+   <d:principal-URL/>
+  </d:prop>
+</d:propfind>
+__EOD;
+
 $data = array(200, 207);
+$curl->propfind('http://compri.me:5232/radicale/',$body);
 
 $test4 = publishBehavior($curl, $data);
 echo "<h1>OBJET 3 : PROPFIND</h1>";
 echo $test4['requete'];
+echo '<br/>----- fok -----';
 echo $test4['contenu'];
 //
 // Fin second objet cURL : PROPFIND
