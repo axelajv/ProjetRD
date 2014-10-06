@@ -56,11 +56,4 @@
 */
 (function () {
 
-    /*
-    * Permet de masquer/afficher le sous-menu "Outils"
-    */
-    $('#outils').click(function(e){
-        e.preventDefault();
-        $('.submenu').toggle();
-    });
 })();

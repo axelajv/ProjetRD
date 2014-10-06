@@ -2338,12 +2338,24 @@ h3 {
 .xlarge,
 h2 {
     font-family: "Roboto Condensed", Helvetica, sans-serif;
-    font-size: 26px;
-    font-weight: 300;
+    font-size: 19px;
+    font-weight: 500;
     line-height: 1.0000em;
     /* 26px */
     padding-top: 1.0000em;
     padding-bottom: 0;
+}
+@media only screen and (min-width: 450px) {
+    .xlarge,
+    h2 {
+        font-family: "Roboto Condensed", Helvetica, sans-serif;
+        font-size: 26px;
+        font-weight: 400;
+        line-height: 1.0000em;
+        /* 26px */
+        padding-top: 1.0000em;
+        padding-bottom: 0;
+    }
 }
 @media only screen and (min-width: 800px) {
     .xlarge,
@@ -2890,7 +2902,7 @@ table td {
     padding-bottom: 13px;
 }
 table td::before {
-    content: attr(data-th) " :";
+    content: attr(data-th) " ";
     display: inline-block;
     color: #ffffff;
     background: #3372df;
@@ -3842,7 +3854,8 @@ body.open {
 p,
 ul,
 ol {
-    font-size: 19px;
+    /*font-size: 19px;*/
+    font-size: 15px;
 }
 
 .navdrawer-container {
@@ -3873,7 +3886,7 @@ main {
 
 .navdrawer-container h4,
 .navdrawer-container ul li a {
-    height: 60px;
+    height: 50px;
     padding: 17px 15px;
     line-height: 1.4;
 }
@@ -3893,8 +3906,8 @@ main {
     display: block;
     text-decoration: none;
     color: white;
-    -webkit-transition: background-color 0.2s ease-out;
-    transition: background-color 0.2s ease-out;
+    -webkit-transition: background 0.3s ease-in;
+    transition: background 0.3s ease-in;
     white-space: nowrap;
 }
 
@@ -3931,6 +3944,7 @@ main {
 
 /** Larger Screens - desktops and tablets **/
 @media all and (min-width: 990px) {
+
     .app-bar {
         position: relative;
     }
@@ -3943,7 +3957,7 @@ main {
 
     .app-bar-container {
         display: block;
-        height: 130px;
+        height: 100px;
         max-width: 864px;
         padding: 0 16px;
         box-sizing: border-box;
@@ -3954,8 +3968,8 @@ main {
         float: left;
         margin: 0;
         padding: 0;
-        line-height: 130px;
-        font-size: 46px;
+        line-height: 100px;
+        font-size: 40px;
     }
 
     .app-bar-actions {
