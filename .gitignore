@@ -1,32 +1,8 @@
 # Created by .gitignore support plugin (hsz.mobi)
-.idea/workspace.xml
-
-.idea/encodings.xml
-
-.idea/inspectionProfiles/profiles_settings.xml
-
-.idea/inspectionProfiles/profiles_settings.xml
-
-.idea/inspectionProfiles/Project_Default.xml
-
-.idea/misc.xml
-
-.idea/ProjetRD.iml
-
-.idea/jsLinters/gjslint.xml
-
-.idea/inspectionProfiles/profiles_settings.xml
-
-.idea/inspectionProfiles/Project_Default.xml
-
-.idea/modules.xml
+.idea/*
 
 src/TST2.php
 
 src/TST3.php
 
-.idea/modules.xml
-
 src/TST.php
-
-.idea/modules.xml
