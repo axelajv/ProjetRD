@@ -2904,8 +2904,8 @@ table td {
 table td::before {
     content: attr(data-th) " ";
     display: inline-block;
-    color: #ffffff;
-    background: #3372df;
+    color: #ececec;
+    /*background: #3372df;*/
     border-right: 2px solid #ffffff;
     position: absolute;
     top: 0;

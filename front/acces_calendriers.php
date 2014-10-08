@@ -1,7 +1,13 @@
 <?php
-// Variables de test -- Fausses valeurs
-$user = 'stud';
-$user = 'prof';
+
+session_start();
+error_reporting(E_ALL);
+
+include_once('../config.php');
+//Connection a la bdd
+mysql_connect($serveur,$user,$pass);
+mysql_select_db($dernierebase);
+
 ?>
 
 <!doctype html>
@@ -31,10 +37,12 @@ $user = 'prof';
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/specifiques.css">
     <link rel="stylesheet" href="lib/iCheck/skins/all.css">
+    <link rel="stylesheet" href="lib/DataTables/media/css/jquery.dataTables.css">
 
     <!-- SCRIPTS JS -->
     <script src="lib/jquery/dist/jquery.js"></script>
     <script src="lib/iCheck/icheck.js"></script>
+    <script src="lib/DataTables/media/js/jquery.dataTables.js"></script>
     <!-- ./SCRIPTS JS -->
 
 </head>
@@ -50,16 +58,12 @@ $user = 'prof';
                 <p>RAJCHENBACH-TELLER David</p>
             </div>
             <!-- Put App Bar Buttons Here -->
-            <?php
-            if($user == 'prof') {
-                ?>
-                <!-- Accès à ma config -->
-                <a href="javascript:submitform_ma_config2()">
-                    <button><i class="color--gray-background icon icon-cog"></i></button>
-                </a>
-            <?php
-            }
-            ?>
+
+            <!-- Accès à ma config -->
+            <a href="javascript:submitform_ma_config2()">
+                <button><i class="color--gray-background icon icon-cog"></i></button>
+            </a>
+
             <!-- Déconnexion -->
             <a href="index.php?disconnect=true">
                 <button><i class="color--red icon icon-close"></i></button>
@@ -73,31 +77,17 @@ $user = 'prof';
     <h4>Navigation</h4>
     <ul>
         <li class="principal"><a href="#accueil" role="menuitem"><span>Accueil</span></a></li>
-        <?php
-
-        if ($user == 'prof') {
-            ?>
-            <li><a href="#" role="menuitem"><span>Mes modules</span></a></li>
-            <li><a href="#" role="menuitem"><span>Mes droits</span></a></li>
-            <li><a href="#" role="menuitem"><span>Mes heures</span></a></li>
-            <li><a href="#" role="menuitem" class="exportPDF"><span>Export PDF</span></a></li>
-            <li><a href="#" role="menuitem" class="fluxRSS"><span>Flux RSS</span></a></li>
-            <li><a href="#" role="menuitem"><span>Agenda</span></a></li>
-        <?php
-        } else if($user == 'stud') {
-            ?>
-            <li><a href="#exportPDF" role="menuitem"><span>Export PDF</span></a></li>
-            <li><a href="#MesDS" role="menuitem"><span>Mes DS</span></a></li>
-            <li><a href="#MesModules" role="menuitem"><span>Mes modules</span></a></li>
-            <li><a href="#FluxRSS" role="menuitem"><span>Flux RSS</span></a></li>
-            <li><a href="#AgendaElectronique" role="menuitem"><span>Agenda</span></a></li>
-        <?php
-        }
-        ?>
+        <li><a href="#" role="menuitem"><span>Mes modules</span></a></li>
+        <li><a href="#" role="menuitem"><span>Mes droits</span></a></li>
+        <li><a href="#" role="menuitem"><span>Mes heures</span></a></li>
+        <li><a href="#" role="menuitem" class="exportPDF"><span>Export PDF</span></a></li>
+        <li><a href="#" role="menuitem" class="fluxRSS"><span>Flux RSS</span></a></li>
+        <li><a href="#" role="menuitem"><span>Agenda</span></a></li>
     </ul>
 </nav>
 
-<!-- Formulaire de gestion des EdT -->
+<!-- Formulaire de téléchargement des EdT -->
+<!-- tableau généré avec DataTables -->
 <main>
     <form method="post" action="/~indydedeken/ProjetRD/front/gestion_edt.php" class="demo-list">
         <table class="table-6">
@@ -114,34 +104,45 @@ $user = 'prof';
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td data-th="Sélection">
-                    <input id="box1" type="checkbox" name="box1">
-                </td>
-                <td data-th="Enseignant">Nom Prénom</td>
-                <td data-th="">
-                    <a class="button--secondary" href="#0">Téléchargement</a>
-                </td>
-            </tr>
-            <tr>
-                <td data-th="Sélection">
-                    <input id="box2" type="checkbox" name="box2">
-                </td>
-                <td data-th="Enseignant">
-                    Nom Prénom
-                </td>
-                <td data-th="">
-                    <a class="button--secondary" href="#0">Téléchargement</a>
-                </td>
-            </tr>
+                <tr>
+                    <td data-th="Sélection"></td>
+                    <td data-th="Enseignant"></td>
+                    <td data-th=""></td>
+                <tr>
+            </tbody>
         </table>
 
         <button type="submit" class="button--secondary">Télécharger les agendas sélectionnés</button>
 
+        <!-- DataTables plugin -->
         <script>
-            $(document).ready(function(){
+            var data = [
+            <?php
+                $ressources_profs = mysql_query("SELECT * FROM $dernierebase.ressources_profs WHERE deleted='0' ");
+                while ($prof = mysql_fetch_array($ressources_profs)) { ?>
+                [
+                    '<input id="box<?php echo $prof[0]; ?>" type="checkbox" name="box<?php echo $prof[0]; ?>">',
+                    '<?php echo $prof[4] . " " . $prof[3]; ?>',
+                    '<a class="button--secondary" href="<?php echo "#RADICALE_URL/COLLECTIONS_PROF/" . $prof['0'] . "/"; ?>">Téléchargement</a>'
+                ],
+            <?php
+                }
+            ?>
+            ]
+
+            $('table').dataTable({
+                  "data"        : data,
+                  "bSort"       : false,
+                  "bSortable"   : false,
+                  "lengthMenu"  : [200]
+            });
+        </script>
+
+        <!-- iCheck plugin -->
+        <script>
+            $(window).ready(function(){
                 var callbacks_list = $('.demo-callbacks ul');
-                $('.demo-list input').on('ifCreated ifClicked ifChanged ifChecked ifUnchecked ifDisabled ifEnabled ifDestroyed', function(event){
+                $('.demo-list input').on('click ifCreated ifClicked ifChanged ifChecked ifUnchecked ifDisabled ifEnabled ifDestroyed', function(event){
                     callbacks_list.prepend('<li><span>#' + this.id + '</span> is ' + event.type.replace('if', '').toLowerCase() + '</li>');
                 }).iCheck({
                     checkboxClass: 'icheckbox_square-blue',
