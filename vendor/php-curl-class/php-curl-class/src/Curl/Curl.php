@@ -119,24 +119,7 @@ class Curl
         return $this->exec();
     }
 
-    public function put_($url, $data = array())
-    {
-        $this->setOpt(CURLOPT_URL, $url);
-        $this->setOpt(CURLOPT_CUSTOMREQUEST, 'PUT');
-        $put_data = http_build_query($data);
-        
-        if (empty($this->options[CURLOPT_INFILE]) && empty($this->options[CURLOPT_INFILESIZE])) {
-            $this->setHeader('Content-Length', strlen($put_data));
-        }
-        
-        //$this->setHeader('Content-Type','application/xml; charset=utf');
-        $this->setOpt(CURLOPT_POSTFIELDS, $data);
-        $this->setHeader('If-None-Match','*');
-
-   
-        return $this->exec();
-    }
-
+    //http://trentrichardson.com/2012/06/22/put-caldav-events-to-calendar-in-php/
     public function put($url, $headers = array(), $data = array(),$pwd)
     {
         $this->setOpt(CURLOPT_URL, $url);
@@ -158,11 +141,16 @@ class Curl
         return $this->exec();
     }
 
-    public function delete($url, $data = array())
+
+    public function delete($url, $headers = array(), $data = array(),$pwd)
     {
-        $this->unsetHeader('Content-Length');
-        $this->setOpt(CURLOPT_URL, $this->buildURL($url, $data));
+        $this->setOpt(CURLOPT_URL, $url);
         $this->setOpt(CURLOPT_CUSTOMREQUEST, 'DELETE');
+        $this->setOpt(CURLOPT_USERPWD, $pwd);
+        $this->setOpt(CURLOPT_HTTPHEADER, $headers);
+        $this->setOpt(CURLOPT_POSTFIELDS, $data);
+        $this->setHeader('If-None-Match','*');
+
         return $this->exec();
     }
 
