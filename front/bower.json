@@ -13,6 +13,7 @@
   "private": true,
   "dependencies": {
     "jquery": "~2.1.1",
-    "iCheck": "~1.0.2"
+    "iCheck": "~1.0.2",
+    "DataTables": "~1.10.2"
   }
 }
