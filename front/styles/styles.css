@@ -2914,8 +2914,8 @@ table td::before {
     width: 100px;
     max-height: 100%;
     font-family: "Roboto Condensed", Helvetica, sans-serif;
-    font-size: 16px;
-    font-weight: 400;
+    font-size: 14px;
+    font-weight: lighter;
     padding-left: 13px;
     padding-top: 13px;
 }

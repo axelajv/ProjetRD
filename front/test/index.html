@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="./css/custom.css" rel="stylesheet">
+  <link href="../skins/all.css" rel="stylesheet">
+  <script src="./js/jquery.js"></script>
+  <script src="../icheck.js"></script>
+  <!--<script src="./js/custom.min.js?v=1.0.2"></script>-->
+</head>
+<body>
+  
+        <div class="demo-list clear">
+          <ul>
+            <li>
+              <input tabindex="1" type="checkbox" id="input-1">
+              <label for="input-1">Checkbox, <span>#input-1</span></label>
+            </li>
+            <li>
+              <input tabindex="2" type="checkbox" id="input-2" checked>
+              <label for="input-2">Checkbox, <span>#input-2</span></label>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <input tabindex="3" type="radio" id="input-3" name="demo-radio">
+              <label for="input-3">Radio button, <span>#input-3</span></label>
+            </li>
+            <li>
+              <input tabindex="4" type="radio" id="input-4" name="demo-radio" checked>
+              <label for="input-4">Radio button, <span>#input-4</span></label>
+            </li>
+          </ul>
+          <script>
+          $(document).ready(function(){
+            var callbacks_list = $('.demo-callbacks ul');
+            $('.demo-list input').on('ifCreated ifClicked ifChanged ifChecked ifUnchecked ifDisabled ifEnabled ifDestroyed', function(event){
+              callbacks_list.prepend('<li><span>#' + this.id + '</span> is ' + event.type.replace('if', '').toLowerCase() + '</li>');
+            }).iCheck({
+              checkboxClass: 'icheckbox_square-blue',
+              radioClass: 'iradio_square-blue',
+              increaseArea: '20%'
+            });
+          });
+          </script>
+        </div>
+</body>
+</html>

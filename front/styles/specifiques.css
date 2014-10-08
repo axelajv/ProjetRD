@@ -16,6 +16,7 @@
     }
 }
 
+/*
 .navdrawer-container ul li .fluxRSS:hover,
 .navdrawer-container ul li .exportPDF:hover{
     color: transparent;
@@ -27,4 +28,9 @@
 
 .navdrawer-container ul li .exportPDF:hover {
     background: url('https://dl.dropboxusercontent.com/u/12687630/menu/pdf.gif') center;
+}
+*/
+
+td {
+    text-align: center;
 }

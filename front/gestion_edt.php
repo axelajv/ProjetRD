@@ -32,16 +32,21 @@ $user = 'prof';
     <meta name="msapplication-TileColor" content="#3372DF">
 
     <!-- Page styles -->
+    <link rel="stylesheet" href="lib/iCheck/skins/all.css">
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/specifiques.css">
+
+    <!-- SCRIPTS JS -->
+    <script src="lib/jquery/src/jquery.js"></script>
+    <!--<script src="scripts/main.js"></script>-->
+    <link href="test/skins/all.css" rel="stylesheet">
+    <script src="test/js/jquery.js"></script>
+    <script src="lib/iCheck/icheck.js"></script>
+    <!-- ./SCRIPTS JS -->
+
 </head>
 
 <body>
-<!-- Préchargement des images -->
-<img style="display: none" src="https://dl.dropboxusercontent.com/u/12687630/menu/rss.gif" />
-<img style="display: none" src="https://dl.dropboxusercontent.com/u/12687630/menu/pdf.gif" />
-<!-- Fin préchargement des images -->
-
 <header class="app-bar promote-layer">
     <div class="app-bar-container">
         <button class="menu"><img src="images/hamburger.svg" alt="Menu"></button>
@@ -101,42 +106,55 @@ $user = 'prof';
 
 <!-- Formulaire de gestion des EdT -->
 <main>
-    <table class="table-6">
-        <colgroup>
-            <col span="1">
-            <col span="1">
-            <col span="1">
-        </colgroup>
-        <thead>
-        <tr>
-            <th>Element</th>
-            <th>Etat</th>
-            <th>Description</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td data-th="Element">
-                <input type="checkbox">
-            </td>
-            <td data-th="Etat">Clos</td>
-            <td data-th="Description">Gives the address (URL) of the video.</td>
-        </tr>
-        <tr>
-            <td data-th="element">
-                <input type="checkbox">
-            </td>
-            <td data-th="Etat">Ouvert</td>
-            <td data-th="Description">Gives the address (URL) of an image file that the browser can show as soon as the video element loads, before playback begins.</td>
-        </tr>
-
-    </table>
+    <div class="demo-list clear">
+        <table class="table-6">
+            <colgroup>
+                <col span="1">
+                <col span="4">
+                <col span="1">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>Sélectionner</th>
+                <th>Enseignant</th>
+                <th>Téléchargement</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td data-th="Sélection">
+                    <input type="checkbox">
+                </td>
+                <td data-th="Enseignant">Nom Prénom</td>
+                <td data-th="">
+                    <a class="button--secondary" href="#0">Téléchargement</a>
+                </td>
+            </tr>
+            <tr>
+                <td data-th="Sélection">
+                    <input type="checkbox">
+                </td>
+                <td data-th="Enseignant">
+                    Nom Prénom
+                </td>
+                <td data-th="">
+                    <a class="button--secondary" href="#0">Téléchargement</a>
+                </td>
+            </tr>
+        </table>
+        <script>
+            $(document).ready(function(){
+                var callbacks_list = $('.demo-callbacks ul');
+                $('.demo-list input').on('ifCreated ifClicked ifChanged ifChecked ifUnchecked ifDisabled ifEnabled ifDestroyed', function(event){
+                    callbacks_list.prepend('<li><span>#' + this.id + '</span> is ' + event.type.replace('if', '').toLowerCase() + '</li>');
+                }).iCheck({
+                    checkboxClass: 'icheckbox_square-blue',
+                    radioClass: 'iradio_square-blue',
+                    increaseArea: '20%'
+                });
+            });
+        </script>
+    </div>
 </main>
-
-<!-- SCRIPTS JS -->
-<script src="lib/jquery/src/jquery.js"></script>
-<script src="scripts/main.js"></script>
-<!-- ./SCRIPTS JS -->
-
 </body>
 </html>
