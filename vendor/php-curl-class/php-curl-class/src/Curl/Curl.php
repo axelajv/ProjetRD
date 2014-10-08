@@ -119,15 +119,33 @@ class Curl
         return $this->exec();
     }
 
-    public function put($url, $data = array())
+    public function put_($url, $data = array())
     {
         $this->setOpt(CURLOPT_URL, $url);
         $this->setOpt(CURLOPT_CUSTOMREQUEST, 'PUT');
         $put_data = http_build_query($data);
+        
         if (empty($this->options[CURLOPT_INFILE]) && empty($this->options[CURLOPT_INFILESIZE])) {
             $this->setHeader('Content-Length', strlen($put_data));
         }
-        $this->setOpt(CURLOPT_POSTFIELDS, $put_data);
+        
+        //$this->setHeader('Content-Type','application/xml; charset=utf');
+        $this->setOpt(CURLOPT_POSTFIELDS, $data);
+        $this->setHeader('If-None-Match','*');
+
+   
+        return $this->exec();
+    }
+
+    public function put($url, $headers = array(), $data = array(),$pwd)
+    {
+        $this->setOpt(CURLOPT_URL, $url);
+        $this->setOpt(CURLOPT_CUSTOMREQUEST, 'PUT');
+        $this->setOpt(CURLOPT_USERPWD, $pwd);
+        $this->setOpt(CURLOPT_HTTPHEADER, $headers);
+        $this->setOpt(CURLOPT_POSTFIELDS, $data);
+        $this->setHeader('If-None-Match','*');
+
         return $this->exec();
     }
 
