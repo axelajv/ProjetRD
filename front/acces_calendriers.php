@@ -1,8 +1,4 @@
 <?php
-/*
- * Page test pour login
- */
-
 // Variables de test -- Fausses valeurs
 $user = 'stud';
 $user = 'prof';
@@ -25,22 +21,19 @@ $user = 'prof';
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="Web Starter Kit">
-    <link rel="apple-touch-icon-precomposed" href="apple-touch-icon-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon-precomposed.png">
 
     <!-- Tile icon for Win8 (144x144 + tile color) -->
     <meta name="msapplication-TileImage" content="images/touch/favicon.png">
     <meta name="msapplication-TileColor" content="#3372DF">
 
     <!-- Page styles -->
-    <link rel="stylesheet" href="lib/iCheck/skins/all.css">
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/specifiques.css">
+    <link rel="stylesheet" href="lib/iCheck/skins/all.css">
 
     <!-- SCRIPTS JS -->
-    <script src="lib/jquery/src/jquery.js"></script>
-    <!--<script src="scripts/main.js"></script>-->
-    <link href="test/skins/all.css" rel="stylesheet">
-    <script src="test/js/jquery.js"></script>
+    <script src="lib/jquery/dist/jquery.js"></script>
     <script src="lib/iCheck/icheck.js"></script>
     <!-- ./SCRIPTS JS -->
 
@@ -106,7 +99,7 @@ $user = 'prof';
 
 <!-- Formulaire de gestion des EdT -->
 <main>
-    <div class="demo-list clear">
+    <form method="post" action="/~indydedeken/ProjetRD/front/gestion_edt.php" class="demo-list">
         <table class="table-6">
             <colgroup>
                 <col span="1">
@@ -123,7 +116,7 @@ $user = 'prof';
             <tbody>
             <tr>
                 <td data-th="Sélection">
-                    <input type="checkbox">
+                    <input id="box1" type="checkbox" name="box1">
                 </td>
                 <td data-th="Enseignant">Nom Prénom</td>
                 <td data-th="">
@@ -132,7 +125,7 @@ $user = 'prof';
             </tr>
             <tr>
                 <td data-th="Sélection">
-                    <input type="checkbox">
+                    <input id="box2" type="checkbox" name="box2">
                 </td>
                 <td data-th="Enseignant">
                     Nom Prénom
@@ -142,6 +135,9 @@ $user = 'prof';
                 </td>
             </tr>
         </table>
+
+        <button type="submit" class="button--secondary">Télécharger les agendas sélectionnés</button>
+
         <script>
             $(document).ready(function(){
                 var callbacks_list = $('.demo-callbacks ul');
@@ -154,7 +150,11 @@ $user = 'prof';
                 });
             });
         </script>
-    </div>
+
+    </form>
+
+    <script src="scripts/main.js"></script>
+
 </main>
 </body>
 </html>
