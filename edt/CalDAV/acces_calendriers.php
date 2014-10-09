@@ -119,13 +119,14 @@ mysql_select_db($dernierebase);
             var data = [
             <?php
                 $ressources_profs = mysql_query("SELECT * FROM $dernierebase.ressources_profs WHERE deleted='0' ");
-                while ($prof = mysql_fetch_array($ressources_profs)) { ?>
+                while ($prof = mysql_fetch_array($ressources_profs)) {
+                    ?>
                 [
                     '<input id="box<?php echo $prof[0]; ?>" type="checkbox" name="box<?php echo $prof[0]; ?>">',
                     '<?php echo $prof[4] . " " . $prof[3]; ?>',
-                    '<a class="button--secondary" href="<?php echo "#RADICALE_URL/COLLECTIONS_PROF/" . $prof['0'] . "/"; ?>">Téléchargement</a>'
+                    '<a class="button--secondary" target="_blank" href="http://localhost/~indydedeken/edt/icsprof/icsprof.php?<?php echo "idprof=$prof[0]&nom=$prof[3]&prenom=$prof[4]"; ?>">Téléchargement</a>'
                 ],
-            <?php
+                    <?php
                 }
             ?>
             ]
