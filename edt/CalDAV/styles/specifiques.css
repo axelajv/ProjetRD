@@ -1,0 +1,36 @@
+/*
+ * Header menu bar
+ */
+.app-bar .utilisateur {
+    color: #404040;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.app-bar .utilisateur p {
+    font-weight: 500;
+    line-height: 1px;
+}
+@media (max-width: 620px) {
+    .app-bar .utilisateur p{
+        display: none;
+    }
+}
+
+/*
+.navdrawer-container ul li .fluxRSS:hover,
+.navdrawer-container ul li .exportPDF:hover{
+    color: transparent;
+}
+
+.navdrawer-container ul li .fluxRSS:hover {
+    background: url('https://dl.dropboxusercontent.com/u/12687630/menu/rss.gif') center;
+}
+
+.navdrawer-container ul li .exportPDF:hover {
+    background: url('https://dl.dropboxusercontent.com/u/12687630/menu/pdf.gif') center;
+}
+*/
+
+td {
+    text-align: center;
+}
