@@ -1,8 +1,10 @@
 # Created by .gitignore support plugin (hsz.mobi)
 .idea/*
 
-src/TST2.php
+src/TST*
 
-src/TST3.php
+edt/CalDAV/lib/bootstrap/less/*
 
-src/TST.php
+edt/CalDAV/lib/bootstrap/grunt/*
+
+edt/CalDAV/lib/bootstrap/js/*

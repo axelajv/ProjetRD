@@ -19,16 +19,16 @@ setlocale(LC_TIME, 'fr_FR');
 
 // Pour générer un calendrier précis
 // recuperation de : ID NOM PRENOM
-if(	isset($_GET['idprof']) &&
-		!empty($_GET['idprof']) &&
-		isset($_GET['nom']) &&
-		!empty($_GET['nom']) &&
-		isset($_GET['prenom']) &&
-		!empty($_GET['prenom'])
+if(	isset($_POST['idprof']) &&
+		!empty($_POST['idprof']) &&
+		isset($_POST['nom']) &&
+		!empty($_POST['nom']) &&
+		isset($_POST['prenom']) &&
+		!empty($_POST['prenom'])
 ) {
-		$idProf			= $_GET['idprof'];
-		$nomProf		= $_GET['nom'];
-		$prenomProf	= $_GET['prenom'];
+		$idProf			= $_POST['idprof'];
+		$nomProf		= $_POST['nom'];
+		$prenomProf	= $_POST['prenom'];
 
 		$requete_precision_prof = "AND codeProf=$idProf AND nom='$nomProf' AND prenom='$prenomProf'";
 } else {

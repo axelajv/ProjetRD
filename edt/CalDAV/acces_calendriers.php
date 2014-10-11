@@ -4,10 +4,21 @@ session_start();
 error_reporting(E_ALL);
 
 include_once('../config.php');
-//Connection a la bdd
-mysql_connect($serveur,$user,$pass);
-mysql_select_db($dernierebase);
 
+/*
+ * PARAMETRAGE ENVIRONNEMENT DE TEST
+ */
+if( !isset($_SESSION['logged_prof_perso']) || empty($_SESSION['logged_prof_perso'])) {
+    // si non-prof alors on redirige l'utilisateur
+    header("Location: /");
+}
+
+$urlEdt = "http://localhost/~indydedeken/edt";
+$urlEdt = "http://compri.me/edt";
+
+/*
+ * FIN PARAMETRAGE ENVIRONNEMENT DE TEST
+ */
 ?>
 
 <!doctype html>
@@ -34,73 +45,68 @@ mysql_select_db($dernierebase);
     <meta name="msapplication-TileColor" content="#3372DF">
 
     <!-- Page styles -->
-    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="styles/specifiques.css">
-    <link rel="stylesheet" href="lib/iCheck/skins/all.css">
+    <link rel="stylesheet" href="lib/iCheck/skins/flat/blue.css">
     <link rel="stylesheet" href="lib/DataTables/media/css/jquery.dataTables.css">
 
     <!-- SCRIPTS JS -->
     <script src="lib/jquery/dist/jquery.js"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.js"></script>
     <script src="lib/iCheck/icheck.js"></script>
     <script src="lib/DataTables/media/js/jquery.dataTables.js"></script>
-    <!-- ./SCRIPTS JS -->
 
 </head>
 
 <body>
-<header class="app-bar promote-layer">
-    <div class="app-bar-container">
-        <button class="menu"><img src="images/hamburger.svg" alt="Menu"></button>
-        <h1 class="logo">VT <strong>Agenda</strong></h1>
-        <section class="app-bar-actions">
-            <!-- Nom de l'utilisateur -->
-            <div class="utilisateur">
-                <p>RAJCHENBACH-TELLER David</p>
-            </div>
-            <!-- Put App Bar Buttons Here -->
-
-            <!-- Accès à ma config -->
-            <a href="javascript:submitform_ma_config2()">
-                <button><i class="color--gray-background icon icon-cog"></i></button>
-            </a>
-
-            <!-- Déconnexion -->
-            <a href="index.php?disconnect=true">
-                <button><i class="color--red icon icon-close"></i></button>
-            </a>
-        </section>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-calendar"></span> VT Calendar</a>
     </div>
-</header>
 
-<!-- Menu bar -->
-<nav id="cssmenu" class="navdrawer-container promote-layer">
-    <h4>Navigation</h4>
-    <ul>
-        <li class="principal"><a href="#accueil" role="menuitem"><span>Accueil</span></a></li>
-        <li><a href="#" role="menuitem"><span>Mes modules</span></a></li>
-        <li><a href="#" role="menuitem"><span>Mes droits</span></a></li>
-        <li><a href="#" role="menuitem"><span>Mes heures</span></a></li>
-        <li><a href="#" role="menuitem" class="exportPDF"><span>Export PDF</span></a></li>
-        <li><a href="#" role="menuitem" class="fluxRSS"><span>Flux RSS</span></a></li>
-        <li><a href="#" role="menuitem"><span>Agenda</span></a></li>
-    </ul>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> nom prenom <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Outils</a></li>
+            <li><a href="#">Modules</a></li>
+            <li><a href="#">Droits</a></li>
+            <li><a href="#">Heures</a></li>
+			<li><a href="#">Export PDF</a></li>
+			<li><a href="#">Flux RSS</a></li>
+			<li><a href="#">Config</a></li>
+          </ul>
+        </li>
+      </ul>
+	  <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Déconnexion</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
 </nav>
 
-<!-- Formulaire de téléchargement des EdT -->
-<!-- tableau généré avec DataTables -->
 <main>
+
+    <!-- Form - Download EdT form -->
     <form method="post" action="/~indydedeken/ProjetRD/front/gestion_edt.php" class="demo-list">
-        <table class="table-6">
-            <colgroup>
-                <col span="1">
-                <col span="4">
-                <col span="1">
-            </colgroup>
+
+        <!-- Table - Genered by DataTables plugin -->
+        <table class="table table-striped">
             <thead>
             <tr>
-                <th>Sélectionner</th>
+                <th><span class="glyphicon glyphicon-th-list"></span></th>
                 <th>Enseignant</th>
-                <th>Téléchargement</th>
+                <th><span class="glyphicon glyphicon-download"></span></th>
             </tr>
             </thead>
             <tbody>
@@ -111,52 +117,108 @@ mysql_select_db($dernierebase);
                 <tr>
             </tbody>
         </table>
+        <!-- ./table -->
 
-        <button type="submit" class="button--secondary">Télécharger les agendas sélectionnés</button>
+        <!-- div - Download all the selected EdT -->
+        <div class="center">
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Télécharger les agendas sélectionnés</button>
+        </div>
+        <!-- ./div -->
 
         <!-- DataTables plugin -->
         <script>
-            var data = [
-            <?php
-                $ressources_profs = mysql_query("SELECT * FROM $dernierebase.ressources_profs WHERE deleted='0' ");
-                while ($prof = mysql_fetch_array($ressources_profs)) {
-                    ?>
-                [
-                    '<input id="box<?php echo $prof[0]; ?>" type="checkbox" name="box<?php echo $prof[0]; ?>">',
-                    '<?php echo $prof[4] . " " . $prof[3]; ?>',
-                    '<a class="button--secondary" target="_blank" href="http://localhost/~indydedeken/edt/icsprof/icsprof.php?<?php echo "idprof=$prof[0]&nom=$prof[3]&prenom=$prof[4]"; ?>">Téléchargement</a>'
-                ],
+            $(document).ready(function(){
+                /* Get data to feed DataTables */
+                var data = [
                     <?php
-                }
-            ?>
-            ]
 
-            $('table').dataTable({
-                  "data"        : data,
-                  "bSort"       : false,
-                  "bSortable"   : false,
-                  "lengthMenu"  : [200]
+                    $deleteValue  = 0;
+                    $data         = array(':deleteValue'=>$deleteValue);
+
+                    $sql           = "SELECT codeProf, nom, prenom FROM $dernierebase.ressources_profs WHERE deleted=:deleteValue;";
+                    $req_listeProf = $dbh->prepare($sql);
+                    $req_listeProf->execute($data);
+                    $res_listeProf = $req_listeProf->fetchAll();
+
+                    foreach($res_listeProf as $prof) {
+                        ?>
+                        [
+                            '<input id="box_<?php echo $prof[0]; ?>" type="checkbox" name="<?php echo $prof[0]; ?>">',
+                            '<?php echo $prof[1] . " " . $prof[2]; ?>',
+                            '<a id="lien_<?php echo $prof[0]; ?>" class="btn btn-default" data-idprof="<?php echo $prof[0]; ?>" data-nom="<?php echo $prof[1]; ?>" data-prenom="<?php echo $prof[2]; ?>"><span class="glyphicon glyphicon-save"></span></a>'
+                        ],
+                            <?php
+                        }
+                    ?>
+                ]
+
+                /* Param DataTables plugin */
+                $('table').dataTable({
+                      "data"        : data,
+                      "bSort"       : false,
+                      "bSortable"   : false,
+                      "lengthMenu"  : [200],
+                      "language"    : {
+                        "zeroRecords" : "Aucun enseignant",
+                        "search"      : "Rechercher un enseignant _INPUT_"
+                      }
+                });
+
+                /* Download EdT one by one */
+                $( "table a" ).on('click', function( event ) {
+
+                    event.preventDefault();
+
+                    var idprof = $(this).data( "idprof" );
+                    var nom    = $(this).data( "nom" );
+                    var prenom = $(this).data( "prenom" );
+
+                    var request = $.ajax({
+                        url: "<?php echo $urlEdt; ?>/icsprof/icsprof.php",
+                        type: "POST",
+                        data: {
+                            idprof : idprof,
+                            nom    : nom,
+                            prenom : prenom
+                        }
+                    })
+                    .done(function( data ) {
+
+                        $( "#lien_" + idprof)
+                            .removeClass('btn-default')
+                            .html( '<span class="glyphicon glyphicon-ok"></span>' )
+                            .addClass('btn-success')
+                            .attr('href', "<?php echo $urlEdt; ?>/icsprof/" + nom.toLowerCase() + "_" + prenom.toLowerCase() + ".ics");
+
+                        window.open($( "#lien_" + idprof).attr( 'href' ));
+
+                    })
+                    .fail(function( data ) {
+                        alert( "La requête a échouée : " + textStatus );
+                    });
+
+                });
             });
         </script>
+        <!-- ./DataTables plugin -->
 
         <!-- iCheck plugin -->
         <script>
-            $(window).ready(function(){
+            $(document).ready(function(){
                 var callbacks_list = $('.demo-callbacks ul');
                 $('.demo-list input').on('click ifCreated ifClicked ifChanged ifChecked ifUnchecked ifDisabled ifEnabled ifDestroyed', function(event){
                     callbacks_list.prepend('<li><span>#' + this.id + '</span> is ' + event.type.replace('if', '').toLowerCase() + '</li>');
                 }).iCheck({
-                    checkboxClass: 'icheckbox_square-blue',
-                    radioClass: 'iradio_square-blue',
-                    increaseArea: '20%'
+                    checkboxClass: 'icheckbox_flat-blue',
+                    radioClass: 'iradio_flat-blue',
+                    increaseArea: '40%'
                 });
             });
         </script>
+        <!-- ./iCheck plugin -->
 
     </form>
-
-    <script src="scripts/main.js"></script>
-
+    <!-- ./form -->
 </main>
 </body>
 </html>
