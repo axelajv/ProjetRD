@@ -8,3 +8,7 @@ edt/CalDAV/lib/bootstrap/less/*
 edt/CalDAV/lib/bootstrap/grunt/*
 
 edt/CalDAV/lib/bootstrap/js/*
+
+edt/CalDAV/lib/DataTables/examples/*
+
+edt/CalDAV/lib/DataTables/examples/unit_testing/*
