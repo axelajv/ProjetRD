@@ -1,9 +1,13 @@
+<<<<<<< HEAD
 ﻿<?php
 include("../config.php");
 //Connection a la bdd
 mysql_connect($serveur,$user,$pass);
 mysql_select_db($dernierebase);
 
+//CALDav project - START ------
+include("../CalDAV/CALDavCommunication.php");
+//CALDav project - FIN --------
 
 $jour=date('d');
 $mois=date('m');
@@ -171,7 +175,7 @@ while ( $groupe = mysql_fetch_array($ressources_groupes) )
         }
 
 
-//reservations		
+//reservations
         $reservations_groupes=mysql_query("SELECT * FROM reservations_groupes WHERE codeRessource='$groupe[codeGroupe]' AND deleted= '0'");
         while ($reservation_groupe = mysql_fetch_array($reservations_groupes) )
         {
@@ -293,17 +297,11 @@ while ( $groupe = mysql_fetch_array($ressources_groupes) )
     $nomfichier=preg_replace('/\s/',"_",$nomfichier);
     $nomfichier=strtolower($nomfichier);
     file_put_contents($nomfichier,$fichier);
+
+    //CALDav project - START ------
+    $uid = $annee.$mois.$jour."T"."000001Z-".$i."@ufrsitec.u-paris10.fr";
+    sendICSFile($nomfichier,$fichier,$ENSEIGNANT,$uid);
+    //---------------- FIN --------
+
 }
 ?>
-
-
-
-
-
-
-
-
-		
-
-
-
