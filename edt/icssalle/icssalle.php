@@ -4,6 +4,9 @@ include("../config.php");
 mysql_connect($serveur,$user,$pass);
 mysql_select_db($dernierebase);
 
+//CALDav project - START ------
+include("../CalDAV/CALDavCommunication.php");
+//CALDav project - FIN --------
 
 $jour=date('d');
 $mois=date('m');
@@ -230,19 +233,23 @@ while ($reservation_salle = mysql_fetch_array($reservations_salles) )
 			$i=$i+1;
 			$fichier.="END:VEVENT". "\n";
 			
-				}
+			}
 			
 		}
 		
 
-	$fichier.="END:VCALENDAR";
+		$fichier.="END:VCALENDAR";
 
-	$nomfichier=$salle['nom'].".ics";
-	//$nomfichier=ereg_replace("[ ]","_",$nomfichier);
-	$nomfichier=preg_replace('/\s/',"_",$nomfichier);
-	$nomfichier=strtolower($nomfichier);
-	file_put_contents($nomfichier,$fichier);
-	
+		$nomfichier=$salle['nom'].".ics";
+		//$nomfichier=ereg_replace("[ ]","_",$nomfichier);
+		$nomfichier=preg_replace('/\s/',"_",$nomfichier);
+		$nomfichier=strtolower($nomfichier);
+		file_put_contents($nomfichier,$fichier);
+		
+		//CALDav project - START ------
+		$uid = $annee.$mois.$jour."T"."000001Z-".$i."@ufrsitec.u-paris10.fr";
+		sendICSFile($nomfichier,$fichier,$ENSEIGNANT,$uid);
+		//---------------- FIN --------
 	
 	}
 	

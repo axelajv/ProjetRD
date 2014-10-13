@@ -4,6 +4,9 @@ include("../config.php");
 mysql_connect($serveur,$user,$pass);
 mysql_select_db($dernierebase);
 
+//CALDav project - START ------
+include("../CalDAV/CALDavCommunication.php");
+//CALDav project - FIN --------
 
    error_reporting(E_ALL);
 
@@ -276,35 +279,40 @@ while ($reservation_groupe = mysql_fetch_array($reservations_groupes) )
 				$fichier.="END:VEVENT"."\n";
 			
 				}
+				
+			}
+
+		}
+		
+
+		
 			
+		$fichier.="END:VCALENDAR";
+
+		if ($ressource_etudiant['nom']!=$ressource_etudiant['prenom'])
+		{
+			$nomfichier=$ressource_etudiant['nom']."_".$ressource_etudiant['prenom'].".ics";
+			//$nomfichier=ereg_replace("[ ]","_",$nomfichier);
+			$nomfichier=preg_replace('/\s/',"_",$nomfichier);
+
+			$nomfichier=strtolower($nomfichier);
+			file_put_contents($nomfichier,$fichier);
+		}
+		else
+		{
+			$nomfichier=$ressource_etudiant['identifiant'].".ics";
+			//	$nomfichier=ereg_replace("[ ]","_",$nomfichier);
+			$nomfichier=preg_replace('/\s/',"_",$nomfichier);
+
+			$nomfichier=strtolower($nomfichier);
+			file_put_contents($nomfichier,$fichier);
 		}
 
-		}
+		//CALDav project - START ------
+		$uid = $annee.$mois.$jour."T"."000001Z-".$i."@ufrsitec.u-paris10.fr";
+		sendICSFile($nomfichier,$fichier,$ENSEIGNANT,$uid);
+		//---------------- FIN --------
 		
-
-		
-		
-	$fichier.="END:VCALENDAR";
-
-	if ($ressource_etudiant['nom']!=$ressource_etudiant['prenom'])
-	{
-	$nomfichier=$ressource_etudiant['nom']."_".$ressource_etudiant['prenom'].".ics";
-	//$nomfichier=ereg_replace("[ ]","_",$nomfichier);
-	$nomfichier=preg_replace('/\s/',"_",$nomfichier);
-
-	$nomfichier=strtolower($nomfichier);
-	file_put_contents($nomfichier,$fichier);
-	}
-	else
-	{
-	$nomfichier=$ressource_etudiant['identifiant'].".ics";
-//	$nomfichier=ereg_replace("[ ]","_",$nomfichier);
-$nomfichier=preg_replace('/\s/',"_",$nomfichier);
-
-	$nomfichier=strtolower($nomfichier);
-	file_put_contents($nomfichier,$fichier);
-	}
-	
 	}
 
 ?>
