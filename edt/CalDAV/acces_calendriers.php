@@ -1,17 +1,19 @@
 <?php
-
 session_start();
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
 
 include_once('../config.php');
 
 /*
  * PARAMETRAGE ENVIRONNEMENT DE TEST
  */
-if( !isset($_SESSION['logged_prof_perso']) || empty($_SESSION['logged_prof_perso'])) {
+
+/*
+ * SCRIPT PIERRICK
+ * if( isset($_SESSION['teachLogin']) ) {
     // si non-prof alors on redirige l'utilisateur
     header("Location: /");
-}
+}*/
 
 $urlEdt = "http://localhost/~indydedeken/edt";
 $urlEdt = "http://compri.me/edt";
@@ -45,95 +47,132 @@ $urlEdt = "http://compri.me/edt";
     <meta name="msapplication-TileColor" content="#3372DF">
 
     <!-- Page styles -->
-    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="styles/specifiques.css">
     <link rel="stylesheet" href="lib/iCheck/skins/flat/blue.css">
     <link rel="stylesheet" href="lib/DataTables/media/css/jquery.dataTables.css">
 
     <!-- SCRIPTS JS -->
     <script src="lib/jquery/dist/jquery.js"></script>
-    <script src="lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="lib/bootstrap/js/bootstrap.js"></script>
     <script src="lib/iCheck/icheck.js"></script>
     <script src="lib/DataTables/media/js/jquery.dataTables.js"></script>
-
 </head>
 
 <body>
 <nav class="navbar navbar-default" role="navigation">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-calendar"></span> VT Calendar</a>
-    </div>
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-calendar"></span> VT Calendar</a>
+        </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> nom prenom <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Outils</a></li>
-            <li><a href="#">Modules</a></li>
-            <li><a href="#">Droits</a></li>
-            <li><a href="#">Heures</a></li>
-			<li><a href="#">Export PDF</a></li>
-			<li><a href="#">Flux RSS</a></li>
-			<li><a href="#">Config</a></li>
-          </ul>
-        </li>
-      </ul>
-	  <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Déconnexion</a></li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> nom prenom <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Outils</a></li>
+                        <li><a href="#">Modules</a></li>
+                        <li><a href="#">Droits</a></li>
+                        <li><a href="#">Heures</a></li>
+                        <li><a href="#">Export PDF</a></li>
+                        <li><a href="#">Flux RSS</a></li>
+                        <li><a href="#">Config</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <!-- SCRIPT PIERRICK -->
+                <li><a href="<?php echo $urlEdt; ?>/script/disconnectScript.php">Déconnexion</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
 </nav>
 
 <main>
 
-    <!-- Form - Download EdT form -->
-    <form method="post" action="/~indydedeken/ProjetRD/front/gestion_edt.php" class="demo-list">
+    <!-- div - btn-group -->
+    <div class="btn-group btn-group-justified">
+        <a id="form-enseignant" role="button" class="btn btn-default active">Enseignants</a>
+        <a id="form-groupe" role="button" class="btn btn-default">Filières</a>
+        <a id="form-salle" role="button" class="btn btn-default">Salles</a>
+    </div>
+    <!-- ./div - btn-group -->
 
-        <!-- Table - Genered by DataTables plugin -->
-        <table class="table table-striped">
+    <!-- form - form-enseignant -->
+    <form method="post" action="#" class="form-enseignant">
+        <!-- Table-enseigant - Generate by DataTables plugin -->
+        <table class="table table-striped table-enseignant">
             <thead>
             <tr>
                 <th><span class="glyphicon glyphicon-th-list"></span></th>
-                <th>Enseignant</th>
+                <th class="libelle">Enseignant <span id="plusEnseignant" class="glyphicon glyphicon-chevron-down"></span></th>
                 <th><span class="glyphicon glyphicon-download"></span></th>
             </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td data-th="Sélection"></td>
-                    <td data-th="Enseignant"></td>
-                    <td data-th=""></td>
-                <tr>
+            <tr>
+                <td data-th="Sélection"></td>
+                <td data-th="Enseignant"></td>
+                <td data-th=""></td>
+            </tr>
             </tbody>
         </table>
         <!-- ./table -->
 
         <!-- div - Download all the selected EdT -->
-        <div class="center">
-            <button type="submit" class="btn btn-primary btn-lg btn-block">Télécharger les agendas sélectionnés</button>
+        <div class="button-enseignant center">
+            <button type="submit" class="btn btn-primary btn-lg">Enseignants sélectionnés</button>
         </div>
         <!-- ./div -->
+    </form>
+    <!-- ./form - form-enseignant -->
+
+    <!-- form - form-group -->
+    <form method="post" action="#" class="form-groupe">
+        <!-- Table-groupe - Generate by DataTables plugin -->
+        <table class="table table-striped table-groupe">
+            <thead>
+            <tr>
+                <th><span class="glyphicon glyphicon-th-list"></span></th>
+                <th class="libelle">Groupe <span id="plusGroupe" class="glyphicon glyphicon-chevron-down"></span></th>
+                <th><span class="glyphicon glyphicon-download"></span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td data-th="Sélection"></td>
+                <td data-th="Groupe"></td>
+                <td data-th=""></td>
+            <tr>
+            </tbody>
+        </table>
+        <!-- ./table -->
+
+        <!-- div - Download all the selected EdT -->
+        <div class="button-groupe center">
+            <button type="submit" class="btn btn-primary btn-lg">Filières sélectionnés</button>
+        </div>
+        <!-- ./div -->
+    </form>
+    <!-- ./form - form-groupe -->
 
         <!-- DataTables plugin -->
         <script>
-            $(document).ready(function(){
-                /* Get data to feed DataTables */
-                var data = [
+            $(document).ready(function() {
+                /* Get data from ENSEIGNANT to feed DataTables */
+                var dataEnseigant = [
                     <?php
-
-                    $deleteValue  = 0;
-                    $data         = array(':deleteValue'=>$deleteValue);
+                    $deleteValue = 0;
+                    $data        = array(':deleteValue'=>$deleteValue);
 
                     $sql           = "SELECT codeProf, nom, prenom FROM $dernierebase.ressources_profs WHERE deleted=:deleteValue;";
                     $req_listeProf = $dbh->prepare($sql);
@@ -141,32 +180,31 @@ $urlEdt = "http://compri.me/edt";
                     $res_listeProf = $req_listeProf->fetchAll();
 
                     foreach($res_listeProf as $prof) {
-                        ?>
+                    ?>
                         [
                             '<input id="box_<?php echo $prof[0]; ?>" type="checkbox" name="<?php echo $prof[0]; ?>">',
                             '<?php echo $prof[1] . " " . $prof[2]; ?>',
                             '<a id="lien_<?php echo $prof[0]; ?>" class="btn btn-default" data-idprof="<?php echo $prof[0]; ?>" data-nom="<?php echo $prof[1]; ?>" data-prenom="<?php echo $prof[2]; ?>"><span class="glyphicon glyphicon-save"></span></a>'
                         ],
-                            <?php
-                        }
+                    <?php
+                    }
                     ?>
                 ]
 
                 /* Param DataTables plugin */
-                $('table').dataTable({
-                      "data"        : data,
-                      "bSort"       : false,
-                      "bSortable"   : false,
-                      "lengthMenu"  : [200],
-                      "language"    : {
+                $('table.table-enseignant').dataTable({
+                    "data"        : dataEnseigant,
+                    "bSort"       : false,
+                    "bSortable"   : false,
+                    "lengthMenu"  : [200],
+                    "language"    : {
                         "zeroRecords" : "Aucun enseignant",
                         "search"      : "Rechercher un enseignant _INPUT_"
-                      }
+                    }
                 });
 
-                /* Download EdT one by one */
-                $( "table a" ).on('click', function( event ) {
-
+                /* Download ENSEIGNANT-EdT one by one */
+                $( 'table.table-enseignant a' ).on('click', function( event ) {
                     event.preventDefault();
 
                     var idprof = $(this).data( "idprof" );
@@ -182,21 +220,95 @@ $urlEdt = "http://compri.me/edt";
                             prenom : prenom
                         }
                     })
-                    .done(function( data ) {
+                        .done(function( data ) {
+                            $( "#lien_" + idprof)
+                                .removeClass('btn-default')
+                                .html( '<span class="glyphicon glyphicon-ok"></span>' )
+                                .addClass('btn-success')
+                                .attr('href', "<?php echo $urlEdt; ?>/icsprof/" + nom.toLowerCase() + "_" + prenom.toLowerCase() + ".ics");
+                            window.open($( "#lien_" + idprof).attr( 'href' ));
+                        }
+                    )
+                        .fail(function( data ) {
+                            $( "#lien_" + idprof)
+                                .removeClass('btn-default')
+                                .html( '<span class="glyphicon glyphicon-repeat"></span>' )
+                                .addClass('btn-danger');
+                            alert( "La requête a échoué : " + textStatus );
+                        }
+                    );
+                });
 
-                        $( "#lien_" + idprof)
-                            .removeClass('btn-default')
-                            .html( '<span class="glyphicon glyphicon-ok"></span>' )
-                            .addClass('btn-success')
-                            .attr('href', "<?php echo $urlEdt; ?>/icsprof/" + nom.toLowerCase() + "_" + prenom.toLowerCase() + ".ics");
+                /* Get data from GROUPE/FILIERE to feed DataTables */
+                var dataGroupe = [
+                    <?php
+                    $deleteValue = 0;
+                    $data        = array(':deleteValue'=>$deleteValue);
 
-                        window.open($( "#lien_" + idprof).attr( 'href' ));
+                    $sql          = "SELECT codeGroupe, nom, alias FROM $dernierebase.ressources_groupes WHERE deleted=:deleteValue;";
+                    $req_listeGrp = $dbh->prepare($sql);
+                    $req_listeGrp->execute($data);
+                    $res_listeGrp = $req_listeGrp->fetchAll();
 
+                    foreach($res_listeGrp as $grp) {
+                    ?>
+                    [
+                        '<input id="box_<?php echo $grp[0]; ?>" type="checkbox" name="<?php echo $grp[0]; ?>">',
+                        '<?php echo ((empty($grp[2])) ? $grp[1] : $grp[2]); ?>',
+                        '<a id="lien_<?php echo $grp[0]; ?>" class="btn btn-default" data-idgrp="<?php echo $grp[0]; ?>" data-nomgrp="<?php echo $grp[1]; ?>"><span class="glyphicon glyphicon-save"></span></a>'
+                    ],
+                    <?php
+                    }
+                    ?>
+                ]
+
+                /* Param DataTables plugin */
+                $('table.table-groupe').dataTable({
+                    "data"        : dataGroupe,
+                    "bSort"       : false,
+                    "bSortable"   : false,
+                    "lengthMenu"  : [200],
+                    "language"    : {
+                        "zeroRecords" : "Aucune filière",
+                        "search"      : "Rechercher une filière _INPUT_"
+                    }
+                });
+
+                /* Download GROUPE-EdT one by one */
+                $( 'table.table-groupe a' ).on('click', function( event ) {
+
+                    event.preventDefault();
+
+                    var idgrp  = $(this).data( "idgrp" );
+                    var nomgrp = $(this).data( "nomgrp" );
+
+                    var request = $.ajax({
+                        url: "<?php echo $urlEdt; ?>/icsetudiant/icsgroupe.php",
+                        type: "POST",
+                        data: {
+                            idgrp  : idgrp,
+                            nomgrp : nomgrp
+                        }
                     })
-                    .fail(function( data ) {
-                        alert( "La requête a échouée : " + textStatus );
-                    });
+                        .done(function( data ) {
 
+                            $( "#lien_" + idgrp)
+                                .removeClass('btn-default')
+                                .html( '<span class="glyphicon glyphicon-ok"></span>' )
+                                .addClass('btn-success')
+                                .attr('href', "<?php echo $urlEdt; ?>/icsetudiant/" + nomgrp.toLowerCase() + ".ics");
+
+                            window.open($( "#lien_" + idgrp).attr( 'href' ));
+                        }
+                    )
+                        .fail(function( data ) {
+                            $( "#lien_" + idgrp)
+                                .removeClass('btn-default')
+                                .html( '<span class="glyphicon glyphicon-repeat"></span>' )
+                                .addClass('btn-danger');
+                            alert( "La requête a échoué : " + textStatus );
+                        }
+                    );
                 });
             });
         </script>
@@ -206,16 +318,95 @@ $urlEdt = "http://compri.me/edt";
         <script>
             $(document).ready(function(){
                 var callbacks_list = $('.demo-callbacks ul');
-                $('.demo-list input').on('click ifCreated ifClicked ifChanged ifChecked ifUnchecked ifDisabled ifEnabled ifDestroyed', function(event){
+                $('form input').on('click ifCreated ifClicked ifChanged ifChecked ifUnchecked ifDisabled ifEnabled ifDestroyed', function(event){
                     callbacks_list.prepend('<li><span>#' + this.id + '</span> is ' + event.type.replace('if', '').toLowerCase() + '</li>');
                 }).iCheck({
-                    checkboxClass: 'icheckbox_flat-blue',
-                    radioClass: 'iradio_flat-blue',
-                    increaseArea: '40%'
+                    checkboxClass : 'icheckbox_flat-blue',
+                    radioClass    : 'iradio_flat-blue',
+                    increaseArea  : '40%'
                 });
             });
         </script>
         <!-- ./iCheck plugin -->
+
+        <!-- Manual scripts -->
+        <script>
+            $(document).ready(function() {
+
+                /*
+                 * Dropdown effect on Enseignant-list
+                 */
+                $('.table-enseignant th').click(function (e) {
+                    $('#DataTables_Table_0 tbody, .downloadEnseigant').slideToggle("fast");
+
+                    /* recoder proprement */
+                    var monIcone = $('#plusEnseignant');
+                    var change = monIcone.hasClass('glyphicon-chevron-down');
+                    if (change) {
+                        monIcone.removeClass('glyphicon-chevron-down')
+                            .addClass('glyphicon-chevron-up');
+                        $('.button-enseignant').hide('fast');
+                        $('#DataTables_Table_0_filter').slideUp();
+                    } else {
+                        monIcone.removeClass('glyphicon-chevron-up')
+                            .addClass('glyphicon-chevron-down');
+                        $('.button-enseignant').show('fast');
+                        $('#DataTables_Table_0_filter').slideDown();
+                    }
+
+                });
+
+                /*
+                 * Dropdown effect on Groupe-list (filière)
+                 */
+                $('.table-groupe th').click(function (e) {
+                    $('#DataTables_Table_1 tbody, .downloadGroupe').slideToggle("fast");
+
+                    /* recoder proprement */
+                    var monIcone = $('#plusGroupe');
+                    var change = monIcone.hasClass('glyphicon-chevron-down');
+                    if (change) {
+                        monIcone.removeClass('glyphicon-chevron-down')
+                            .addClass('glyphicon-chevron-up');
+                        $('.button-groupe').hide('fast');
+                        $('#DataTables_Table_1_filter').slideUp();
+
+                    } else {
+                        monIcone.removeClass('glyphicon-chevron-up')
+                            .addClass('glyphicon-chevron-down');
+                        $('.button-groupe').show('fast');
+                        $('#DataTables_Table_1_filter').slideDown();
+                    }
+                });
+
+                /*
+                 * Button - choose a category (Enseignant, Filière, Salle)
+                 */
+                $('#form-enseignant').click(function(){
+                    $('.form-groupe, .form-salle').hide('fast');
+                    $('.form-enseignant').show('fast');
+                    $('#form-groupe, #form-salle').removeClass('active');
+                    $(this).addClass('active');
+                });
+                $('#form-groupe').click(function(){
+                    $('.form-enseignant, .form-salle').hide('fast');
+                    $('.form-groupe').show('fast');
+
+                    $('#form-salle, #form-enseignant').removeClass('active');
+                    $(this).addClass('active');
+                });
+                $('#form-salle').click(function(){
+                    $('.form-enseignant, .form-groupe').hide('fast');
+                    $('.form-salle').show('fast');
+                    $('#form-enseignant, #form-groupe').removeClass('active');
+                    $(this).addClass('active');
+                });
+
+                // par défault, on affiche uniquement le form-enseignant
+                $('.form-groupe, .form-salle').hide('fast');
+            });
+        </script>
+        <!-- ./Manual scripts -->
 
     </form>
     <!-- ./form -->
