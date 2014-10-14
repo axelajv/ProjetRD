@@ -17,6 +17,7 @@ include_once('../config.php');
 
 $urlEdt = "http://localhost/~indydedeken/edt";
 $urlEdt = "http://compri.me/edt";
+$urlRadicale = "http://compri.me:5232/";
 
 /*
  * FIN PARAMETRAGE ENVIRONNEMENT DE TEST
@@ -225,7 +226,7 @@ $urlEdt = "http://compri.me/edt";
                                 .removeClass('btn-default')
                                 .html( '<span class="glyphicon glyphicon-ok"></span>' )
                                 .addClass('btn-success')
-                                .attr('href', "<?php echo $urlEdt; ?>/icsprof/" + nom.toLowerCase() + "_" + prenom.toLowerCase() + ".ics");
+                                .attr('href', "<?php echo $urlRadicale; ?>/Enseignants/" + nom.toLowerCase() + "_" + prenom.toLowerCase() + ".ics");
                             window.open($( "#lien_" + idprof).attr( 'href' ));
                         }
                     )
@@ -296,7 +297,7 @@ $urlEdt = "http://compri.me/edt";
                                 .removeClass('btn-default')
                                 .html( '<span class="glyphicon glyphicon-ok"></span>' )
                                 .addClass('btn-success')
-                                .attr('href', "<?php echo $urlEdt; ?>/icsetudiant/" + nomgrp.toLowerCase() + ".ics");
+                                .attr('href', "<?php echo $urlRadicale; ?>/Etudiants/" + nomgrp.toLowerCase() + ".ics");
 
                             window.open($( "#lien_" + idgrp).attr( 'href' ));
                         }
