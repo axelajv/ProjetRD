@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 require 'vendor/php-curl-class/php-curl-class/src/Curl/Curl.php';
 use \Curl\Curl;
@@ -10,53 +10,51 @@ $SALLE = "Salles";
 
 function sendICSFile($nomfichier,$contenu,$ctg,$uid){
 
-    $url = $ctg.'/'.$nomfichier.'/';
-    $userpwd = 'adminprof:adminprof';
+        $url = $ctg.'/'.$nomfichier.'/';
+    $userpwd = 'adminprof:adminprof';
 
-    $headers = array(
-        'Content-Type: text/calendar; charset=utf-8',
-        'If-None-Match: *',
-        'Content-Length: '.strlen($contenu),
-    );
+    $headers = array(
+                'Content-Type: text/calendar; charset=utf-8',
+        'If-None-Match: *',
+        'Content-Length: '.strlen($contenu),
+    );
 
-    echo $contenu."<br/><br/>";
+    $curl = new Curl();
 
-    $curl = new Curl();
+    $curl->PUT('http://compri.me:5232/'.$url,$headers, $contenu, $userpwd);
 
-    $curl->PUT('http://compri.me:5232/'.$url,$headers, $contenu, $userpwd);
+    $retour = getStatusInfo($curl, $nomfichier);
 
-    $retour = getStatusInfo($curl);
-
-    writeLog($retour,'cURL');
+    writeLog($retour,'cURL','PUT');
 }
 
-function getStatusInfo($curl, $httpStatus = array(200,201,202,203,204,205,206,207,210)) {
-    $msg = array();
+function getStatusInfo($curl, $nomfichier, $httpStatus = array(200,201,202,203,204,205,206,207,210)) {
+        $msg = array();
+    
+    // requete
+    if(!$curl->curl_error) {
+        if( in_array($curl->http_status_code, $httpStatus) ) {
+            $msg = "La requête est bien arrivée - HTTP[".$curl->http_status_code."] Le fichier \"".$nomfichier."\" a été envoyé au serveur";
+        } else {
+                    $msg = "La requête a échoué - HTTP[".$curl->http_status_code."] Le fichier \"".$nomfichier."\" n'a pas été envoyé au serveur";
+        }
+    } else {
+                $msg = "cURL KO, erreur : ".$curl->curl_error_message;
+    }
 
-    // requete
-    if(!$curl->curl_error) {
-        if( in_array($curl->http_status_code, $httpStatus) ) {
-            $msg = "La requête est bien arrivée - HTTP[".$curl->http_status_code."]".$curl->response_headers;
-        } else {
-            $msg = "La requête a échoué - HTTP[".$curl->http_status_code."]".$curl->response_headers;
-        }
-    } else {
-        $msg = "cURL KO, erreur : ".$curl->curl_error_message;
-    }
-
-    return $msg;
+    return $msg;
 }
 
-function writeLog($msg,$subject){
-    $monfichier = fopen('../CALDav/log.txt', 'a+');
-    fputs($monfichier, date('dmY-H:i')." [".$subject."] - ".$msg.";\n");
-    fclose($monfichier);
+function writeLog($msg,$subject,$type){
+        $monfichier = fopen('../CALDav/log.txt', 'a+');
+    fputs($monfichier, date('dmY-H:i')." [".$subject." - ".$type."] - ".$msg.";\n");
+    fclose($monfichier);
 
-    //si le fichier devient trop gros, on l'efface
-    if(filesize('../CALDav/log.txt') > 3000000){
-        $vide = fopen('../CALDav/log.txt', 'w');
-        fclose($vide);
-    }
+    //si le fichier devient trop gros, on l'efface
+    if(filesize('../CALDav/log.txt') > 500000){
+        $vide = fopen('../CALDav/log.txt', 'w');
+        fclose($vide);
+    }
 }
 
 
