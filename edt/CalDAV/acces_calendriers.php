@@ -226,7 +226,7 @@ $urlRadicale = "http://compri.me:5232";
                                 .removeClass('btn-default')
                                 .html( '<span class="glyphicon glyphicon-ok"></span>' )
                                 .addClass('btn-success')
-                                .attr('href', "<?php echo $urlRadicale; ?>/Enseignants/" + nom.toLowerCase() + "_" + prenom.toLowerCase() + ".ics");
+                                .attr('href', "<?php echo $urlRadicale; ?>/Enseignants/" + nom.toLowerCase() + "_" + prenom.toLowerCase() + ".ics/");
                             window.open($( "#lien_" + idprof).attr( 'href' ));
                         }
                     )
@@ -297,7 +297,7 @@ $urlRadicale = "http://compri.me:5232";
                                 .removeClass('btn-default')
                                 .html( '<span class="glyphicon glyphicon-ok"></span>' )
                                 .addClass('btn-success')
-                                .attr('href', "<?php echo $urlRadicale; ?>/Etudiants/" + nomgrp.toLowerCase() + ".ics");
+                                .attr('href', "<?php echo $urlRadicale; ?>/Etudiants/" + nomgrp.toLowerCase() + ".ics/");
 
                             window.open($( "#lien_" + idgrp).attr( 'href' ));
                         }
