@@ -9,7 +9,7 @@ $FILIERE = "Filieres";
 $SALLE = "Salles";
 
 define("URL_LOCALE", "http://localhost:5232");
-define("URL_RADICALE", "http://compri.me:5232");
+define("URL_RADICALE", "http://edouardalvescamilo.ovh:8081");
 
 function sendICSFile($nomfichier, $contenu, $ctg){
 
@@ -40,7 +40,7 @@ function getStatusInfo($curl, $nomfichier, $httpStatus = array(200,201,202,203,2
             $msg = "La requête a échoué - HTTP[".$curl->http_status_code."] Le fichier \"".$nomfichier."\" n'a pas été envoyé au serveur";
         }
     } else {
-        $msg = "cURL KO, erreur : ".$curl->curl_error_message;
+        $msg = "cURL KO, erreur - HTTP[".$curl->http_status_code."] ".$curl->curl_error_message;
     }
     return $msg;
 }
