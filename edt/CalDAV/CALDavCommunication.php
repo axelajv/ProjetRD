@@ -48,13 +48,13 @@ function getStatusInfo($curl, $httpStatus = array(200,201,202,203,204,205,206,20
 }
 
 function writeLog($msg,$subject){
-    $monfichier = fopen('../CALDavCommunication/log.txt', 'a+');
+    $monfichier = fopen('../CALDav/log.txt', 'a+');
     fputs($monfichier, date('dmY-H:i')." [".$subject."] - ".$msg.";\n");
     fclose($monfichier);
 
     //si le fichier devient trop gros, on l'efface
-    if(filesize('../CALDavCommunication/log.txt') > 3000000){
-        $vide = fopen('../CALDavCommunication/log.txt', 'w');
+    if(filesize('../CALDav/log.txt') > 3000000){
+        $vide = fopen('../CALDav/log.txt', 'w');
         fclose($vide);
     }
 }
