@@ -17,7 +17,7 @@ include_once('../config.php');
 
 $urlEdt = "http://localhost/~indydedeken/edt";
 $urlEdt = "http://compri.me/edt";
-$urlRadicale = "http://compri.me:5232/";
+$urlRadicale = "http://compri.me:5232";
 
 /*
  * FIN PARAMETRAGE ENVIRONNEMENT DE TEST

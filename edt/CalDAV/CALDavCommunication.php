@@ -1,6 +1,6 @@
 <?php 
 
-require 'Curl.php';
+require 'vendor/php-curl-class/php-curl-class/src/Curl/Curl.php';
 use \Curl\Curl;
 
 $ENSEIGNANT = "Enseignants";
