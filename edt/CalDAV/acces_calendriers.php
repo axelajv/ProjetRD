@@ -45,14 +45,14 @@ include_once('env_radicale_prod.php');
     <meta name="msapplication-TileColor" content="#3372DF">
 
     <!-- Page styles -->
-    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="styles/specifiques.css">
     <link rel="stylesheet" href="lib/iCheck/skins/flat/blue.css">
     <link rel="stylesheet" href="lib/DataTables/media/css/jquery.dataTables.css">
 
     <!-- SCRIPTS JS -->
     <script src="lib/jquery/dist/jquery.js"></script>
-    <script src="lib/bootstrap/js/bootstrap.js"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.js"></script>
     <script src="lib/iCheck/icheck.js"></script>
     <script src="lib/DataTables/media/js/jquery.dataTables.js"></script>
 </head>

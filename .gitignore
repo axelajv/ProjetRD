@@ -12,3 +12,9 @@ edt/CalDAV/lib/bootstrap/js/*
 edt/CalDAV/lib/DataTables/examples/*
 
 edt/CalDAV/lib/DataTables/examples/unit_testing/*
+
+edt/CalDAV/lib/fpdf/*
+
+edt/CalDAV/lib/jspdf/*
+
+edt/CalDAV/lib/stdClass/*

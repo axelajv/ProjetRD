@@ -15,6 +15,7 @@
     "jquery": "~2.1.1",
     "iCheck": "~1.0.2",
     "DataTables": "~1.10.2",
-    "bootstrap": "~3.2.0"
+    "bootstrap": "~3.2.0",
+    "fpdf": "~0.0.1"
   }
 }

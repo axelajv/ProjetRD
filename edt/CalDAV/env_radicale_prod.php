@@ -7,4 +7,4 @@
 
 // Ne pas mettre les "/" à la fin des URL
 define("URL_RADICALE", "http://edouardalvescamilo.ovh:8081");
-define("URL_APPLICATION", "http://compri.me:5232/edt");
+define("URL_APPLICATION", "http://compri.me/edt");
