@@ -3,6 +3,7 @@ session_start();
 //error_reporting(E_ALL);
 
 include_once('../config.php');
+include_once('env_radicale_prod.php');
 
 /*
  * PARAMETRAGE ENVIRONNEMENT DE TEST
@@ -14,10 +15,6 @@ include_once('../config.php');
     // si non-prof alors on redirige l'utilisateur
     header("Location: /");
 }*/
-
-$urlEdt = "http://localhost/~indydedeken/edt";
-$urlEdt = "http://compri.me/edt";
-$urlRadicale = "http://compri.me:5232";
 
 /*
  * FIN PARAMETRAGE ENVIRONNEMENT DE TEST
@@ -92,7 +89,7 @@ $urlRadicale = "http://compri.me:5232";
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <!-- SCRIPT PIERRICK -->
-                <li><a href="<?php echo $urlEdt; ?>/script/disconnectScript.php">Déconnexion</a></li>
+                <li><a href="<?php echo URL_APPLICATION; ?>/script/disconnectScript.php">Déconnexion</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -213,7 +210,7 @@ $urlRadicale = "http://compri.me:5232";
                     var prenom = $(this).data( "prenom" );
 
                     var request = $.ajax({
-                        url: "<?php echo $urlEdt; ?>/icsprof/icsprof.php",
+                        url: "<?php echo URL_APPLICATION; ?>/icsprof/icsprof.php",
                         type: "POST",
                         data: {
                             idprof : idprof,
@@ -226,7 +223,7 @@ $urlRadicale = "http://compri.me:5232";
                                 .removeClass('btn-default')
                                 .html( '<span class="glyphicon glyphicon-ok"></span>' )
                                 .addClass('btn-success')
-                                .attr('href', "<?php echo $urlRadicale; ?>/Enseignants/" + nom.toLowerCase() + "_" + prenom.toLowerCase() + ".ics/");
+                                .attr('href', "<?php echo URL_RADICALE; ?>/Enseignants/" + nom.toLowerCase() + "_" + prenom.toLowerCase() + ".ics/");
                             window.open($( "#lien_" + idprof).attr( 'href' ));
                         }
                     )
@@ -284,7 +281,7 @@ $urlRadicale = "http://compri.me:5232";
                     var nomgrp = $(this).data( "nomgrp" );
 
                     var request = $.ajax({
-                        url: "<?php echo $urlEdt; ?>/icsetudiant/icsgroupe.php",
+                        url: "<?php echo URL_APPLICATION; ?>/icsetudiant/icsgroupe.php",
                         type: "POST",
                         data: {
                             idgrp  : idgrp,
@@ -297,7 +294,7 @@ $urlRadicale = "http://compri.me:5232";
                                 .removeClass('btn-default')
                                 .html( '<span class="glyphicon glyphicon-ok"></span>' )
                                 .addClass('btn-success')
-                                .attr('href', "<?php echo $urlRadicale; ?>/Etudiants/" + nomgrp.toLowerCase() + ".ics/");
+                                .attr('href', "<?php echo URL_RADICALE; ?>/Etudiants/" + nomgrp.toLowerCase() + ".ics/");
 
                             window.open($( "#lien_" + idgrp).attr( 'href' ));
                         }

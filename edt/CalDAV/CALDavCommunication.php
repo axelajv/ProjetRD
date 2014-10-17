@@ -1,5 +1,6 @@
 <?php
 
+include_once('env_radicale_prod.php');
 require 'vendor/php-curl-class/php-curl-class/src/Curl/Curl.php';
 use \Curl\Curl;
 
@@ -8,12 +9,9 @@ $ETUDIANT = "Etudiants";
 $FILIERE = "Filieres";
 $SALLE = "Salles";
 
-define("URL_LOCALE", "http://localhost:5232");
-define("URL_RADICALE", "http://compri.me:5232");
+function sendICSFile($nomfichier, $contenu, $categorie){
 
-function sendICSFile($nomfichier, $contenu, $ctg){
-
-    $url = '/' . $ctg . '/' . $nomfichier . '/';
+    $url = '/' . $categorie . '/' . $nomfichier . '/';
     $userpwd = 'adminprof:adminprof';
 
     $headers = array(
