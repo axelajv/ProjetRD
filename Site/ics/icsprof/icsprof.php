@@ -10,6 +10,7 @@ include("../../script/CalDAVCommunication.php");
 //CALDav project - FIN --------
 
 date_default_timezone_set('Europe/Paris');
+setlocale(LC_TIME, 'fr_FR');
 $jour=date('d');
 $mois=date('m');
 $annee=date('Y');

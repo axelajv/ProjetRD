@@ -1,21 +1,22 @@
-<<<<<<< HEAD
 ﻿<?php
-include("../config.php");
+include("../../config/config.php");
+//error_reporting(E_ALL);
 //Connection a la bdd
 mysql_connect($serveur,$user,$pass);
 mysql_select_db($dernierebase);
 
 //CALDav project - START ------
-include("../CalDAV/CALDavCommunication.php");
+include("../../script/CalDAVCommunication.php");
 //CALDav project - FIN --------
 
+date_default_timezone_set('Europe/Paris');
+setlocale(LC_TIME, 'fr_FR');
 $jour=date('d');
 $mois=date('m');
 $annee=date('Y');
 $heure=date('H');
 $minute=date('i');
 $i=0;
-setlocale(LC_TIME, 'fr_FR');
 
 // Pour générer un calendrier précis
 // recuperation de : ID NOM
@@ -300,7 +301,7 @@ while ( $groupe = mysql_fetch_array($ressources_groupes) )
 
     //CALDav project - START ------
     $uid = $annee.$mois.$jour."T"."000001Z-".$i."@ufrsitec.u-paris10.fr";
-    sendICSFile($nomfichier,$fichier,$ENSEIGNANT,$uid);
+    sendICSFile($nomfichier,$fichier,$GROUPE,$uid);
     //---------------- FIN --------
 
 }

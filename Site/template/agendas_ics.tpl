@@ -56,7 +56,7 @@
             <!-- form - form-enseignant -->
             <form method="post" action="#" class="form-enseignant">
                 <!-- Table-enseigant - Generate by DataTables plugin -->
-                <table class="table table-striped table-enseignant">
+                <table class="table table-enseignant">
                     <thead>
                     <tr>
                         <th><span class="glyphicon glyphicon-th-list"></span></th>
@@ -83,13 +83,13 @@
             <!-- ./form - form-enseignant -->
 
             <!-- form - form-filiere -->
-            <form method="post" action="#" class="form-filiere">
+            <form method="post" action="#" class="form-filiere" style="display:none;">
                 <!-- Table-filere - Generate by DataTables plugin -->
-                <table class="table table-striped table-filiere">
+                <table class="table table-filiere">
                     <thead>
                     <tr>
                         <th><span class="glyphicon glyphicon-th-list"></span></th>
-                        <th class="libelle">Enseignant <span id="plusEnseignant" class="glyphicon glyphicon-chevron-down"></span></th>
+                        <th class="libelle">Filière <span id="plusFiliere" class="glyphicon glyphicon-chevron-down"></span></th>
                         <th><span class="glyphicon glyphicon-download"></span></th>
                     </tr>
                     </thead>
@@ -104,12 +104,41 @@
                 <!-- ./table -->
 
                 <!-- div - Download all the selected EdT -->
-                <div class="button-enseignant center">
+                <div class="button-filiere center">
                     <button type="submit" class="btn btn-primary btn-lg">Filières sélectionnées</button>
                 </div>
                 <!-- ./div -->
             </form>
             <!-- ./form - form-filiere -->
+
+            <!-- form - form-salle -->
+            <form method="post" action="#" class="form-salle" style="display:none;">
+                <!-- Table-salle - Generate by DataTables plugin -->
+                <table class="table table-salle">
+                    <thead>
+                    <tr>
+                        <th><span class="glyphicon glyphicon-th-list"></span></th>
+                        <th class="libelle">Salle <span id="plusFiliere" class="glyphicon glyphicon-chevron-down"></span></th>
+                        <th><span class="glyphicon glyphicon-download"></span></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td data-th="Sélection"></td>
+                        <td data-th="Salle"></td>
+                        <td data-th=""></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <!-- ./table -->
+
+                <!-- div - Download all the selected EdT -->
+                <div class="button-filiere center">
+                    <button type="submit" class="btn btn-primary btn-lg">Salles sélectionnées</button>
+                </div>
+                <!-- ./div -->
+            </form>
+            <!-- ./form - form-salle -->
 
         {/if}
 

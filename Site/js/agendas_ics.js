@@ -1,16 +1,21 @@
+var urlRadicale = 'https://www.edouardalvescamilo.ovh';
+
 
 /*
  * iCheck plugin
  */
     $(document).on('icheck', function(){
         var callbacks_list = $('.demo-callbacks ul');
-        $('.form-enseignant').on('click ifCreated ifClicked ifChanged ifChecked ifUnchecked ifDisabled ifEnabled ifDestroyed', function(event){
-            callbacks_list.prepend('<li><span>#' + this.id + '</span> is ' + event.type.replace('if', '').toLowerCase() + '</li>');
-        }).iCheck({
-            checkboxClass : 'icheckbox_flat-blue',
-            radioClass    : 'iradio_flat-blue',
-            increaseArea  : '40%'
-        });
+        $('.form-enseignant, .form-filiere, .form-salle')
+            .on('click ifCreated ifClicked ifChanged ifChecked ifUnchecked ifDisabled ifEnabled ifDestroyed',
+                function(event){
+                    callbacks_list.prepend('<li><span>#' + this.id + '</span> is ' + event.type.replace('if', '').toLowerCase() + '</li>');
+                }
+            ).iCheck({
+                checkboxClass : 'icheckbox_flat-blue',
+                radioClass    : 'iradio_flat-blue',
+                increaseArea  : '40%'
+            });
     }).trigger('icheck');; // charger iCheck
 /*
  * ./iCheck plugin
@@ -24,10 +29,13 @@
         $('table.table-enseignant').dataTable( {
             "processing": true,
             "serverSide": true,
-            "ajax": "script/dataTablesGetProfs.php",
+            "ajax": {
+                "url" : "script/dataTablesGetProfs.php",
+                "dataType" : "json"
+            },
             "columns": [
                 {
-                    "data": "id",
+                    "data": "Selection",
                     "render": function ( data, type, row ) {
                         if ( type === 'display' ) {
                             return '<input id="box_' + row.codeProf + '" type="checkbox" name="' + row.codeProf + '">';
@@ -37,7 +45,7 @@
                     "defaultContent": "-"
                 },
                 {
-                    "data": "nom",
+                    "data": "Enseignant",
                     "render": function ( data, type, row ) {
                         if ( type === 'display' ) {
                             return row.nom + ' ' + row.prenom;
@@ -47,7 +55,7 @@
                     "defaultContent": "-"
                 },
                 {
-                    "data": "prenom",
+                    "data": "Téléchargement",
                     "render": function ( data, type, row ) {
                         if ( type === 'display' ) {
                             return '<a id="lien_'+ row.codeProf + '" class="btn btn-default" data-idprof="' + row.codeProf + '" data-nom="' + row.nom + '" data-prenom="' + row.prenom + '"><span class="glyphicon glyphicon-save"></span></a>';
@@ -62,64 +70,23 @@
             "lengthMenu"  : [200],
             "language"    : {
                 "zeroRecords" : "Aucun enseignant",
-                "search"      : "Rechercher un enseignant _INPUT_"
+                "search"      : "Rechercher un enseignant _INPUT_",
+                "sProcessing" : "Chargement..."
             },
             "fnDrawCallback": function( oSettings ) {
                 $(document).trigger('icheck'); // charger iCheck
 
                 var selecteurCSS = '.table-enseignant a';
-                var urlRadicale = 'https://www.edouardalvescamilo.ovh';
-                var typeICS = 'Enseignant';
-
-                enseignantEdt(selecteurCSS, urlRadicale, typeICS);
+                var typeICS      = 'Enseignant';
+                // lancement de production de fichier .ics
+                callIcsCreator(selecteurCSS, urlRadicale, typeICS);
             }
         });
-
-        /* Download ENSEIGNANT-EdT one by one */
-        function enseignantEdt (selecteurCSS, urlRadicale, typeICS) {
-
-
-            $( selecteurCSS ).on('click', function( event ) {
-                event.preventDefault();
-
-                var idprof = $(this).data( "idprof" );
-                var nom    = $(this).data( "nom" );
-                var prenom = $(this).data( "prenom" );
-
-                var request = $.ajax({
-                    url: "ics/icsprof/icsprof.php",
-                    type: "POST",
-                    data: {
-                        idprof : idprof,
-                        nom    : nom,
-                        prenom : prenom
-                    }
-                })
-                    .done(function( data ) {
-                        $( "#lien_" + idprof)
-                            .removeClass('btn-default')
-                            .html( '<span class="glyphicon glyphicon-ok"></span>' )
-                            .addClass('btn-success')
-                            .attr('href', urlRadicale + "/" + typeICS + "/" + nom.toLowerCase() + "_" + prenom.toLowerCase() + ".ics");
-                        window.open($( "#lien_" + idprof).attr( 'href' ));
-                    }
-                )
-                    .fail(function( data ) {
-                        $( "#lien_" + idprof)
-                            .removeClass('btn-default')
-                            .html( '<span class="glyphicon glyphicon-repeat"></span>' )
-                            .addClass('btn-danger');
-                        alert( "La requête a échoué : " + textStatus );
-                    }
-                );
-            });
-        }
-
-
     });
 /*
  * ./DataTables plugin Enseignant
  */
+
 
 /*
  * DataTables plugin Filière
@@ -129,10 +96,13 @@
         $('table.table-filiere').dataTable( {
             "processing": true,
             "serverSide": true,
-            "ajax": "script/dataTablesGetGroupes.php",
+            "ajax": {
+                "url" : "script/dataTablesGetGroupes.php",
+                "dataType" : "json"
+            },
             "columns": [
                 {
-                    "data": "id",
+                    "data": "Sélection",
                     "render": function ( data, type, row ) {
                         if ( type === 'display' ) {
                             return '<input id="box_' + row.codeGroupe + '" type="checkbox" name="' + row.codeGroupe + '">';
@@ -142,7 +112,7 @@
                     "defaultContent": "-"
                 },
                 {
-                    "data": "nom",
+                    "data": "Filière",
                     "render": function ( data, type, row ) {
                         if ( type === 'display' ) {
                             return row.alias === '' ? row.nom : row.alias;
@@ -152,10 +122,10 @@
                     "defaultContent": "-"
                 },
                 {
-                    "data": "alias",
+                    "data": "Téléchargement",
                     "render": function ( data, type, row ) {
                         if ( type === 'display' ) {
-                            return '<a id="lien_'+ row.codeGroupe + '" class="btn btn-default" data-idprof="' + row.codeGroupe + '" data-nom="' + row.nom + '" data-prenom="' + row.alias + '"><span class="glyphicon glyphicon-save"></span></a>';
+                            return '<a id="lien_'+ row.codeGroupe + '" class="btn btn-default" data-idgroupe="' + row.codeGroupe + '" data-nom="' + row.nom + '" data-alias="' + row.alias + '"><span class="glyphicon glyphicon-save"></span></a>';
                         }
                         return data;
                     },
@@ -167,17 +137,109 @@
             "lengthMenu"  : [200],
             "language"    : {
                 "zeroRecords" : "Aucune filière",
-                "search"      : "Rechercher une filière _INPUT_"
+                "search"      : "Rechercher une filière _INPUT_",
+                "sProcessing" : "Chargement..."
             },
             "fnDrawCallback": function( oSettings ) {
                 $(document).trigger('icheck'); // charger iCheck
-            }
 
+                var selecteurCSS = '.table-filiere a';
+                var typeICS      = 'Filiere';
+                // lancement de production de fichier .ics
+                callIcsCreator(selecteurCSS, urlRadicale, typeICS);
+            }
         });
 
     });
 /*
  * ./DataTables plugin Filière
+ */
+
+
+/*
+ * DataTables - téléchargement d'EdT un par un
+ */
+function callIcsCreator(selecteurCSS, urlRadicale, typeICS) {
+
+    $( selecteurCSS ).on('click', function( event ) {
+        event.preventDefault();
+
+        // En fonction du selecteur on identifie
+        // si cas == enseignant || filiere || salle
+        if(selecteurCSS.indexOf("enseignant") > -1) {
+
+            var texte = '{' +
+                '"idprof" : "' + $(this).data( "idprof" ) + '",' +
+                '"var1"   : "' + $(this).data( "idprof" ) + '",' +
+                '"nom"    : "' + $(this).data( "nom" )    + '",' +
+                '"var2"   : "' + $(this).data( "nom" )    + '",' +
+                '"prenom" : "' + $(this).data( "prenom" ) + '",' +
+                '"var3"   : "' + $(this).data( "prenom" ) + '" ' +
+                '}';
+
+            var objet = JSON.parse(texte);
+            var icsDirectory = "icsprof";
+            var icsScript    = "icsprof.php";
+            var icsFile      = objet.nom.toLowerCase() +
+                                "_" +
+                                objet.prenom.toLowerCase();
+
+        }
+        else if(selecteurCSS.indexOf("filiere") > -1) {
+
+            var texte = '{' +
+                '"idgroupe" : "' + $(this).data( "idgroupe" ) + '",' +
+                '"var1"     : "' + $(this).data( "idgroupe" ) + '",' +
+                '"nom"      : "' + $(this).data( "nom" )      + '",' +
+                '"var2"     : "' + $(this).data( "nom" )      + '",' +
+                '"alias"    : "' + $(this).data( "alias" )    + '",' +
+                '"var3"     : "' + $(this).data( "alias" )    + '" ' +
+                '}';
+
+            var objet = JSON.parse(texte);
+            var icsDirectory = "icsetudiant";
+            var icsScript    = "icsgroupe.php";
+            var icsFile      = objet.nom.toLowerCase();
+
+        }
+        else if(selecteurCSS.indexOf("salle") > -1) {
+            /*
+                REMPLIR
+            */
+        }
+        else {
+            var icsDirectory = "";
+            var icsFile      = "";
+            var icsScript    = "";
+            var objet        = "";
+        }
+
+        var request = $.ajax({
+            url: "ics/" + icsDirectory + "/" + icsScript,
+            type: "POST",
+            data: objet
+        })
+            .done(function( data ) {
+                $( "#lien_" + objet.var1)
+                    .removeClass('btn-default')
+                    .html( '<span class="glyphicon glyphicon-ok"></span>' )
+                    .addClass('btn-success')
+                    .attr('href', urlRadicale + "/" + typeICS + "/" + icsFile + ".ics");
+                window.open($( "#lien_" + objet.var1).attr( 'href' ));
+            }
+        )
+            .fail(function( data ) {
+                $( "#lien_" + objet.var1)
+                    .removeClass('btn-default')
+                    .html( '<span class="glyphicon glyphicon-repeat"></span>' )
+                    .addClass('btn-danger');
+                alert( "La requête a échoué : " + textStatus );
+            }
+        );
+    });
+}
+/*
+ *  ./DataTables - téléchargement d'EdT un par un
  */
 
 /*
@@ -189,7 +251,7 @@
          * Dropdown effect on Enseignant-list
          */
         $('.table-enseignant th').click(function (e) {
-            $('#DataTables_Table_0 tbody, .downloadEnseigant').slideToggle("fast");
+            $('#DataTables_Table_0 tbody').slideToggle("fast");
 
             /* recoder proprement */
             var monIcone = $('#plusEnseignant');
@@ -209,24 +271,24 @@
         });
 
         /*
-         * Dropdown effect on Groupe-list (filière)
+         * Dropdown effect on Filiere-list (filière)
          */
-        $('.table-groupe th').click(function (e) {
-            $('#DataTables_Table_1 tbody, .downloadGroupe').slideToggle("fast");
+        $('.table-filiere th').click(function (e) {
+            $('#DataTables_Table_1 tbody').slideToggle("fast");
 
             /* recoder proprement */
-            var monIcone = $('#plusGroupe');
+            var monIcone = $('#plusFiliere');
             var change = monIcone.hasClass('glyphicon-chevron-down');
             if (change) {
                 monIcone.removeClass('glyphicon-chevron-down')
                     .addClass('glyphicon-chevron-up');
-                $('.button-groupe').hide('fast');
+                $('.button-filiere').hide('fast');
                 $('#DataTables_Table_1_filter').slideUp();
 
             } else {
                 monIcone.removeClass('glyphicon-chevron-up')
                     .addClass('glyphicon-chevron-down');
-                $('.button-groupe').show('fast');
+                $('.button-filiere').show('fast');
                 $('#DataTables_Table_1_filter').slideDown();
             }
         });
@@ -253,9 +315,6 @@
             $('#form-enseignant, #form-filiere').removeClass('active');
             $(this).addClass('active');
         });
-
-        /* par défault, on affiche uniquement le form-enseignant */
-        $('.form-filiere, .form-salle').hide('fast');
     });
 /*
  * Manual scripts

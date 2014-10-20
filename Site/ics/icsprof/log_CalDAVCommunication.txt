@@ -1,9 +1,0 @@
-20102014-16:30 [cURL] - cURL KO, erreur : SSL certificate problem: Invalid certificate chain;
-20102014-16:39 [cURL] - cURL KO, erreur : SSL certificate problem: Invalid certificate chain;
-20102014-16:40 [cURL] - cURL KO, erreur : SSL certificate problem: Invalid certificate chain;
-20102014-16:40 [cURL] - cURL KO, erreur : SSL certificate problem: Invalid certificate chain;
-20102014-16:43 [cURL] - cURL KO, erreur : SSL certificate problem: Invalid certificate chain;
-20102014-16:43 [cURL] - cURL KO, erreur : SSL certificate problem: Invalid certificate chain;
-20102014-16:43 [cURL] - cURL KO, erreur : SSL certificate problem: Invalid certificate chain;
-20102014-16:44 [cURL] - cURL KO, erreur : SSL certificate problem: Invalid certificate chain;
-20102014-16:44 [cURL] - cURL KO, erreur : SSL certificate problem: Invalid certificate chain;
