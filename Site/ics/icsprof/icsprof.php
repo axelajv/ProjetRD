@@ -1,21 +1,21 @@
 ﻿<?php
-include("../config.php");
-error_reporting(E_ALL);
+include("../../config/config.php");
+//error_reporting(E_ALL);
 //Connection a la bdd
 mysql_connect($serveur,$user,$pass);
 mysql_select_db($dernierebase);
 
 //CALDav project - START ------
-include("../CalDAV/CALDavCommunication.php");
+include("../../script/CalDAVCommunication.php");
 //CALDav project - FIN --------
 
+date_default_timezone_set('Europe/Paris');
 $jour=date('d');
 $mois=date('m');
 $annee=date('Y');
 $heure=date('H');
 $minute=date('i');
 $i=0;
-setlocale(LC_TIME, 'fr_FR');
 
 // Pour générer un calendrier précis
 // recuperation de : ID NOM PRENOM
@@ -261,6 +261,7 @@ while($prof = mysql_fetch_array($ressources_profs)) {
 			$nomfichier=$prof['nom']."_".$prof['prenom'].".ics";
 			$nomfichier=str_replace(" ","_",$nomfichier);
 			$nomfichier=strtolower($nomfichier);
+
 			file_put_contents($nomfichier,$fichier);
 
 			//CALDav project - START ------

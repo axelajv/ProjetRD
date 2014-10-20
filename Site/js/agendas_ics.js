@@ -17,7 +17,7 @@
  */
 
 /*
- * DataTables plugin
+ * DataTables plugin Enseignant
  */
     $(document).ready(function() {
         // EXAMPLE : http://editor.datatables.net/examples/api/checkbox.html
@@ -66,49 +66,118 @@
             },
             "fnDrawCallback": function( oSettings ) {
                 $(document).trigger('icheck'); // charger iCheck
+
+                var selecteurCSS = '.table-enseignant a';
+                var urlRadicale = 'https://www.edouardalvescamilo.ovh';
+                var typeICS = 'Enseignant';
+
+                enseignantEdt(selecteurCSS, urlRadicale, typeICS);
             }
         });
 
         /* Download ENSEIGNANT-EdT one by one */
+        function enseignantEdt (selecteurCSS, urlRadicale, typeICS) {
 
-        $( 'table.table-enseignant a' ).on('click', function( event ) {
-            event.preventDefault();
 
-            var idprof = $(this).data( "idprof" );
-            var nom    = $(this).data( "nom" );
-            var prenom = $(this).data( "prenom" );
+            $( selecteurCSS ).on('click', function( event ) {
+                event.preventDefault();
 
-            var request = $.ajax({
-                url: "icsprof/icsprof.php",
-                type: "POST",
-                data: {
-                    idprof : idprof,
-                    nom    : nom,
-                    prenom : prenom
+                var idprof = $(this).data( "idprof" );
+                var nom    = $(this).data( "nom" );
+                var prenom = $(this).data( "prenom" );
+
+                var request = $.ajax({
+                    url: "ics/icsprof/icsprof.php",
+                    type: "POST",
+                    data: {
+                        idprof : idprof,
+                        nom    : nom,
+                        prenom : prenom
+                    }
+                })
+                    .done(function( data ) {
+                        $( "#lien_" + idprof)
+                            .removeClass('btn-default')
+                            .html( '<span class="glyphicon glyphicon-ok"></span>' )
+                            .addClass('btn-success')
+                            .attr('href', urlRadicale + "/" + typeICS + "/" + nom.toLowerCase() + "_" + prenom.toLowerCase() + ".ics");
+                        window.open($( "#lien_" + idprof).attr( 'href' ));
+                    }
+                )
+                    .fail(function( data ) {
+                        $( "#lien_" + idprof)
+                            .removeClass('btn-default')
+                            .html( '<span class="glyphicon glyphicon-repeat"></span>' )
+                            .addClass('btn-danger');
+                        alert( "La requête a échoué : " + textStatus );
+                    }
+                );
+            });
+        }
+
+
+    });
+/*
+ * ./DataTables plugin Enseignant
+ */
+
+/*
+ * DataTables plugin Filière
+ */
+    $(document).ready(function() {
+        // EXAMPLE : http://editor.datatables.net/examples/api/checkbox.html
+        $('table.table-filiere').dataTable( {
+            "processing": true,
+            "serverSide": true,
+            "ajax": "script/dataTablesGetGroupes.php",
+            "columns": [
+                {
+                    "data": "id",
+                    "render": function ( data, type, row ) {
+                        if ( type === 'display' ) {
+                            return '<input id="box_' + row.codeGroupe + '" type="checkbox" name="' + row.codeGroupe + '">';
+                        }
+                        return data;
+                    },
+                    "defaultContent": "-"
+                },
+                {
+                    "data": "nom",
+                    "render": function ( data, type, row ) {
+                        if ( type === 'display' ) {
+                            return row.alias === '' ? row.nom : row.alias;
+                        }
+                        return data;
+                    },
+                    "defaultContent": "-"
+                },
+                {
+                    "data": "alias",
+                    "render": function ( data, type, row ) {
+                        if ( type === 'display' ) {
+                            return '<a id="lien_'+ row.codeGroupe + '" class="btn btn-default" data-idprof="' + row.codeGroupe + '" data-nom="' + row.nom + '" data-prenom="' + row.alias + '"><span class="glyphicon glyphicon-save"></span></a>';
+                        }
+                        return data;
+                    },
+                    "defaultContent": "-"
                 }
-            })
-                .done(function( data ) {
-                    $( "#lien_" + idprof)
-                        .removeClass('btn-default')
-                        .html( '<span class="glyphicon glyphicon-ok"></span>' )
-                        .addClass('btn-success')
-                        .attr('href', "<?php echo URL_RADICALE; ?>/Enseignants/" + nom.toLowerCase() + "_" + prenom.toLowerCase() + ".ics/");
-                    window.open($( "#lien_" + idprof).attr( 'href' ));
-                }
-            )
-                .fail(function( data ) {
-                    $( "#lien_" + idprof)
-                        .removeClass('btn-default')
-                        .html( '<span class="glyphicon glyphicon-repeat"></span>' )
-                        .addClass('btn-danger');
-                    alert( "La requête a échoué : " + textStatus );
-                }
-            );
+            ],
+            "bSort"       : false,
+            "bSortable"   : false,
+            "lengthMenu"  : [200],
+            "language"    : {
+                "zeroRecords" : "Aucune filière",
+                "search"      : "Rechercher une filière _INPUT_"
+            },
+            "fnDrawCallback": function( oSettings ) {
+                $(document).trigger('icheck'); // charger iCheck
+            }
+
         });
 
     });
 /*
- * ./DataTables plugin
+ * ./DataTables plugin Filière
  */
 
 /*
@@ -166,27 +235,27 @@
          * Button - choose a category (Enseignant, Filière, Salle)
          */
         $('#form-enseignant').click(function(){
-            $('.form-groupe, .form-salle').hide('fast');
+            $('.form-filiere, .form-salle').hide('fast');
             $('.form-enseignant').show('fast');
-            $('#form-groupe, #form-salle').removeClass('active');
+            $('#form-filiere, #form-salle').removeClass('active');
             $(this).addClass('active');
         });
-        $('#form-groupe').click(function(){
+        $('#form-filiere').click(function(){
             $('.form-enseignant, .form-salle').hide('fast');
-            $('.form-groupe').show('fast');
+            $('.form-filiere').show('fast');
 
             $('#form-salle, #form-enseignant').removeClass('active');
             $(this).addClass('active');
         });
         $('#form-salle').click(function(){
-            $('.form-enseignant, .form-groupe').hide('fast');
+            $('.form-enseignant, .form-filiere').hide('fast');
             $('.form-salle').show('fast');
-            $('#form-enseignant, #form-groupe').removeClass('active');
+            $('#form-enseignant, #form-filiere').removeClass('active');
             $(this).addClass('active');
         });
 
         /* par défault, on affiche uniquement le form-enseignant */
-        $('.form-groupe, .form-salle').hide('fast');
+        $('.form-filiere, .form-salle').hide('fast');
     });
 /*
  * Manual scripts

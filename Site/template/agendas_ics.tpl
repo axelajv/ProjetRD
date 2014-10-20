@@ -32,7 +32,7 @@
         <script src="API/bootstrap/js/bootstrap.js"></script>
         <script src="js/loadPage.js"></script>
         <script src="API/iCheck/icheck.js"></script>
-        <script src="API/DataTables/js/jquery.dataTables.js"></script>
+        <script src="API/dataTables/js/jquery.dataTables.js"></script>
 
     </head>
     <body>
@@ -44,10 +44,11 @@
             <!-- faire une redirection vers index.php -->
         {else}
             <!-- PARTIE ENSEIGNANT -->
+
             <!-- div - btn-group -->
             <div class="btn-group btn-group-justified">
                 <a id="form-enseignant" role="button" class="btn btn-default active">Enseignants</a>
-                <a id="form-groupe" role="button" class="btn btn-default">Filières</a>
+                <a id="form-filiere" role="button" class="btn btn-default">Filières</a>
                 <a id="form-salle" role="button" class="btn btn-default">Salles</a>
             </div>
             <!-- ./div - btn-group -->
@@ -80,6 +81,35 @@
                 <!-- ./div -->
             </form>
             <!-- ./form - form-enseignant -->
+
+            <!-- form - form-filiere -->
+            <form method="post" action="#" class="form-filiere">
+                <!-- Table-filere - Generate by DataTables plugin -->
+                <table class="table table-striped table-filiere">
+                    <thead>
+                    <tr>
+                        <th><span class="glyphicon glyphicon-th-list"></span></th>
+                        <th class="libelle">Enseignant <span id="plusEnseignant" class="glyphicon glyphicon-chevron-down"></span></th>
+                        <th><span class="glyphicon glyphicon-download"></span></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td data-th="Sélection"></td>
+                        <td data-th="Filière"></td>
+                        <td data-th=""></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <!-- ./table -->
+
+                <!-- div - Download all the selected EdT -->
+                <div class="button-enseignant center">
+                    <button type="submit" class="btn btn-primary btn-lg">Filières sélectionnées</button>
+                </div>
+                <!-- ./div -->
+            </form>
+            <!-- ./form - form-filiere -->
 
         {/if}
 
