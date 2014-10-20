@@ -1,0 +1,31 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Mes heures</title>
+		<link rel="stylesheet" href="API/bootstrap/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="css/common.css"/>
+		<script type="text/javascript" src="js/version.js"></script>
+		
+	</head>
+	
+	<body>
+		
+		<form name="form" id="form" action="heure.php" method="get" >
+
+			<p>Année scolaire : <select class="form-control" name="annee_scolaire" onchange="document.form.submit();">
+				<option>$annee_scolaire[0]</option>
+			</select></p><br>
+			
+
+			<p>Profs : <select class="form-control" name="selec_prof2"   onchange="document.form.submit();">
+			</select></p><br>
+	 
+	 	
+			<select multiple class="form-control" name="prof"  size="5">  
+
+			</select><br>
+		
+
+	</body>
+		
+</html>		

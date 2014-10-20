@@ -1,0 +1,40 @@
+/* CSS de la page de connexion */
+.col-centered, #myTab
+{
+	float: none !important;
+	margin: 0 auto !important;
+}
+
+.panel-default 
+{
+	opacity: 0.9;
+	margin-top:30px;
+}
+
+.form-group.last 
+{
+	margin-bottom:0px;
+}
+
+#teachButtons, #studyButtons 
+{
+	padding: 10px;
+}
+
+#menuHeader, #menuHeaderNom {
+	text-align : left;
+}
+
+
+#bs-example-navbar-collapse-1 ul li {
+	text-align : left;
+}
+
+.pull-right form-inline {
+	width : 100%;
+}
+
+#liste-document {
+	margin: 0 0 0;
+	
+}

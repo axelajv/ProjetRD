@@ -1,0 +1,17 @@
+table {
+	font-size: 10px;
+	background-color: white;
+}
+
+.center-table
+{
+  margin: 0 auto !important;
+  float: none !important;
+  text-align: center;
+  background-color: white;
+}
+
+.center-table tr th
+{
+  text-align: center;
+}
