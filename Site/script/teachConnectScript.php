@@ -44,7 +44,7 @@ if (isset($_POST['teachLogin'])&& isset($_POST['teachPwd']) && !empty($_POST['te
 		}
 		else
 		{
-			$_SESSION['teachLogin'] = true;
+			$_SESSION['teachLogin'] = $_POST['teachLogin'];
 		}
 	}
 
