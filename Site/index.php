@@ -7,7 +7,7 @@ require('API/Smarty/Smarty.class.php'); // On inclut la classe Smarty
 $smarty = new Smarty();
 
 include('config/config.php');
-					
+
 //compteur de pages vues
 $sql="SELECT valeur FROM compteur WHERE id_compteur='1'";
 $compteur_req=$dbh->query($sql);
@@ -26,7 +26,7 @@ if (isset($_SESSION['studyLogin']) || isset($_SESSION['teachLogin']) || !empty($
 		include('script/getStudyInfos.php');
 		$smarty->assign("loginStudy",$loginUtilisateur);
 		$smarty->assign("userName",$userName);
-		
+
 	}
 	else
 	{
@@ -35,11 +35,11 @@ if (isset($_SESSION['studyLogin']) || isset($_SESSION['teachLogin']) || !empty($
 		$smarty->assign("teachLogin",$loginUtilisateur);
 		$smarty->assign("firstName",$firstName);
 		$smarty->assign("userName",$userName);
-		
+
 		include('script/getDroits.php');
 		$smarty->assign("droits", $droits);
 	}
-	
+
 	if (isset($_GET['page']))
 	{
 		// NAVIGATION ETUDIANT
@@ -77,11 +77,6 @@ if (isset($_SESSION['studyLogin']) || isset($_SESSION['teachLogin']) || !empty($
 			{
 				$smarty->display("template/versions.tpl");
 			}
-			else if ($_GET['page'] == "agendas_ics")
-			{
-				$smarty->display("template/agendas_ics.tpl");
-				//$smarty->display('');
-			}
 			else
 			{
 				$smarty->display("template/index.tpl");
@@ -115,8 +110,8 @@ if (isset($_SESSION['studyLogin']) || isset($_SESSION['teachLogin']) || !empty($
 				$smarty->assign("code", $code);
 				include('script/getTeachersHours.php');
 				$smarty->assign("allSeances", $allSeances);
-				
-				
+
+
 				$smarty->display("template/heures.tpl");
 			}
 			else if ($_GET['page' ] == "export" && ($droits['pdf'] == 1 || $droits['giseh'] == 1))
@@ -144,24 +139,29 @@ if (isset($_SESSION['studyLogin']) || isset($_SESSION['teachLogin']) || !empty($
 				include('script/getComposantes.php');
 				include('script/computeDialogueGestion.php');
 				$smarty->assign("composantes", $composantesComplet);
-				
+
 				$smarty->display("template/dialogueGestion.tpl");
 			}
 			else if ($_GET['page'] == "admin" && $droits['admin'] == 1)
 			{
 				include('script/getAllTeacherInfos.php');
 				$smarty->assign("allTeachers", $allTeachers);
-				
+
 				$smarty->display("template/admin.tpl");
 			}
 			else if ($_GET['page'] == "version")
 			{
 				$smarty->display("template/versions.tpl");
 			}
-			else if ($_GET['page'] == "agendas_ics")
+			else if ($_GET['page'] == "agendas_ics_login"
+					|| $_GET['page'] == "agendas_ics" && !isset($_SESSION['teachLoginAgendasICS']))
+			{
+				$smarty->display("template/agendas_ics_login.tpl");
+			}
+			else if ($_GET['page'] == "agendas_ics" && $_SESSION['teachLoginAgendasICS'])
 			{
 				$smarty->display("template/agendas_ics.tpl");
-				//$smarty->display('');
+				include('script/teachDeconnectAgendasICS.php');
 			}
 			else
 			{
@@ -184,7 +184,7 @@ else
 	else
 	{
 		if (isset($_GET['errorID']) && !empty($_GET['errorID']))
-		{	
+		{
 			$msg = "";
 			if($_GET['errorID'] == 1)
 			{
@@ -198,7 +198,7 @@ else
 			{
 				$msg = "La modification de mot de passe a echoué. Les variables saisies ne sont pas correctes";
 			}
-			
+
 			$smarty->assign("errorMsg", $msg);
 		}
 		else if (isset($_GET['successId']) && !empty($_GET['successId']))

@@ -5,18 +5,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>VT Calendar - Accueil</title>
 
+        <link rel="icon" type="image/x-icon" href="img/favicon/favicon.ico">
+
         <!-- Add to homescreen for Chrome on Android -->
         <meta name="mobile-web-app-capable" content="yes">
-        <link rel="icon" sizes="192x192" href="images/touch/favicon.png">
+        <link rel="icon" sizes="192x192" href="img/favicon/favicon.png">
 
         <!-- Add to homescreen for Safari on iOS -->
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <meta name="apple-mobile-web-app-title" content="Web Starter Kit">
-        <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="img/favicon/apple-touch-icon-precomposed.png">
 
         <!-- Tile icon for Win8 (144x144 + tile color) -->
-        <meta name="msapplication-TileImage" content="images/touch/favicon.png">
+        <meta name="msapplication-TileImage" content="img/favicon/favicon.png">
         <meta name="msapplication-TileColor" content="#3372DF">
 
         <!-- Page styles -->
@@ -44,7 +46,6 @@
             <!-- faire une redirection vers index.php -->
         {else}
             <!-- PARTIE ENSEIGNANT -->
-
             <!-- div - btn-group -->
             <div class="btn-group btn-group-justified">
                 <a id="form-enseignant" role="button" class="btn btn-default active">Enseignants</a>
