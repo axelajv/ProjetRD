@@ -5,7 +5,7 @@ $serveur='localhost';
 
 $base=array();
 $annee_scolaire=array();
-$base[0]='VT_INFO_2014';
+$base[0]='vt_agenda';
 $annee_scolaire[0]='2013-2014';
 $nbdebdd='1';
 

@@ -24,7 +24,7 @@ function sendICSFile($nomfichier,$contenu,$categorie,$uid){
 
     $curl = new Curl();
 
-    $curl->PUT('https://edouardalvescamilo.ovh/'.$url,$headers, $contenu, $userpwd);
+    $curl->PUT('http://compri.me:5232/'.$url,$headers, $contenu, $userpwd);
 
     $retour = getStatusInfo($curl);
 

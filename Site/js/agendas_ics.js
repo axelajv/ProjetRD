@@ -1,4 +1,4 @@
-var urlRadicale = 'https://www.edouardalvescamilo.ovh';
+var urlRadicale = 'http://compri.me:5232';
 
 
 /*
@@ -77,7 +77,7 @@ var urlRadicale = 'https://www.edouardalvescamilo.ovh';
                 $(document).trigger('icheck'); // charger iCheck
 
                 var selecteurCSS = '.table-enseignant a';
-                var typeICS      = 'Enseignant';
+                var typeICS      = 'Enseignants';
                 // lancement de production de fichier .ics
                 callIcsCreator(selecteurCSS, urlRadicale, typeICS);
             }
@@ -144,7 +144,7 @@ var urlRadicale = 'https://www.edouardalvescamilo.ovh';
                 $(document).trigger('icheck'); // charger iCheck
 
                 var selecteurCSS = '.table-filiere a';
-                var typeICS      = 'Filiere';
+                var typeICS      = 'Filieres';
                 // lancement de production de fichier .ics
                 callIcsCreator(selecteurCSS, urlRadicale, typeICS);
             }
@@ -154,6 +154,74 @@ var urlRadicale = 'https://www.edouardalvescamilo.ovh';
 /*
  * ./DataTables plugin Filière
  */
+
+
+ /*
+  * DataTables plugin Salle
+  */
+     $(document).ready(function() {
+         // EXAMPLE : http://editor.datatables.net/examples/api/checkbox.html
+         $('table.table-salle').dataTable( {
+             "processing": true,
+             "serverSide": true,
+             "ajax": {
+                 "url" : "script/dataTablesGetSalles.php",
+                 "dataType" : "json"
+             },
+             "columns": [
+                 {
+                     "data": "Sélection",
+                     "render": function ( data, type, row ) {
+                         if ( type === 'display' ) {
+                             return '<input id="box_' + row.codeSalle + '" type="checkbox" name="' + row.codeSalle + '">';
+                         }
+                         return data;
+                     },
+                     "defaultContent": "-"
+                 },
+                 {
+                     "data": "Salle",
+                     "render": function ( data, type, row ) {
+                         if ( type === 'display' ) {
+                             return row.alias === '' ? row.nom : row.alias;
+                         }
+                         return data;
+                     },
+                     "defaultContent": "-"
+                 },
+                 {
+                     "data": "Téléchargement",
+                     "render": function ( data, type, row ) {
+                         if ( type === 'display' ) {
+                             return '<a id="lien_'+ row.codeSalle + '" class="btn btn-default" data-idsalle="' + row.codeSalle + '" data-nom="' + row.nom + '" data-alias="' + row.alias + '"><span class="glyphicon glyphicon-save"></span></a>';
+                         }
+                         return data;
+                     },
+                     "defaultContent": "-"
+                 }
+             ],
+             "bSort"       : false,
+             "bSortable"   : false,
+             "lengthMenu"  : [200],
+             "language"    : {
+                 "zeroRecords" : "Aucune salle",
+                 "search"      : "Rechercher une salle _INPUT_",
+                 "sProcessing" : "Chargement..."
+             },
+             "fnDrawCallback": function( oSettings ) {
+                 $(document).trigger('icheck'); // charger iCheck
+
+                 var selecteurCSS = '.table-salle a';
+                 var typeICS      = 'Salles';
+                 // lancement de production de fichier .ics
+                 callIcsCreator(selecteurCSS, urlRadicale, typeICS);
+             }
+         });
+
+     });
+ /*
+  * ./DataTables plugin Salle
+  */
 
 
 /*
@@ -203,9 +271,19 @@ function callIcsCreator(selecteurCSS, urlRadicale, typeICS) {
 
         }
         else if(selecteurCSS.indexOf("salle") > -1) {
-            /*
-                REMPLIR
-            */
+            var texte = '{' +
+                '"idsalle"  : "' + $(this).data( "idsalle" ) + '",' +
+                '"var1"     : "' + $(this).data( "idsalle" ) + '",' +
+                '"nom"      : "' + $(this).data( "nom" )      + '",' +
+                '"var2"     : "' + $(this).data( "nom" )      + '",' +
+                '"alias"    : "' + $(this).data( "alias" )    + '",' +
+                '"var3"     : "' + $(this).data( "alias" )    + '" ' +
+                '}';
+
+            var objet = JSON.parse(texte);
+            var icsDirectory = "icssalle";
+            var icsScript    = "icssalle.php";
+            var icsFile      = objet.nom.toLowerCase();
         }
         else {
             var icsDirectory = "";
@@ -224,7 +302,7 @@ function callIcsCreator(selecteurCSS, urlRadicale, typeICS) {
                     .removeClass('btn-default')
                     .html( '<span class="glyphicon glyphicon-ok"></span>' )
                     .addClass('btn-success')
-                    .attr('href', urlRadicale + "/" + typeICS + "/" + icsFile + ".ics");
+                    .attr('href', urlRadicale + "/" + typeICS + "/" + icsFile + ".ics/");
                 window.open($( "#lien_" + objet.var1).attr( 'href' ));
             }
         )
