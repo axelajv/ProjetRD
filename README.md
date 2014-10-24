@@ -17,3 +17,6 @@ Le <a href="https://github.com/edmondsnadane/Projet-R-D.git" title="projet VT2">
 
 ### INFORMATIONS
 Pour toutes informations supplémentaires, veuillez consulter notre <a href="https://github.com/indydedeken/ProjetRD/wiki">Wiki</a>.
+
+### BUGS & PROBLEMES CONNUS
+L'ensemble des soucis liés à l'application *(ou sa mise en place)* sont répertoriés ici : [issues](https://github.com/indydedeken/ProjetRD/issues).
