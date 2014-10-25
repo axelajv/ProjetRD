@@ -719,7 +719,7 @@
 		{
 			var columns = settings.aoColumns;
 
-			_fnCalculateColumnWidths( settings );
+			//_fnCalculateColumnWidths( settings );
 			for ( var i=0 , iLen=columns.length ; i<iLen ; i++ )
 			{
 				columns[i].nTh.style.width = columns[i].sWidth;

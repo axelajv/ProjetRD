@@ -35,16 +35,6 @@ var urlRadicale = 'http://compri.me:5232';
             },
             "columns": [
                 {
-                    "data": "Selection",
-                    "render": function ( data, type, row ) {
-                        if ( type === 'display' ) {
-                            return '<input id="box_' + row.codeProf + '" type="checkbox" name="' + row.codeProf + '">';
-                        }
-                        return data;
-                    },
-                    "defaultContent": "-"
-                },
-                {
                     "data": "Enseignant",
                     "render": function ( data, type, row ) {
                         if ( type === 'display' ) {
@@ -101,16 +91,6 @@ var urlRadicale = 'http://compri.me:5232';
                 "dataType" : "json"
             },
             "columns": [
-                {
-                    "data": "Sélection",
-                    "render": function ( data, type, row ) {
-                        if ( type === 'display' ) {
-                            return '<input id="box_' + row.codeGroupe + '" type="checkbox" name="' + row.codeGroupe + '">';
-                        }
-                        return data;
-                    },
-                    "defaultContent": "-"
-                },
                 {
                     "data": "Filière",
                     "render": function ( data, type, row ) {
@@ -169,16 +149,6 @@ var urlRadicale = 'http://compri.me:5232';
                  "dataType" : "json"
              },
              "columns": [
-                 {
-                     "data": "Sélection",
-                     "render": function ( data, type, row ) {
-                         if ( type === 'display' ) {
-                             return '<input id="box_' + row.codeSalle + '" type="checkbox" name="' + row.codeSalle + '">';
-                         }
-                         return data;
-                     },
-                     "defaultContent": "-"
-                 },
                  {
                      "data": "Salle",
                      "render": function ( data, type, row ) {
@@ -324,53 +294,6 @@ function callIcsCreator(selecteurCSS, urlRadicale, typeICS) {
  * Manual scripts
  */
     $(document).ready(function() {
-
-        /*
-         * Dropdown effect on Enseignant-list
-         */
-        $('.table-enseignant th').click(function (e) {
-            $('#DataTables_Table_0 tbody').slideToggle("fast");
-
-            /* recoder proprement */
-            var monIcone = $('#plusEnseignant');
-            var change = monIcone.hasClass('glyphicon-chevron-down');
-            if (change) {
-                monIcone.removeClass('glyphicon-chevron-down')
-                    .addClass('glyphicon-chevron-up');
-                $('.button-enseignant').hide('fast');
-                $('#DataTables_Table_0_filter').slideUp();
-            } else {
-                monIcone.removeClass('glyphicon-chevron-up')
-                    .addClass('glyphicon-chevron-down');
-                $('.button-enseignant').show('fast');
-                $('#DataTables_Table_0_filter').slideDown();
-            }
-
-        });
-
-        /*
-         * Dropdown effect on Filiere-list (filière)
-         */
-        $('.table-filiere th').click(function (e) {
-            $('#DataTables_Table_1 tbody').slideToggle("fast");
-
-            /* recoder proprement */
-            var monIcone = $('#plusFiliere');
-            var change = monIcone.hasClass('glyphicon-chevron-down');
-            if (change) {
-                monIcone.removeClass('glyphicon-chevron-down')
-                    .addClass('glyphicon-chevron-up');
-                $('.button-filiere').hide('fast');
-                $('#DataTables_Table_1_filter').slideUp();
-
-            } else {
-                monIcone.removeClass('glyphicon-chevron-up')
-                    .addClass('glyphicon-chevron-down');
-                $('.button-filiere').show('fast');
-                $('#DataTables_Table_1_filter').slideDown();
-            }
-        });
-
         /*
          * Button - choose a category (Enseignant, Filière, Salle)
          */

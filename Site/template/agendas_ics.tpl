@@ -45,102 +45,90 @@
             <!-- PARTIE ETUDIANT -->
             <!-- faire une redirection vers index.php -->
         {else}
-            <!-- PARTIE ENSEIGNANT -->
-            <!-- div - btn-group -->
-            <div class="btn-group btn-group-justified">
-                <a id="form-enseignant" role="button" class="btn btn-default active">Enseignants</a>
-                <a id="form-filiere" role="button" class="btn btn-default">Filières</a>
-                <a id="form-salle" role="button" class="btn btn-default">Salles</a>
+
+        <div class="container">
+			<div class="col-lg-10 col-centered">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+
+                        <!-- PARTIE ENSEIGNANT -->
+                        <!-- div - btn-group -->
+                        <div class="btn-group btn-group-justified">
+                            <a id="form-enseignant" role="button" class="btn btn-default active">Enseignants</a>
+                            <a id="form-filiere" role="button" class="btn btn-default">Filières</a>
+                            <a id="form-salle" role="button" class="btn btn-default">Salles</a>
+                        </div>
+                        <!-- ./div - btn-group -->
+
+                        <!-- form - form-enseignant -->
+                        <form method="post" action="#" class="form-enseignant col-lg-12">
+                            <!-- Table-enseigant - Generate by DataTables plugin -->
+                            <table class="table table-enseignant">
+                                <thead>
+                                <tr>
+                                    <th class="libelle">Enseignant</th>
+                                    <th><span class="glyphicon glyphicon-download"></span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td data-th="Enseignant"></td>
+                                    <td data-th=""></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <!-- ./table -->
+
+                        </form>
+                        <!-- ./form - form-enseignant -->
+
+                        <!-- form - form-filiere -->
+                        <form method="post" action="#" class="form-filiere col-lg-12" style="display:none;">
+                            <!-- Table-filere - Generate by DataTables plugin -->
+                            <table class="table table-filiere">
+                                <thead>
+                                <tr>
+                                    <th class="libelle">Filière</th>
+                                    <th><span class="glyphicon glyphicon-download"></span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td data-th="Filière"></td>
+                                    <td data-th=""></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <!-- ./table -->
+
+                        </form>
+                        <!-- ./form - form-filiere -->
+
+                        <!-- form - form-salle -->
+                        <form method="post" action="#" class="form-salle col-lg-12" style="display:none;">
+                            <!-- Table-salle - Generate by DataTables plugin -->
+                            <table class="table table-salle">
+                                <thead>
+                                <tr>
+                                    <th class="libelle">Salle</th>
+                                    <th><span class="glyphicon glyphicon-download"></span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td data-th="Salle"></td>
+                                    <td data-th=""></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <!-- ./table -->
+
+                        </form>
+                        <!-- ./form - form-salle -->
+                    </div>
+                </div>
             </div>
-            <!-- ./div - btn-group -->
-
-            <!-- form - form-enseignant -->
-            <form method="post" action="#" class="form-enseignant">
-                <!-- Table-enseigant - Generate by DataTables plugin -->
-                <table class="table table-enseignant">
-                    <thead>
-                    <tr>
-                        <th><span class="glyphicon glyphicon-th-list"></span></th>
-                        <th class="libelle">Enseignant <span id="plusEnseignant" class="glyphicon glyphicon-chevron-down"></span></th>
-                        <th><span class="glyphicon glyphicon-download"></span></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td data-th="Sélection"></td>
-                        <td data-th="Enseignant"></td>
-                        <td data-th=""></td>
-                    </tr>
-                    </tbody>
-                </table>
-                <!-- ./table -->
-
-                <!-- div - Download all the selected EdT -->
-                <div class="button-enseignant center">
-                    <button type="submit" class="btn btn-primary btn-lg">Enseignants sélectionnés</button>
-                </div>
-                <!-- ./div -->
-            </form>
-            <!-- ./form - form-enseignant -->
-
-            <!-- form - form-filiere -->
-            <form method="post" action="#" class="form-filiere" style="display:none;">
-                <!-- Table-filere - Generate by DataTables plugin -->
-                <table class="table table-filiere">
-                    <thead>
-                    <tr>
-                        <th><span class="glyphicon glyphicon-th-list"></span></th>
-                        <th class="libelle">Filière <span id="plusFiliere" class="glyphicon glyphicon-chevron-down"></span></th>
-                        <th><span class="glyphicon glyphicon-download"></span></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td data-th="Sélection"></td>
-                        <td data-th="Filière"></td>
-                        <td data-th=""></td>
-                    </tr>
-                    </tbody>
-                </table>
-                <!-- ./table -->
-
-                <!-- div - Download all the selected EdT -->
-                <div class="button-filiere center">
-                    <button type="submit" class="btn btn-primary btn-lg">Filières sélectionnées</button>
-                </div>
-                <!-- ./div -->
-            </form>
-            <!-- ./form - form-filiere -->
-
-            <!-- form - form-salle -->
-            <form method="post" action="#" class="form-salle" style="display:none;">
-                <!-- Table-salle - Generate by DataTables plugin -->
-                <table class="table table-salle">
-                    <thead>
-                    <tr>
-                        <th><span class="glyphicon glyphicon-th-list"></span></th>
-                        <th class="libelle">Salle <span id="plusFiliere" class="glyphicon glyphicon-chevron-down"></span></th>
-                        <th><span class="glyphicon glyphicon-download"></span></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td data-th="Sélection"></td>
-                        <td data-th="Salle"></td>
-                        <td data-th=""></td>
-                    </tr>
-                    </tbody>
-                </table>
-                <!-- ./table -->
-
-                <!-- div - Download all the selected EdT -->
-                <div class="button-filiere center">
-                    <button type="submit" class="btn btn-primary btn-lg">Salles sélectionnées</button>
-                </div>
-                <!-- ./div -->
-            </form>
-            <!-- ./form - form-salle -->
-
+        </div>
         {/if}
 
         <script src="js/agendas_ics.js"></script>
