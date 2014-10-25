@@ -4,7 +4,7 @@
 * Avec connection a la bdd
 *
 */
-//session_start();
+session_start();
 include('../config/config.php');
 
 $start = $_REQUEST['from'] / 1000;
@@ -176,7 +176,7 @@ $sql="SELECT * FROM seances
 		AND seances.annulee='0'  
 ";
 */
- /*
+ 
     $loginUtilisateur = "";
            
         if (isset($_SESSION['teachLogin']))
@@ -187,24 +187,30 @@ $sql="SELECT * FROM seances
         {
             $loginUtilisateur = $_COOKIE['teachLogin'];
         }
-   
-   
+
+
+$out = array();
+        //sylvie
+        //sbourli1
         // on récupere le codeProf reliés au login de l'enseignant
         //$sql = "SELECT * FROM login_prof WHERE login= ".$dbh->quote($loginUtilisateur, PDO::PARAM_STR);
-        $sql="SELECT seances.dateSeance, seances.heureSeance, seances.dureeSeance, enseignements.nom, enseignements.dureeSeance, enseignements.couleurFond, enseignements.alias, enseignements.codeTypeSalle, matieres.couleurFond, matieres.nom, login_prof.login
+        $sql=sprintf('SELECT seances.dateSeance, seances.heureSeance, seances.dureeSeance,
+        enseignements.nom, enseignements.dureeSeance, enseignements.couleurFond,
+        enseignements.alias, enseignements.codeTypeSalle,
+        matieres.couleurFond, matieres.nom, login_prof.login
                 FROM seances
                 LEFT JOIN seances_profs ON seances.codeSeance = seances_profs.codeSeance
                 LEFT JOIN enseignements ON seances.codeEnseignement = enseignements.codeEnseignement
                 RIGHT JOIN matieres ON matieres.codeMatiere = enseignements.codeMatiere
-                LEFT JOIN login_prof ON login_prof.codeprof = enseignements.codeProprietaire
-                WHERE seances_profs.deleted =  '0'
-                AND seances.deleted =  '0'
-                AND matieres.deleted =  '0'
-                AND matieres.deleted =  '0'
-                AND seances.annulee =  '0'
-                AND login_prof.login = ".$dbh->quote($loginUtilisateur, PDO::PARAM_STR);
+                LEFT JOIN login_prof ON login_prof.codeprof = seances_profs.codeRessource
+                WHERE seances_profs.deleted =  "0"
+                AND seances.deleted =  "0"
+                AND matieres.deleted =  "0"
+                AND matieres.deleted =  "0"
+                AND seances.annulee =  "0"
+                AND login_prof.login = '.$dbh->quote($loginUtilisateur, PDO::PARAM_STR));
         
-        $req = $dbh->prepare($sql);
+       /* $req = $dbh->prepare($sql);
         $req->execute(); 
         $out = array();
         
@@ -213,7 +219,7 @@ $sql="SELECT * FROM seances
         */
  
         
-        /*if()
+       /* if()
         {
             
         }
@@ -230,21 +236,62 @@ $sql="SELECT * FROM seances
             
         }*/
 
-$sql   = sprintf('SELECT * from seances where dateModif='.$dbh->quote('2014-09-22 13:45:28', PDO::PARAM_STR));  //2014-09-22 13:45:28');//('SELECT * FROM events WHERE `datetime` BETWEEN %s and %s',
+//$sql   = sprintf('SELECT * from seances where dateModif='.$dbh->quote('2014-09-22 13:45:28', PDO::PARAM_STR));  //2014-09-22 13:45:28');//('SELECT * FROM events WHERE `datetime` BETWEEN %s and %s',
+
 $req = $dbh->prepare($sql);
 //print_r($req);
 $req->execute();
+//print_r($req);
+
+/*
+
+8421504      >   gray
+139          >   darkred
+16711808     >   
+8388863      >   purple
+16777215     >   white
+8454143      >   teal
+33023        >   
+65408        >   
+16711680     >  blue 
+8421631      >   
+255          >    red   
+65280        >       lime    
+4227327      >       
+12615808     >          
+16744576     >           
+8421440      >        
+
+*/
 
 $out = array();
 
 $data = getdate();//'Y-m-d', strtotime("+14 days"));
 
-while($ligneCode = $req->fetch()) {    
+while($ligneCode = $req->fetch()) {
+        //print_r($ligneCode);
+        if($ligneCode['couleurFond'] = 255)
+        {
+            $eventC = 'event-warning';
+        }
+        else if($ligneCode['couleurFond'] = 16777215)
+        {
+            $eventC = 'event-info';
+        }
+        else if($ligneCode['couleurFond'] = 8388863)
+        {
+            $eventC = 'event-special';
+        }
+        else if($ligneCode['couleurFond'] = 8421504)
+        {
+            $eventC = 'event-sucess';
+        }
+        else {$eventsC = 'event-warning';}
 	$out[] = array(
-        'id' => $ligneCode['codeSeance'],
-        'title' => $ligneCode['codeSeance'],
+        'id' => $ligneCode['nom'],
+        'title' => $ligneCode['nom'],
         'url' => "",
-		'class' => 'event-important',
+		'class' => $eventC,
 		'start' => $data[0].'000',
 		'end' => $data[0].'999'
     );

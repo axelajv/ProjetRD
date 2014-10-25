@@ -32,14 +32,7 @@ if (isset($_POST['studyLogin']) && !empty($_POST['studyLogin']))
 	}
 	else
 	{
-		if (isset ($_POST['studyCookie']) && $_POST['studyCookie']== 1)
-		{
-			setcookie('studyLogin', $_POST['studyLogin'], time() + 365*24*3600); 
-		}
-		else
-		{
-			$_SESSION['studyLogin'] = $_POST['studyLogin'];
-		}
+		$_SESSION['studyLogin'] = $_POST['studyLogin'];
 	}
 	
 	header('Location: ../index.php');

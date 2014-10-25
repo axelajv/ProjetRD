@@ -5,7 +5,7 @@
 	include('../config/config.php');
 	$seances = array();
 
-	if (isset($_POST['module']))
+	if (isset($_POST['module']) && !empty($_POST['module']))
 	{
 		$nom_module=$_POST['module']."\_";
 		$sql="SELECT *,  enseignements.nom as nom_enseignement,seances.dureeSeance as seanceDuree, seances.commentaire as seancesCommentaire FROM seances LEFT JOIN (enseignements) ON (seances.codeEnseignement=enseignements.codeEnseignement)   where seances.deleted='0' and seances.codeSeance!=''  AND enseignements.deleted='0' and enseignements.nom like ".$dbh->quote("%".$nom_module."%", PDO::PARAM_STR)." order by seances.dateSeance,seances.heureSeance ";		

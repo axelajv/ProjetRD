@@ -2,14 +2,7 @@
 
 	$loginUtilisateur = "";
 	
-	if (isset($_SESSION['teachLogin']))
-	{
-		$loginUtilisateur = $_SESSION['teachLogin'];
-	}
-	else
-	{
-		$loginUtilisateur = $_COOKIE['teachLogin'];
-	}
+	$loginUtilisateur = $_SESSION['teachLogin'];
 
 	$userName= "";
 	$firstName= "";
