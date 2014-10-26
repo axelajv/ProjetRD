@@ -18,3 +18,6 @@ edt/CalDAV/lib/fpdf/*
 edt/CalDAV/lib/jspdf/*
 
 edt/CalDAV/lib/stdClass/*
+
+Site/API/node_modules/*
+

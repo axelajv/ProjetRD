@@ -1,29 +1,23 @@
 /* CSS de la page de connexion */
-#teachButtons, #studyButtons 
-{
-	padding: 10px;
+
+#teachButtons,
+#studyButtons {
+    padding: 10px;
 }
-
-#menuHeader, #menuHeaderNom {
-	text-align : left;
+#menuHeader,
+#menuHeaderNom {
+    text-align: left;
 }
-
-
 #bs-example-navbar-collapse-1 ul li {
-	text-align : left;
+    text-align: left;
 }
-
 .pull-right form-inline {
-	width : 100%;
+    width: 100%;
 }
-
 .myCheck {
-	margin: 0 0 0;
-	
+    margin: 0 0 0;
 }
-
-#myTab
-{
-	float: none !important;
-	margin: 0 auto !important;
+#myTab {
+    float: none !important;
+    margin: 0 auto !important;
 }

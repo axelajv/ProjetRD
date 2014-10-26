@@ -1,79 +1,63 @@
-function deconnect()
-{
-	window.location.replace('index.php?page=deconnection');
+function deconnect() {
+    window.location.replace('index.php?page=deconnection');
 }
 
-function loadConfig()
-{
-	window.location.replace('index.php?page=config');
+function loadConfig() {
+    window.location.replace('index.php?page=config');
 }
 
-function loadIndex()
-{
-	window.location.replace('index.php');
+function loadIndex() {
+    window.location.replace('index.php');
 }
 
-function loadModule()
-{
-	window.location.replace('index.php?page=module');
+function loadModule() {
+    window.location.replace('index.php?page=module');
 }
 
-function loadHeures()
-{
-	window.location.replace('index.php?page=heure');
+function loadHeures() {
+    window.location.replace('index.php?page=heure');
 }
 
-function loadExport()
-{
-	window.location.replace('index.php?page=export');
+function loadExport() {
+    window.location.replace('index.php?page=export');
 }
 
-function loadRSS()
-{
-	window.location.replace('index.php?page=RSS');
+function loadRSS() {
+    window.location.replace('index.php?page=RSS');
 }
 
-function loadDroits()
-{
-	window.location.replace('index.php?page=droits');
+function loadDroits() {
+    window.location.replace('index.php?page=droits');
 }
 
-function loadMaConfig()
-{
-	window.location.replace('index.php?page=maconfig');
+function loadMaConfig() {
+    window.location.replace('index.php?page=maconfig');
 }
 
-function loadAdmin()
-{
-	window.location.replace('index.php?page=admin');
+function loadAdmin() {
+    window.location.replace('index.php?page=admin');
 }
 
-function loadVersion()
-{
-	window.location.replace('index.php?page=version');
+function loadVersion() {
+    window.location.replace('index.php?page=version');
 }
 
-function loadDialogue()
-{
-	window.location.replace('index.php?page=dialogue');
+function loadDialogue() {
+    window.location.replace('index.php?page=dialogue');
 }
 
-function loadMesDS()
-{
-	window.location.replace('index.php?page=mesDS');
+function loadMesDS() {
+    window.location.replace('index.php?page=mesDS');
 }
 
-function loadAgendasICS()
-{
-	window.location.replace('index.php?page=agendas_ics');
+function loadAgendasICS() {
+    window.location.replace('index.php?page=agendas_ics');
 }
 
-function loadOccupationSalle()
-{
-	window.location.replace('index.php?page=occupationSalle');
+function loadOccupationSalle() {
+    window.location.replace('index.php?page=occupationSalle');
 }
 
-function loadBilanFormation()
-{
-	window.location.replace('index.php?page=bilanFormation');
+function loadBilanFormation() {
+    window.location.replace('index.php?page=bilanFormation');
 }

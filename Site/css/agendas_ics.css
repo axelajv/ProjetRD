@@ -1,33 +1,30 @@
-.center, th, td {
-    text-align:center;
+.center,
+th,
+td {
+    text-align: center;
 }
-
-th, td {
+th,
+td {
     vertical-align: middle !important;
 }
-
 .dataTable th {
     cursor: pointer;
 }
-
 .navbar {
     margin-bottom: 0 !important;
 }
-
 .dataTables {
     /*
      * dans jquery.dataTables.js, la ligne 722 est commentée
      * c'est la fonction : _fnCalculateColumnWidths( settings );
      */
 }
-
 .dataTables_filter.alert.alert-info {
     display: block;
     margin-top: 15px;
     padding-right: 0;
     padding-top: 5px;
 }
-
 .dataTables_filter.alert-info input[type="search"] {
     border: 2px solid #DAE1E5;
     border-radius: 6px;

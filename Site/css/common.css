@@ -1,42 +1,32 @@
 /* CSS commun à l'ensemble des pages */
 
-body 
-{ 
-	background: url('../img/bg4.jpg') no-repeat center center fixed;
-	/*background-color: #F2F2F2;*/
-	text-align: center;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
+body {
+    background: url('../img/bg4.jpg') no-repeat center center fixed;
+    /*background-color: #F2F2F2;*/
+    
+    text-align: center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
-
-.col-centered
-{
-	float: none !important;
-	margin: 0 auto !important;
+.col-centered {
+    float: none !important;
+    margin: 0 auto !important;
 }
-
-.panel-default 
-{
-	opacity: 0.9;
-	margin-top:30px;
+.panel-default {
+    opacity: 0.9;
+    margin-top: 30px;
 }
-
-.form-group.last 
-{
-	margin-bottom:0px;
+.form-group.last {
+    margin-bottom: 0px;
 }
-
 a {
-	cursor: pointer;
+    cursor: pointer;
 }
-
-#bs-example-navbar-collapse-1 ul li{
-	text-align : left;
+#bs-example-navbar-collapse-1 ul li {
+    text-align: left;
 }
-
-
 /*@media (max-width: 770px) {
 	.navbar-toggle{
 		
@@ -54,21 +44,21 @@ padding-bottom: 15px;
 	display: none;
 	}
 }*/
-.container{
-	padding: 0px 0 60px;
-	min-height: 100%;
-	height: auto !important
-	}
 
-#footer{
-	padding-top: 60px;
-	background-color: #FBFBFB!important;
-	font-size: 10px!important;
-	height: 60px;
-	display: inline;
+.container {
+    padding: 0px 0 60px;
+    min-height: 100%;
+    height: auto !important
+}
+#footer {
+    padding-top: 60px;
+    background-color: #FBFBFB!important;
+    font-size: 10px!important;
+    height: 60px;
+    display: inline;
 }
 #footerText {
-	background-color: #FBFBFB;
+    background-color: #FBFBFB;
 }
 /*
 @media (min-height: 776px){
@@ -83,6 +73,6 @@ padding-bottom: 15px;
 	}
 }*/
 
-table{
-	background-color : #FBFBFB !important;
+table {
+    background-color: #FBFBFB !important;
 }
