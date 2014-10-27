@@ -68,7 +68,7 @@
 								<label for="departements" class="col-sm-3 control-label">Departement </label>
 								<div class="col-sm-9">
 									<select name="departements" class="form-control" id="departements" required="" onChange="loadProfsList()">
-										<option>TOUS</option>
+										<option value="all">TOUS</option>
 										{foreach from=$composantes item=composante}
 											<option value={$composante.codeComposante}>{$composante.nom}</option>
 										{/foreach}

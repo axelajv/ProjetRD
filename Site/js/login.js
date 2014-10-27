@@ -1,17 +1,74 @@
-$(function() {
-    /*
-     * Selection des documents à ajouter au groupe
-     */
-    $("#liste-document div").on("click", function() {
+$(document).ready(function() {
 
-        var input = $(this).children("input")[0];
-        //console.log(input);
-        if (input.checked) {
-            input.checked = false;
-            $(this).css('background', "none");
-        } else {
-            input.checked = true;
-            $(this).css('background', "#F5F5F6");
-        }
+    // connexion teacher
+    $('#teachConnect').submit(function(event) {
+
+        event.preventDefault();
+
+        $.ajax({
+                type: "POST",
+                url: "script/teachConnectScript.php",
+                data: {
+                    teachLogin: $("#teachConnect #inputLogin3").val(),
+                    teachPwd: $("#teachConnect #inputPassword3").val()
+                },
+                dataType: "json"
+            })
+            .done(function(elem) {
+                if (elem.connexion === true) {
+                    // connexion réussie
+                    window.location.reload();
+                } else {
+                    // connexion échouée
+                    $("#retourLoginJs")
+                        .html(elem.message)
+                        .addClass('alert alert-danger col-md-4 col-centered')
+                        .show(500)
+                        .delay(1000)
+                        .hide(1000);
+                }
+            })
+            .fail(function(elem) {
+                alert("Appel AJAX impossible");
+            });
+
+    });
+
+    // connexion student
+    $('#studyConnect').submit(function(event) {
+
+        event.preventDefault();
+
+        $.ajax({
+                type: "POST",
+                url: "script/studyConnectScript.php",
+                data: {
+                    studyLogin: $("#studyConnect #inputLoginEtudiant").val(),
+                },
+                dataType: "json"
+            })
+            .done(function(elem) {
+                if (elem.connexion === true) {
+                    // connexion réussie
+                    window.location.reload();
+                } else {
+                    // connexion échouée
+                    $("#retourLoginJs")
+                        .html(elem.message)
+                        .addClass('alert alert-danger col-md-4 col-centered')
+                        .show(500)
+                        .delay(1000)
+                        .hide(1000);
+                }
+            })
+            .fail(function(elem) {
+                alert("Appel AJAX impossible");
+            });
+    });
+
+    $('.btn-success').click(function() {
+
+        $("#retourLoginJs").hide();
+
     });
 });

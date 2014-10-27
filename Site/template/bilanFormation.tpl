@@ -41,6 +41,9 @@
 							</div>
 						</form>
 					</div>
+					<div class="panel-footer">
+						<a role="button" class="btn">Exporter vers EXCEL</a>
+					</div>
 				</div>
 			</div>
 			<h3>Heures des profs permanants</h3>

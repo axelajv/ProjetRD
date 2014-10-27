@@ -13,8 +13,6 @@ function drawChart() {
         async: false
     }).responseText;
 
-    console.log(jsonData);
-
     // Create our data table out of JSON data loaded from server.
     var data = new google.visualization.DataTable(jsonData);
 

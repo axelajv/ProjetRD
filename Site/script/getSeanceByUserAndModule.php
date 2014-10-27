@@ -4,6 +4,10 @@
 	session_start();
 	include('../config/config.php');
 	$seances = array();
+	
+	function pad_zero($value) {
+		return sprintf("%02d", $value);
+	}
 
 	if (isset($_POST['module']) && !empty($_POST['module']))
 	{
@@ -13,10 +17,7 @@
 		$req4->execute();
 		while($res_4 = $req4->fetch())
 		{
-			$annee=substr($res_4['dateSeance'],0,4);
-			$mois=substr($res_4['dateSeance'],5,2);
-			$jour=substr($res_4['dateSeance'],8,2);
-			$nom_jour=date("l", mktime(0, 0, 0, $mois, $jour, $annee));
+			$nom_jour = date("l", strtotime($res_4["dateSeance"]));
 			
 			//traduction francais du nom du jour
 			$nom_jour = translateDay($nom_jour);
@@ -35,50 +36,8 @@
 			$type=explode("_",$res_4['nom_enseignement']);
 			$enseignement=$type[1];
 		
-			//mise en forme de la duree des seances
-				
-			if (strlen($res_4['seanceDuree'])==4)
-			{
-				$heureduree=substr($res_4['seanceDuree'],0,2);
-				$minduree=substr($res_4['seanceDuree'],2,2);
-			}
-			if (strlen($res_4['seanceDuree'])==3)
-			{
-				$heureduree=substr($res_4['seanceDuree'],0,1);
-				$minduree=substr($res_4['seanceDuree'],1,2);
-			}
-			if (strlen($res_4['seanceDuree'])==2)
-			{
-				$heureduree=0;
-				$minduree=$res_4['seanceDuree'];
-			}
-			if (strlen($heureduree)==1)
-			{
-				$heureduree="0".$heureduree;
-			}	
-			$duree=$heureduree."h".$minduree;
-			
-			//mise en forme de l'heure de début des seances
-			if (strlen($res_4['heureSeance'])==4)
-			{
-				$heuredebut=substr($res_4['heureSeance'],0,2);
-				$mindebut=substr($res_4['heureSeance'],2,2);
-			}
-			if (strlen($res_4['heureSeance'])==3)
-			{
-				$heuredebut=substr($res_4['heureSeance'],0,1);
-				$mindebut=substr($res_4['heureSeance'],1,2);
-			}
-			if (strlen($res_4['heureSeance'])==2)
-			{
-				$heuredebut=0;
-				$mindebut=$res_4['heureSeance'];
-			}
-			if (strlen($heuredebut)==1)
-			{
-				$heuredebut="0".$heuredebut;
-			}
-			$heure=$heuredebut."h".$mindebut;
+			$duree = pad_zero(floor($res_4["seanceDuree"] / 100)).'h'.pad_zero(floor($res_4["seanceDuree"] % 100));
+			$heure = pad_zero(floor($res_4["heureSeance"] / 100)).'h'.pad_zero(floor($res_4["heureSeance"] % 100));
 			
 			//recherche des profs associés à la seance
 			$code_seance=$res_4['codeSeance'];

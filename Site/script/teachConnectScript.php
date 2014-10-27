@@ -2,11 +2,14 @@
 
 session_start();
 
-error_reporting(E_ALL);
-
 include('../config/config.php');
 
-if (isset($_POST['teachLogin'])&& isset($_POST['teachPwd']) && !empty($_POST['teachLogin']) && !empty($_POST['teachPwd']))
+// tableau suivant l'état de la connexion
+$tableau = array("message"	 => "En attente",
+				 "connexion" => false);
+
+// script
+if (isset($_POST['teachLogin']) && isset($_POST['teachPwd']) && !empty($_POST['teachLogin']) && !empty($_POST['teachPwd']))
 {
 	$find = FALSE;
 
@@ -33,28 +36,23 @@ if (isset($_POST['teachLogin'])&& isset($_POST['teachPwd']) && !empty($_POST['te
 	// Sinon on lui affiche un message d'erreur.
 	if($find == FALSE)
 	{
-		header('Location: ../index.php?errorID=2');
-		exit();
+		$tableau["message"]	  = "Connexion refusée";
+		$tableau["connexion"] = false;
 	}
 	else
 	{
-		if (isset ($_POST['teachCookie']) && $_POST['teachCookie']== 1)
-		{
-			setcookie('teachLogin', $_POST['teachLogin'], time() + 365*24*3600);
-		}
-		else
-		{
-			$_SESSION['teachLogin'] = $_POST['teachLogin'];
-		}
+		$_SESSION['teachLogin'] = $_POST['teachLogin'];
+
+		$tableau["message"]	  	= "Connexion en cours";
+		$tableau["connexion"] 	= true;
 	}
 
-	header('Location: ../index.php');
-	exit();
+	echo json_encode($tableau);
+
 }
 else
 {
-	header('Location: ../index.php?errorID=1');
-	exit();
+	echo json_encode($tableau);
 }
 
 ?>

@@ -6,14 +6,11 @@
 		<link rel="stylesheet" href="css/common.css"/>
 		<link rel="stylesheet" href="css/login.css"/>
 		<script type="text/javascript" src="js/loadPage.js"></script>
-		<script type="text/javascript" src="js/jquery.min.js"></script>
-		<script type="text/javascript" src="js/jquery.tablesorter.min.js"></script>
-		<script src="API/jquery/jquery.js"></script>
-		<script type="text/javascript" src="API/bootstrap/js/bootstrap.js"></script>
-		<script src="API/jquery/jquery.tablesorter.min.js"></script>
-		<script src="API/jquery/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" src="API/jquery/jquery.js"></script>
+		<script type="text/javascript" src="API/jquery/jquery.tablesorter.min.js"></script>
+		<script type="text/javascript" src="API/bootstrap/js/bootstrap.js"></script>		
 		<script type="text/javascript" src="js/filterTable.js"></script>
-		<script src="js/heure.js"></script>
+		<script type="text/javascript" src="js/heure.js"></script>
 		
 	</head>
 	
@@ -26,7 +23,8 @@
 						<strong class="">Afficher mes Heures</strong>
 					</div>
 					<div class="panel-body">
-						<form name="form" id="form" action=""  method="get" >
+						<form class="form-horizontal" role="form" name="form" id="form" method="get" >
+	
 							<input type="hidden" name="page" value="heure" />
 							<label>Année scolaire :</label> 
 							<select class="form-control" name="annee_scolaire">
@@ -34,7 +32,7 @@
 									<option>{$annee}</option>
 								{/foreach}
 							</select><br>
-						
+
 							<label>Tri par Département :</label> 
 							<select class="form-control" name="composante" onchange="document.form.submit();">
 								<option value="all">TOUS</option>
@@ -44,62 +42,57 @@
 							</select></p><br>
 
 							<label>Choix du professeur :</label> 
-							<select name="prof" class="form-control" id="prof" required="" onChange="loadSeanceList()">
+							<select name="prof" class="form-control" id="prof" required="">
 								{foreach from=$allCSTeachers item=csTeacher}
-									<option value="{$csTeacher.codeProf}">{$csTeacher.nom}   {$csTeacher.prenom}</option>
+									<option {if $csTeacher.codeProf == $codeProf}selected="selected"{/if}  value="{$csTeacher.codeProf}">{$csTeacher.nom}   {$csTeacher.prenom}</option>
 								{/foreach}
 							</select><br>
-							<button type="submit" class="btn btn-success">Envoyer</button>
 						</form>
 					</div>
 				</div>
-			</div>
-			
-			{count($allSeances)}
-			{if count($allSeances)>0  }			
+			</div>		
 
-				<div class="table-responsive">
-					<table class="table-striped table center-table col-sm-9 sortTable">
-						<thead>
+			<table class="table-striped table center-table col-sm-9 sortTable">
+				<thead>
+					<tr>
+						<th>Formation</th>
+						<th>Code apogée</th>
+						<th>Matière</th>
+						<th>Date</th>
+						<th>Heure début</th>
+						<th>Heure fin</th>
+						<th>Horaire réparti / nb profs</th>
+						<th>Forfait</th>
+						<th>CM</th>
+						<th>TD</th>
+						<th>TP</th>
+						<th>EqTD</th>
+						<th>Effectué</th>
+					</tr>
+				</thead>
+				
+				<tbody id="tableContent"> 
+						{foreach from=$allSeances item=seance}
 							<tr>
-								<th>Formation</th>
-								<th>Code apogée</th>
-								<th>Matière</th>
-								<th>Date</th>
-								<th>Heure début</th>
-								<th>Heure fin</th>
-								<th>Horaire réparti / nb profs</th>
-								<th>Forfait</th>
-								<th>CR</th>
-								<th>TD</th>
-								<th>TP</th>
-								<th>EqTD</th>
-								<th>Effectué</th>
-							</tr>
-						</thead>
-						
-						<tbody id="tableContent"> 
-								{foreach from=$allSeances item=seance}
-									<tr>
-										<td>{$seance.nomFormation}</td>
-										<td>{$seance.codeApogee}</td>
-										<td>{$seance.nomMatiere}</td>
-										<td>{$seance.dateSeance}</td>
-										<td>{$seance.heureDebut}</td>
-										<td>{$seance.heureFin}</td>
-										<td>{if $seance.volumeReparti ==0} NON {else} OUI {/if}</td>
-										<td>NON</td>
-										<td>TODO</td>
-										<td>TODO</td>
-										<td>TODO</td>
-									</tr>	
-								{/foreach}
+								<td>{$seance.nomFormation}</td>
+								<td>{$seance.codeApogee}</td>
+								<td>{$seance.nomMatiere}</td>
+								<td>{$seance.dateSeance}</td>
+								<td>{$seance.heureDebut}</td>
+								<td>{$seance.heureFin}</td>
+								<td>{if $seance.volumeReparti == 0} NON {else} OUI {/if}</td>
+								<td>{if $seance.forfaitaire == 0} NON {else} OUI {/if} </td>
+								<td>{if $seance.dureeCM !=0}{$seance.dureeCM}{else} --------{/if} </td>
+								<td>{if $seance.dureeTD !=0}{$seance.dureeTD}{else} --------{/if} </td>
+								<td>{if $seance.dureeTP !=0}{$seance.dureeTP}{else} --------{/if} </td>
+								<td>{$seance.codeSeance} {$seance.seancesDureeSeance}</td>
+								<td>TODO</td>
+							</tr>	
+						{/foreach}
 
-						</tbody>
+				</tbody>
 
-					</table>
-				</div>
-			{/if}
+			</table>
 		</div>
 		
 		{include file='template/include/footer.tpl'}

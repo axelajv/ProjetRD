@@ -17,32 +17,34 @@
 		
 		{include file='template/include/header.tpl'}
 		
-		<table class="table-striped table center-table">
-			<tr>
-				<th>Date</th>
-				<th>Groupes</th>
-				<th>Type</th>
-				<th>Enseignement</th>
-				<th>Profs</th>
-				<th>Salles</th>
-				<th>Heure de début</th>
-				<th>Durée</th>
-				<th>Effectué</th>
-			</tr>
-			{foreach from=$mesDS item=ds}
-				<tr>
-					<td>{$ds.dateDS}</td>
-					<td>{$ds.groupeDS}</td>
-					<td class="danger">DS</td>
-					<td>{$ds.enseignementDS}</td>
-					<td>{$ds.profs}</td>
-					<td>{$ds.salles}</td>
-					<td>{$ds.heureDS}</td>
-					<td>{$ds.dureeDS}</td>
-					<td>{$ds.passe}</td>
-				</tr>
-			{/foreach}
-		</table>
+		<div class="container">
+				<table class="table-striped table center-table">
+					<tr>
+						<th>Date</th>
+						<th>Groupes</th>
+						<th>Type</th>
+						<th>Enseignement</th>
+						<th>Profs</th>
+						<th>Salles</th>
+						<th>Heure de début</th>
+						<th>Durée</th>
+						<th>Effectué</th>
+					</tr>
+					{foreach from=$mesDS item=ds}
+						<tr>
+							<td>{$ds.dateDS}</td>
+							<td>{$ds.groupeDS}</td>
+							<td class="danger">DS</td>
+							<td>{$ds.enseignementDS}</td>
+							<td>{$ds.profs}</td>
+							<td>{$ds.salles}</td>
+							<td>{$ds.heureDS}</td>
+							<td>{$ds.dureeDS}</td>
+							<td>{$ds.passe}</td>
+						</tr>
+					{/foreach}
+				</table>
+		</div>
 		
 		{include file='template/include/footer.tpl'}
 	

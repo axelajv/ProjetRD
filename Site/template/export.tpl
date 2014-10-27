@@ -60,6 +60,9 @@
 										</div>
 									</form>
 								</div>
+								<div class="panel-footer">
+									<a role="button" class="btn">Exporter vers EXCEL</a>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -97,23 +100,24 @@
 											</div>
 										</div>
 										<div class="form-group myCheck">
-											<label for="tptd" class="col-sm-3 control-label"> </label>
-											<div class="list-group-item checkbox  col-sm-9" style="background: #F5F5F6;">
-												<input type="checkbox" checked name="vacataire">
-												<span id="tptd">déclarer les TP en TD</span>
+											<label for="tptd" class="col-sm-3 control-label">TP en TD</label>
+											<div class="col-sm-9 class="form-control"" style="background: #F5F5F6; margin-bottom: 10px;">
+												<input type="checkbox" checked name="tptd" id="tptd" class="checkbox">
 											</div>
 										</div>
 										<div class="form-group myCheck">
-											<label for="exportForfait" class="col-sm-3 control-label"> </label>
-											<div class="list-group-item checkbox  col-sm-9" style="background: #F5F5F6;">
-												<input type="checkbox" checked name="teachCookie">
-												<span id="exportForfait">Exporter les forfaits sans séance placée</span>
+											<label for="exportForfait" class="col-sm-3 control-label">Exporter forfaits</label>
+											<div class="col-sm-9 class="form-control"" style="background: #F5F5F6;">
+												<input type="checkbox" checked name="exportForfait" id="exportForfait" class="checkbox">
 											</div>
 										</div>
 										<div class="form-group last" id="gisehButtons">
 											<button type="submit" class="btn btn-success">Exporter</button>
 										</div>
 									</form>
+								</div>
+								<div class="panel-footer">
+									<a role="button" class="btn">Exporter vers EXCEL</a>
 								</div>
 							</div>
 						</div>

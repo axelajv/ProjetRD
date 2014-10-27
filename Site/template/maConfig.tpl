@@ -12,6 +12,9 @@
 		{include file='template/include/header.tpl'}
 		<div class="container">
 			<div class="col-md-4 col-centered">
+				{if isset($successMsg)}
+					<div class="alert alert-success" role="alert">{$successMsg}</div>
+				{/if}
 				<div class="panel panel-default">
 					<div class="panel-heading"> 
 						<strong class="">Modifier votre configuration</strong>
@@ -22,9 +25,9 @@
 								<label for="weekend" class="col-sm-3 control-label">Weekend ?</label>
 								<div class="col-sm-9">
 									<select name="weekend" class="form-control" id="weekend" required="">
-										<option>Samedi et dimanche</option>
-										<option>Samedi</option>
-										<option>Ni samedi ni dimanche</option>
+										<option value=2>Samedi et dimanche</option>
+										<option value=1>Samedi</option>
+										<option value=0>Ni samedi ni dimanche</option>
 									</select>
 								</div>
 							</div>
@@ -127,9 +130,9 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="endBtn1" class="col-sm-3 control-label">Fin</label>
+								<label for="endBtn4" class="col-sm-3 control-label">Fin</label>
 								<div class="col-sm-9">
-									<select name="endBtn1" class="form-control" id="endBtn1" required="">
+									<select name="endBtn4" class="form-control" id="endBtn4" required="">
 										{foreach from=$userConfs.listHeuresBouton item=heureBouton}
 											<option value={$heureBouton.codeHeure}>{$heureBouton.heure}h{$heureBouton.minute}</option>
 										{/foreach}

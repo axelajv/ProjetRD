@@ -1,4 +1,7 @@
-templates_c/*
+Site/templates_c/
+
 tmpls/*
-less/*
+
 Site/config/*
+
+API/node_modules/*
