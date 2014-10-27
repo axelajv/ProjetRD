@@ -17,7 +17,7 @@ $(document).ready(function() {
             .done(function(elem) {
                 if (elem.connexion === true) {
                     // connexion réussie
-                    window.location.reload();
+                    window.location = "index.php";
                 } else {
                     // connexion échouée
                     $("#retourLoginJs")

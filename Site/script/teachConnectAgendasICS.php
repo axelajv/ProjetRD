@@ -1,18 +1,14 @@
 <?php
 
-/*
- * TO-DO-LIST :
- * - UTILISER PDO POUR VRAIMENT PREPARER LA REQUETE
- *
- */
-
-
 session_start();
-
-error_reporting(E_ALL);
 
 include('../config/config.php');
 
+// tableau suivant l'état de la connexion
+$tableau = array("message"	 => "En attente",
+				"connexion" => false);
+
+// script
 if (isset($_POST['teachLogin']) && isset($_POST['teachPwd'])
 	&& !empty($_POST['teachLogin']) && !empty($_POST['teachPwd']))
 {
@@ -26,7 +22,7 @@ if (isset($_POST['teachLogin']) && isset($_POST['teachPwd'])
 	// Si oui, on continue le script...
 	while($find == FALSE && $ligne = $req->fetch())
 	{
-		// Si le mot de passe entré a la même valeur que celui de la base de données, on l'autorise a se connecter...
+		// Si le mot de passe entré à la même valeur que celui de la base de données, on l'autorise a se connecter...
 		if(md5($_POST["teachPwd"]) == $ligne['motPasse'])
 		{
 			$find = TRUE;
@@ -41,21 +37,23 @@ if (isset($_POST['teachLogin']) && isset($_POST['teachPwd'])
 	// Sinon on lui affiche un message d'erreur.
 	if($find == FALSE)
 	{
-		header('Location: ../index.php?errorID=2');
-		exit();
+		$tableau["message"]	  = "Connexion refusée";
+		$tableau["connexion"] = false;
 	}
 	else
 	{
-		// création d'une variable de session pour accéder aux AGENDAS_ICS
 		$_SESSION['teachLoginAgendasICS'] = true;
+
+		$tableau["message"]	  	= "Connexion en cours";
+		$tableau["connexion"] 	= true;
 	}
 
-	header('Location: ../index.php?page=agendas_ics');
-	exit();
+	echo json_encode($tableau);
+
 }
 else
 {
-	header('Location: ../index.php?errorID=1');
-	exit();
+	echo json_encode($tableau);
 }
+
 ?>

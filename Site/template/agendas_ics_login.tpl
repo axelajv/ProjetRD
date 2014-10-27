@@ -24,12 +24,13 @@
         <!-- Page styles -->
         <link rel="stylesheet" href="API/bootstrap/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="css/common.css"/>
-        <link rel="stylesheet" href="css/login.css"/>
+        <link rel="stylesheet" href="css/login_agendas_ics.css"/>
 
         <!-- scripts -->
         <script src="API/jquery/jquery.js"></script>
         <script src="API/bootstrap/js/bootstrap.js"></script>
         <script src="js/loadPage.js"></script>
+        <script src="js/login_agendas_ics.js"></script>
 
     </head>
     <body>
@@ -42,8 +43,12 @@
         {else}
             <!-- PARTIE ENSEIGNANT -->
 
+            <!-- div - retour login.js -->
+            <div id="retourLoginJs"></div>
+            <!-- ./div - retour login.js -->
+
             <!-- div - teachContainer -->
-            <div id="teachContainer col-md-4 col-centered">
+            <div id="teachContainer">
                 <div class="col-md-4 col-centered">
                     <!-- div - panel -->
                     <div class="panel panel-default">
@@ -58,22 +63,22 @@
                         <div class="panel-body">
 
                             <!-- form -->
-                            <form class="form-horizontal" role="form" method="post" action="script/teachConnectAgendasICS.php">
+                            <form id="teachConnect" class="form-horizontal" role="form" method="post" action="#">
 
                                 <!-- div - form-group login -->
                                 <div class="form-group">
-                                    <label for="inputLogin" class="col-sm-3 control-label">Login</label>
+                                    <label for="inputLogin3" class="col-sm-3 control-label">Login</label>
                                     <div class="col-sm-9">
-                                        <input type="text" name="teachLogin" class="form-control" id="inputLogin" required="" placeholder="Login">
+                                        <input type="text" name="teachLogin" class="form-control" id="inputLogin3" required="" placeholder="Login">
                                     </div>
                                 </div>
                                 <!-- ./div - form-group login -->
 
                                 <!-- div - form-group password -->
                                 <div class="form-group">
-                                    <label for="inputPassword" class="col-sm-3 control-label">Mdp</label>
+                                    <label for="inputPassword3" class="col-sm-3 control-label">Mdp</label>
                                     <div class="col-sm-9">
-                                        <input type="password" name="teachPwd" class="form-control" id="inputPassword" placeholder="Mot de passe" required="">
+                                        <input type="password" name="teachPwd" class="form-control" id="inputPassword3" placeholder="Mot de passe" required="">
                                     </div>
                                 </div>
                                 <!-- ./div - form-group password -->
