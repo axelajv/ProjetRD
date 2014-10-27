@@ -17,7 +17,10 @@
 		$req4->execute();
 		while($res_4 = $req4->fetch())
 		{
-			$nom_jour = date("l", strtotime($res_4["dateSeance"]));
+			$annee=substr($res_4['dateSeance'],0,4);
+			$mois=substr($res_4['dateSeance'],5,2);
+			$jour=substr($res_4['dateSeance'],8,2);
+			$nom_jour=date("l", mktime(0, 0, 0, $mois, $jour, $annee));
 			
 			//traduction francais du nom du jour
 			$nom_jour = translateDay($nom_jour);

@@ -5,14 +5,18 @@ require 'vendor/autoload.php';
 use \Curl\Curl;
 
 $ENSEIGNANT = "Enseignants";
-$ETUDIANT = "Etudiants";
-$FILIERE = "Filieres";
-$SALLE = "Salles";
+$ETUDIANT   = "Etudiants";
+$FILIERE    = "Filieres";
+$SALLE      = "Salles";
 
-function sendICSFile($nomfichier,$contenu,$categorie,$uid){
+function sendICSFile($calendrier, $contenu, $collection, $uid){
 
-    $url = $categorie.'/'.$nomfichier.'/';
-    $userpwd = 'adminprof:adminprof';
+    $scheme   = 'https://';
+    $userpwd  = 'adminprof:adminprof';
+    $domain   = 'edouardalvescamilo.ovh';
+    $uri      = $scheme . $userpwd . "@" . $domain . "/";
+
+    $location = $collection . '/' . $calendrier . '/'; // le slash de fin est nécessaire !!!
 
     $headers = array(
         'Content-Type: text/calendar; charset=utf-8',
@@ -24,11 +28,11 @@ function sendICSFile($nomfichier,$contenu,$categorie,$uid){
 
     $curl = new Curl();
 
-    $curl->PUT('http://compri.me:5232/'.$url,$headers, $contenu, $userpwd);
+    $curl->PUT($uri . $location, $headers, $contenu, $userpwd);
 
     $retour = getStatusInfo($curl);
 
-    writeLog($retour,'cURL');
+    writeLog($retour, 'cURL');
 }
 
 function getStatusInfo($curl, $httpStatus = array(200,201,202,203,204,205,206,207,210)) {
