@@ -21,3 +21,6 @@
     float: none !important;
     margin: 0 auto !important;
 }
+#retourLoginJs {
+    cursor: pointer;
+}

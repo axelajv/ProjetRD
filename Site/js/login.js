@@ -1,5 +1,10 @@
 $(document).ready(function() {
 
+    // closeTag Bootstrap3.0
+    var closeTag = '<button type="button" class="close" data-dismiss="modal">' +
+                   '<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>' +
+                   '</button>';
+
     // connexion teacher
     $('#teachConnect').submit(function(event) {
 
@@ -21,11 +26,9 @@ $(document).ready(function() {
                 } else {
                     // connexion échouée
                     $("#retourLoginJs")
-                        .html(elem.message)
+                        .html(closeTag + elem.message)
                         .addClass('alert alert-danger col-md-4 col-centered')
-                        .show(500)
-                        .delay(1000)
-                        .hide(1000);
+                        .show(500);
                 }
             })
             .fail(function(elem) {
@@ -56,9 +59,7 @@ $(document).ready(function() {
                     $("#retourLoginJs")
                         .html(elem.message)
                         .addClass('alert alert-danger col-md-4 col-centered')
-                        .show(500)
-                        .delay(1000)
-                        .hide(1000);
+                        .show(500);
                 }
             })
             .fail(function(elem) {
@@ -66,9 +67,8 @@ $(document).ready(function() {
             });
     });
 
-    $('.btn-success').click(function() {
-
-        $("#retourLoginJs").hide();
-
+    // possibilité de masquer le message d'erreur
+    $('#loginTabContent').on("click", "#retourLoginJs", function() {
+        $(this).html('').hide();
     });
 });

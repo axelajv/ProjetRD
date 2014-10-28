@@ -10,6 +10,7 @@
 
 		<!-- javascript -->
 		<script src="API/jquery/jquery.js"></script>
+		<script src="API/bootstrap/js/bootstrap.js"></script>
 		<script src="js/loadPage.js"></script>
 		<script src="js/login.js"></script>
 	</head>
