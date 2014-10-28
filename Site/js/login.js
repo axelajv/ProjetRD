@@ -2,8 +2,8 @@ $(document).ready(function() {
 
     // closeTag Bootstrap3.0
     var closeTag = '<button type="button" class="close" data-dismiss="modal">' +
-                   '<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>' +
-                   '</button>';
+        '<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>' +
+        '</button>';
 
     // connexion teacher
     $('#teachConnect').submit(function(event) {
@@ -68,7 +68,7 @@ $(document).ready(function() {
     });
 
     // possibilité de masquer le message d'erreur
-    $('#loginTabContent').on("click", "#retourLoginJs", function() {
+    $('#loginTabContent').on("click", "#retourLoginJs", function()  {
         $(this).html('').hide();
     });
 });

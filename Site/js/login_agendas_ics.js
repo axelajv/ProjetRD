@@ -7,12 +7,12 @@ $(document).ready(function() {
 
         $.ajax({
                 type: "POST",
-                url  : "script/teachConnectAgendasICS.php",
-                data : {
-                    teachLogin : $("#inputLogin3").val(),
-                    teachPwd   : $("#inputPassword3").val()
+                url: "script/teachConnectAgendasICS.php",
+                data: {
+                    teachLogin: $("#inputLogin3").val(),
+                    teachPwd: $("#inputPassword3").val()
                 },
-                dataType : "json"
+                dataType: "json"
             })
             .done(function(elem) {
 
