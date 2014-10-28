@@ -1,4 +1,5 @@
-var urlRadicale = 'http://compri.me:5232';
+// URL a deplacer/modifier
+var urlRadicale = 'https://adminprof:adminprof@edouardalvescamilo.ovh';
 
 
 /*
