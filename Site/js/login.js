@@ -28,7 +28,7 @@ $(document).ready(function() {
                     $("#retourLoginJs")
                         .html(closeTag + elem.message)
                         .addClass('alert alert-danger col-md-4 col-centered')
-                        .show(500);
+                        .show("fast");
                 }
             })
             .fail(function(elem) {
@@ -57,9 +57,9 @@ $(document).ready(function() {
                 } else {
                     // connexion échouée
                     $("#retourLoginJs")
-                        .html(elem.message)
+                        .html(closeTag + elem.message)
                         .addClass('alert alert-danger col-md-4 col-centered')
-                        .show(500);
+                        .show("fast");
                 }
             })
             .fail(function(elem) {
