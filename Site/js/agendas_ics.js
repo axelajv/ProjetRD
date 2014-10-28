@@ -4,7 +4,7 @@ var urlRadicale = 'https://adminprof:adminprof@edouardalvescamilo.ovh';
 
 /*
  * iCheck plugin
- */
+ *
 $(document).on('icheck', function() {
     var callbacks_list = $('.demo-callbacks ul');
     $('.form-enseignant, .form-filiere, .form-salle')
@@ -62,7 +62,7 @@ $(document).ready(function() {
             "sProcessing": "Chargement..."
         },
         "fnDrawCallback": function(oSettings) {
-            $(document).trigger('icheck'); // charger iCheck
+            //$(document).trigger('icheck'); // charger iCheck
 
             var selecteurCSS = '.table-enseignant a';
             var typeICS = 'Enseignants';
@@ -116,7 +116,7 @@ $(document).ready(function() {
             "sProcessing": "Chargement..."
         },
         "fnDrawCallback": function(oSettings) {
-            $(document).trigger('icheck'); // charger iCheck
+            //$(document).trigger('icheck'); // charger iCheck
 
             var selecteurCSS = '.table-filiere a';
             var typeICS = 'Filieres';
@@ -171,7 +171,7 @@ $(document).ready(function() {
             "sProcessing": "Chargement..."
         },
         "fnDrawCallback": function(oSettings) {
-            $(document).trigger('icheck'); // charger iCheck
+            //$(document).trigger('icheck'); // charger iCheck
 
             var selecteurCSS = '.table-salle a';
             var typeICS = 'Salles';

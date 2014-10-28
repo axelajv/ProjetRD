@@ -26,14 +26,12 @@
         <link rel="stylesheet" href="css/common.css"/>
         <link rel="stylesheet" href="css/login.css"/>
         <link rel="stylesheet" href="css/agendas_ics.css">
-        <link rel="stylesheet" href="API/iCheck/skins/flat/blue.css">
         <link rel="stylesheet" href="API/DataTables/css/jquery.dataTables.css">
 
         <!-- scripts -->
         <script src="API/jquery/jquery.js"></script>
         <script src="API/bootstrap/js/bootstrap.js"></script>
         <script src="js/loadPage.js"></script>
-        <script src="API/iCheck/icheck.js"></script>
         <script src="API/dataTables/js/jquery.dataTables.js"></script>
 
     </head>
