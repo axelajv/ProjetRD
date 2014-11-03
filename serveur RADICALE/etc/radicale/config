@@ -4,17 +4,17 @@
 # IPv6 syntax: [address]:port
 # For example: 0.0.0.0:9999, [::]:9999
 # IPv6 adresses are configured to only allow IPv6 connections
-hosts = 0.0.0.0:5232
+hosts = 5.196.11.220:5232
 # Daemon flag
 daemon = False
 # File storing the PID in daemon mode
 pid =
 # SSL flag, enable HTTPS protocol
-ssl = False
+ssl = True
 # SSL certificate path
-certificate = /etc/apache2/ssl/server.crt
+certificate = /etc/apache2/certificats/www_edouardalvescamilo_ovh.crt
 # SSL private key
-key = /etc/apache2/ssl/server.key
+key = /etc/apache2/certificats/radicale.key
 # SSL Protocol used. See python's ssl module for available values
 protocol = PROTOCOL_SSLv23
 # Ciphers available. See python's ssl module for available ciphers
@@ -39,8 +39,7 @@ stock = utf-8
 [auth]
 # Authentication method
 # Value: None | htpasswd | IMAP | LDAP | PAM | courier | http | remote_user | custom
-# type = None
-type = htpasswd
+type = None
 
 # Custom authentication handler
 custom_handler =
@@ -103,7 +102,6 @@ type = from_file
 custom_handler =
 
 # File for rights management from_file
-#file = ~/.config/radicale/rights
 file = /etc/radicale/rights
 
 [storage]
@@ -131,7 +129,7 @@ database_url =
 # http://docs.python.org/library/logging.config.html
 config = /etc/radicale/logging
 # Set the default logging level to debug
-debug = False
+debug = True
 # Store all environment variables (including those set in the shell)
 full_environment = False
 
