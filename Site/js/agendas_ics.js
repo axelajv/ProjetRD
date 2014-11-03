@@ -126,7 +126,7 @@ $(document).ready(function() {
             "data": "Salle",
             "render": function(data, type, row) {
                 if (type === 'display') {
-                    return row.alias === '' ? row.nom : row.alias;
+                    return row.nom;
                 }
                 return data;
             },
@@ -229,6 +229,12 @@ function callIcsCreator(selecteurCSS, urlRadicale, typeICS) {
                 icsDirectory = "icssalle";
                 icsScript = "icssalle.php";
                 icsFile = obj.nom.toLowerCase();
+
+                var find = ' ';
+                var reg = new RegExp(find, 'g');
+
+                icsFile = icsFile.replace(reg, '_');
+
             } else {
                 icsDirectory = "";
                 icsFile = "";

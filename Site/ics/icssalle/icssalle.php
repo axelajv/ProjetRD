@@ -1,22 +1,40 @@
-﻿<?php
-include("../config.php");
+<?php
+include("../../config/config.php");
+//error_reporting(E_ALL);
 //Connection a la bdd
 mysql_connect($serveur,$user,$pass);
 mysql_select_db($dernierebase);
 
 //CALDav project - START ------
-include("../CalDAV/CALDavCommunication.php");
+include("../../script/CalDAVCommunication.php");
 //CALDav project - FIN --------
 
+date_default_timezone_set('Europe/Paris');
+setlocale(LC_TIME, 'fr_FR');
 $jour=date('d');
 $mois=date('m');
 $annee=date('Y');
 $heure=date('H');
 $minute=date('i');
 $i=0;
-setlocale(LC_TIME, 'fr_FR');	
-	
-$ressources_salles = mysql_query("SELECT * FROM ressources_salles WHERE deleted='0'");
+
+// Pour générer un calendrier précis
+// recuperation de : ID NOM PRENOM
+if(	isset($_POST['idsalle'])
+	&& !empty($_POST['idsalle'])
+	&& isset($_POST['nom'])
+	&& !empty($_POST['nom'])
+) {
+		$idSalle	= $_POST['idsalle'];
+		$nomSalle	= $_POST['nom'];
+
+		$requete_precision_salle = "AND codeSalle=$idSalle AND nom='$nomSalle'";
+} else {
+		// si aucun prof n'est précisé => EXPORT TOUS CALENDRIERS
+		$requete_precision_salle = "";
+}
+
+$ressources_salles = mysql_query("SELECT * FROM ressources_salles WHERE deleted='0' $requete_precision_salle");
 
 while ($salle = mysql_fetch_array($ressources_salles) )
 	{
@@ -29,21 +47,21 @@ while ($salle = mysql_fetch_array($ressources_salles) )
 	$fichier.="METHOD:PUBLISH". "\n";
 	$fichier.="X-WR-CALNAME:".$salle['nom']. "\n";
 	$fichier.="X-WR-TIMEZONE:Europe/paris". "\n";
-	
+
 	while ($seances_salle = mysql_fetch_array($seances_salles) )
 		{
 			$seances=mysql_query("SELECT * FROM seances WHERE codeSeance='$seances_salle[codeSeance]' AND deleted= '0'");
-			
-			
+
+
 			while ($seance = mysql_fetch_array($seances) )
 				{
 				$fichier.="BEGIN:VEVENT". "\n";
-				
-				
-				
+
+
+
 				//nom de la seance
 				$enseignements=mysql_query("SELECT * FROM enseignements WHERE codeEnseignement='$seance[codeEnseignement]' AND deleted= '0'");
-				$enseignement = mysql_fetch_array($enseignements);	
+				$enseignement = mysql_fetch_array($enseignements);
 				$numero_type=$enseignement['codeTypeActivite'];
 				$types=mysql_query("SELECT * FROM types_activites WHERE codeTypeActivite='$numero_type'");
 				$type_enseignement = mysql_fetch_array($types);
@@ -52,8 +70,8 @@ while ($salle = mysql_fetch_array($ressources_salles) )
 				//récupération de différentes infos du champs nom de la table enseignement
 				$cursename=explode("_",$enseignement['nom']);
 				$fichier.="SUMMARY:".$cursename[1]." - ".$type."\n";
-					
-				
+
+
 				//date debut seance
 				$dateseance=$seance['dateSeance'];
 				//$dateseance=ereg_replace("[-:]","",$dateseance);
@@ -68,11 +86,11 @@ while ($salle = mysql_fetch_array($ressources_salles) )
 				$jourseance=substr($dateseance,6,2);
 				$heureseance=substr($heuredebutseance,0,2);
 				$minuteseance=substr($heuredebutseance,2,2);
-				
+
 				$dates= gmstrftime("DTSTART:%Y%m%dT%H%M%SZ", mktime($heureseance, $minuteseance, 0, $moisseance, $jourseance, $anneeseance));
-				
+
 				$fichier.=$dates."\n";
-				
+
 				//date fin seance
 				$heuredebut=gmstrftime("%H", mktime($heureseance, $minuteseance, 0, $moisseance, $jourseance, $anneeseance));
 				$mindebut=gmstrftime("%M", mktime($heureseance, $minuteseance, 0, $moisseance, $jourseance, $anneeseance));
@@ -96,8 +114,8 @@ while ($salle = mysql_fetch_array($ressources_salles) )
 					}
 				$heurefinenmin=$heuredebutenmin+$heureduree*60+$minduree;
 				$heurefin=intval($heurefinenmin/60);
-				
-														
+
+
 				if (strlen($heurefin)==1)
 					{
 						$heurefin="0".$heurefin;
@@ -108,65 +126,65 @@ while ($salle = mysql_fetch_array($ressources_salles) )
 						$minfin="0".$minfin;
 					}
 				$fichier.="DTEND:".$dateseance."T".$heurefin.$minfin."00Z"."\n";
-				
-				
-				
+
+
+
 				//detail de la seance
 				$seances_groupes=mysql_query("SELECT * FROM seances_groupes WHERE codeSeance='$seances_salle[codeSeance]' AND deleted= '0'");
 				$nomgroupe="";
 				while ($seance_groupe = mysql_fetch_array($seances_groupes))
 					{
 					$groupes=mysql_query("SELECT * FROM ressources_groupes WHERE codeGroupe='$seance_groupe[codeRessource]' AND deleted= '0'");
-					$groupe = mysql_fetch_array($groupes);				
+					$groupe = mysql_fetch_array($groupes);
 					$nomgroupe=$nomgroupe.$groupe['nom']." ";
 					}
-				$nomgroupe=trim($nomgroupe);	
+				$nomgroupe=trim($nomgroupe);
 				if($seance['commentaire']!="")
 				{
 				$commentaire=utf8_encode($seance['commentaire']);
 				$commentaire=str_replace(array('à', 'â', 'ä', 'á', 'ã', 'å','î', 'ï', 'ì', 'í', 'ô', 'ö', 'ò', 'ó', 'õ', 'ø','ù', 'û', 'ü', 'ú','é', 'è', 'ê', 'ë','ç', 'ÿ', 'ñ'),array('a', 'a', 'a', 'a', 'a', 'a','i', 'i', 'i', 'i','o', 'o', 'o', 'o', 'o', 'o','u', 'u', 'u', 'u','e', 'e', 'e', 'e','c', 'y', 'n'),$commentaire);
-				$commentaire=strtoupper($commentaire);	
+				$commentaire=strtoupper($commentaire);
 				$fichier.="DESCRIPTION;LANGUAGE=fr-CA:MATIERE : ".$cursename[1]." - ".$type."\\nGROUPE : ".$nomgroupe."\\nDUREE : ".$heureduree."h".$minduree. "\\nCOMMENTAIRE : ".$commentaire. "\n";
 				}
 				else
 				{
 				$fichier.="DESCRIPTION;LANGUAGE=fr-CA:MATIERE : ".$cursename[1]." - ".$type."\\nGROUPE : ".$nomgroupe."\\nDUREE : ".$heureduree."h".$minduree."\n";
 				}
-			
-			$fichier.="DTSTAMP:".$annee.$mois.$jour."T".$heure.$minute."00Z". "\n";		
-			$fichier.="UID:".$annee.$mois.$jour."T"."000001Z-".$i."@ufrsitec.u-paris10.fr". "\n";	
+
+			$fichier.="DTSTAMP:".$annee.$mois.$jour."T".$heure.$minute."00Z". "\n";
+			$fichier.="UID:".$annee.$mois.$jour."T"."000001Z-".$i."@ufrsitec.u-paris10.fr". "\n";
 			$i=$i+1;
 			$fichier.="CATEGORIES:Emplois du temps du PST". "\n";
-				
+
 			$fichier.="END:VEVENT". "\n";
-			
+
 				}
-			
+
 		}
-		
-		
-//reservations		
+
+
+//reservations
 $reservations_salles=mysql_query("SELECT * FROM reservations_salles WHERE codeRessource='$salle[codeSalle]' AND deleted= '0'");
 while ($reservation_salle = mysql_fetch_array($reservations_salles) )
 		{
 			$reservations=mysql_query("SELECT * FROM reservations WHERE codeReservation='$reservation_salle[codeReservation]' AND deleted= '0'");
-			
-			
-			
+
+
+
 			while ($reservation = mysql_fetch_array($reservations) )
 				{
 				$fichier.="BEGIN:VEVENT". "\n";
-				
-				
-				
+
+
+
 				//nom de la reservation
 				$commentaire=utf8_encode($reservation['commentaire']);
 				$commentaire=str_replace(array('à', 'â', 'ä', 'á', 'ã', 'å','î', 'ï', 'ì', 'í', 'ô', 'ö', 'ò', 'ó', 'õ', 'ø','ù', 'û', 'ü', 'ú','é', 'è', 'ê', 'ë','ç', 'ÿ', 'ñ'),array('a', 'a', 'a', 'a', 'a', 'a','i', 'i', 'i', 'i','o', 'o', 'o', 'o', 'o', 'o','u', 'u', 'u', 'u','e', 'e', 'e', 'e','c', 'y', 'n'),$commentaire);
 				$commentaire=strtoupper($commentaire);
 				$fichier.="SUMMARY:".$commentaire."\n";
-				
+
 				$fichier.="CLASS:PUBLIC". "\n";
-				
+
 				//date debut reservation
 				$datereservation=$reservation['dateReservation'];
 				//$datereservation=ereg_replace("[-:]","",$datereservation);
@@ -180,12 +198,12 @@ while ($reservation_salle = mysql_fetch_array($reservations_salles) )
 				$moisreservation=substr($datereservation,4,2);
 				$jourreservation=substr($datereservation,6,2);
 				$heurereservation=substr($heuredebutreservation,0,2);
-				$minutereservation=substr($heuredebutreservation,2,2);	
-					
+				$minutereservation=substr($heuredebutreservation,2,2);
+
 				$dates= gmstrftime("DTSTART:%Y%m%dT%H%M%SZ", mktime($heurereservation, $minutereservation, 0, $moisreservation, $jourreservation, $anneereservation));
-				
+
 				$fichier.=$dates."\n";
-				
+
 				//date fin reservation
 				$heuredebut=gmstrftime("%H", mktime($heurereservation, $minutereservation, 0, $moisreservation, $jourreservation, $anneereservation));
 				$mindebut=gmstrftime("%M", mktime($heurereservation, $minutereservation, 0, $moisreservation, $jourreservation, $anneereservation));
@@ -209,7 +227,7 @@ while ($reservation_salle = mysql_fetch_array($reservations_salles) )
 					}
 				$heurefinenmin=$heuredebutenmin+$heureduree*60+$minduree;
 				$heurefin=intval($heurefinenmin/60);
-														
+
 				if (strlen($heurefin)==1)
 					{
 						$heurefin="0".$heurefin;
@@ -220,53 +238,36 @@ while ($reservation_salle = mysql_fetch_array($reservations_salles) )
 						$minfin="0".$minfin;
 					}
 				$fichier.="DTEND:".$datereservation."T".$heurefin.$minfin."00Z"."\n";
-				
-				
+
+
 				//detail de la seance
 				$fichier.="DESCRIPTION;LANGUAGE=fr-CA:INTITULE : ".$commentaire." \\nDUREE : ".$heureduree."h".$minduree."\n";
-				
-			
-				
+
+
+
 			$fichier.="CATEGORIES:Emplois du temps du PST". "\n";
-			$fichier.="DTSTAMP:".$annee.$mois.$jour."T".$heure.$minute."00Z". "\n";		
-			$fichier.="UID:".$annee.$mois.$jour."T"."000001Z-".$i."@ufrsitec.u-paris10.fr". "\n";	
+			$fichier.="DTSTAMP:".$annee.$mois.$jour."T".$heure.$minute."00Z". "\n";
+			$fichier.="UID:".$annee.$mois.$jour."T"."000001Z-".$i."@ufrsitec.u-paris10.fr". "\n";
 			$i=$i+1;
 			$fichier.="END:VEVENT". "\n";
-			
+
 			}
-			
+
 		}
-		
+
 
 		$fichier.="END:VCALENDAR";
 
 		$nomfichier=$salle['nom'].".ics";
 		//$nomfichier=ereg_replace("[ ]","_",$nomfichier);
-		$nomfichier=preg_replace('/\s/',"_",$nomfichier);
+		$nomfichier=preg_replace('/\s\s+/',"_",$nomfichier);
 		$nomfichier=strtolower($nomfichier);
 		file_put_contents($nomfichier,$fichier);
-		
+
 		//CALDav project - START ------
 		$uid = $annee.$mois.$jour."T"."000001Z-".$i."@ufrsitec.u-paris10.fr";
-		sendICSFile($nomfichier,$fichier,$ENSEIGNANT,$uid);
+		sendICSFile($nomfichier,$fichier,$SALLE,$uid);
 		//---------------- FIN --------
-	
+
 	}
-	
-
-	
-	
-
 ?>
-
-
-
-
-
-
-
-
-		
-
-
-
