@@ -2,52 +2,60 @@
 
 session_start();
 
+error_reporting(E_ALL);
+
 include('../config/config.php');
 
 // tableau suivant l'état de la connexion
 $tableau = array("message"	 => "En attente",
-				"connexion" => false);
+				"connexion" => FALSE);
 
 if (isset($_POST['studyLogin']) && !empty($_POST['studyLogin']))
 {
-	$find = FALSE;
+	// variables
+	$find		= FALSE;
+	$studyLogin	= $_POST['studyLogin'];
 
-	// si tout les champs sont remplis alors on regarde si le nom de compte rentré existe bien dans la base de données.
-	$sql = "SELECT * FROM ressources_etudiants WHERE identifiant=".$dbh->quote($_POST['studyLogin'], PDO::PARAM_STR)." AND deleted=0";
-	$req = $dbh->prepare($sql);
+	// si tous les champs sont remplis alors on vérifie l'existence en BDD
+	$req = $dbh->prepare('SELECT * FROM ressources_etudiants WHERE identifiant = :studyLogin');
+	$req->bindParam(':studyLogin', $studyLogin, PDO::PARAM_STR);
 	$req->execute();
 
-	// Si oui, on continue le script...
-	while($find == FALSE && $ligne = $req->fetch())
+	// $find == 1 si une ligne correspond
+	$find = $req->rowCount();
+
+	/* ATTENTION :
+	* Dans la table "ressources_etudiants" plusieurs
+	* logins existent pour un même libellé
+	*/
+	if($find > 0) // connexion réussie
 	{
-		$find = TRUE;
+		// compteur de connexion
+		$dbh->exec('UPDATE compteur SET valeur=valeur+1 WHERE id_compteur=1');
 
-		$sql="UPDATE compteur SET valeur=valeur+1 WHERE id_compteur='1'";
-		$dbh->exec($sql);
-	}
+		// init variable de session
+		$_SESSION['studyLogin'] = $studyLogin;
 
-	$req->closeCursor();
-
-	// Sinon on lui affiche un message d'erreur.
-	if($find == FALSE)
-	{
-		$tableau["message"]	  = "Connexion refusée";
-		$tableau["connexion"] = false;
-	}
-	else
-	{
-		$_SESSION['studyLogin'] = $_POST['studyLogin'];
-
+		// $tableau sert de réponse à l'appel ajax
 		$tableau["message"]	  	= "Connexion en cours";
-		$tableau["connexion"] 	= true;
+		$tableau["connexion"] 	= TRUE;
+	}
+	else // connexion échouée
+	{
+		// $tableau sert de réponse à l'appel ajax
+		$tableau["message"]	  = "Connexion impossible";
+		$tableau["connexion"] = FALSE;
 	}
 
-	echo json_encode($tableau);
+	// fermeture de la connexion
+	$req->closeCursor();
 
 }
 else
 {
-	echo json_encode($tableau);
+	// $tableau sert de réponse à l'appel ajax
+	$tableau["message"]	  = "informations incorrectes";
+	$tableau["connexion"] = false;
 }
 
-?>
+echo json_encode($tableau);
