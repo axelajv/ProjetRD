@@ -301,7 +301,7 @@ while ( $groupe = mysql_fetch_array($ressources_groupes) )
 
     //CALDav project - START ------
     $uid = $annee.$mois.$jour."T"."000001Z-".$i."@ufrsitec.u-paris10.fr";
-    sendICSFile($nomfichier,$fichier,$GROUPE,$uid);
+    sendICSFile($nomfichier,$fichier,$FILIERE,$uid);
     //---------------- FIN --------
 
 }

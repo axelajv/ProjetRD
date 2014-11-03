@@ -278,7 +278,6 @@ $(document).ready(function() {
     $('#form-filiere').click(function() {
         $('.form-enseignant, .form-salle').hide('fast');
         $('.form-filiere').show('fast');
-
         $('#form-salle, #form-enseignant').removeClass('active');
         $(this).addClass('active');
     });
