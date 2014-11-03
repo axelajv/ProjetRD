@@ -20,13 +20,13 @@ $i=0;
 
 // Pour générer un calendrier précis
 // recuperation de : ID NOM
-if(	isset($_POST['idgrp']) &&
-    !empty($_POST['idgrp']) &&
-    isset($_POST['nomgrp']) &&
-    !empty($_POST['nomgrp'])
+if(	isset($_POST['idgroupe']) &&
+    !empty($_POST['idgroupe']) &&
+    isset($_POST['nom']) &&
+    !empty($_POST['nom'])
 ) {
-    $idGroupe	= $_POST['idgrp'];
-    $nomGroupe  = $_POST['nomgrp'];
+    $idGroupe	= $_POST['idgroupe'];
+    $nomGroupe  = $_POST['nom'];
 
     $requete_precision_grp = "AND codeGroupe=$idGroupe AND nom='$nomGroupe'";
 } else {
