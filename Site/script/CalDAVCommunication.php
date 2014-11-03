@@ -41,9 +41,9 @@ function getStatusInfo($curl, $httpStatus = array(200,201,202,203,204,205,206,20
     // requete
     if(!$curl->curl_error) {
         if( in_array($curl->http_status_code, $httpStatus) ) {
-            $msg = "La requête est bien arrivée - HTTP[".$curl->http_status_code."]".$curl->response_headers;
+            $msg = "La requête est bien arrivée - HTTP[".$curl->http_status_code."]";
         } else {
-            $msg = "La requête a échoué - HTTP[".$curl->http_status_code."]".$curl->response_headers;
+            $msg = "La requête a échoué - HTTP[".$curl->http_status_code."]";
         }
     } else {
         $msg = "cURL KO, erreur : ".$curl->curl_error_message;

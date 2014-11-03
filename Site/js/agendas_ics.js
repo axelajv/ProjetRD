@@ -1,27 +1,6 @@
 // URL a deplacer/modifier
 var urlRadicale = 'https://adminprof:adminprof@edouardalvescamilo.ovh';
 
-
-/*
- * iCheck plugin
- *
-$(document).on('icheck', function() {
-    var callbacks_list = $('.demo-callbacks ul');
-    $('.form-enseignant, .form-filiere, .form-salle')
-        .on('click ifCreated ifClicked ifChanged ifChecked ifUnchecked ifDisabled ifEnabled ifDestroyed',
-            function(event) {
-                callbacks_list.prepend('<li><span>#' + this.id + '</span> is ' + event.type.replace('if', '').toLowerCase() + '</li>');
-            }
-        ).iCheck({
-            checkboxClass: 'icheckbox_flat-blue',
-            radioClass: 'iradio_flat-blue',
-            increaseArea: '40%'
-        });
-}).trigger('icheck'); // charger iCheck
-/*
- * ./iCheck plugin
- */
-
 /*
  * DataTables plugin Enseignant
  */
