@@ -22,3 +22,7 @@ edt/CalDAV/lib/stdClass/*
 Site/API/node_modules/*
 
 Site/templates_c/*
+
+Site/config/config.php
+
+Site/config/config.php

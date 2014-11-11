@@ -24,7 +24,7 @@ function sendICSFile($calendrier, $contenu, $collection, $uid){
         'Content-Length: '.strlen($contenu),
     );
 
-    echo $contenu."<br/><br/>";
+    //echo $contenu."<br/><br/>";
 
     $curl = new Curl();
 

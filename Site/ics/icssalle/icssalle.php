@@ -144,11 +144,11 @@ while ($salle = mysql_fetch_array($ressources_salles) )
 				$commentaire=utf8_encode($seance['commentaire']);
 				$commentaire=str_replace(array('à', 'â', 'ä', 'á', 'ã', 'å','î', 'ï', 'ì', 'í', 'ô', 'ö', 'ò', 'ó', 'õ', 'ø','ù', 'û', 'ü', 'ú','é', 'è', 'ê', 'ë','ç', 'ÿ', 'ñ'),array('a', 'a', 'a', 'a', 'a', 'a','i', 'i', 'i', 'i','o', 'o', 'o', 'o', 'o', 'o','u', 'u', 'u', 'u','e', 'e', 'e', 'e','c', 'y', 'n'),$commentaire);
 				$commentaire=strtoupper($commentaire);
-				$fichier.="DESCRIPTION;LANGUAGE=fr-CA:MATIERE : ".$cursename[1]." - ".$type."\\nGROUPE : ".$nomgroupe."\\nDUREE : ".$heureduree."h".$minduree. "\\nCOMMENTAIRE : ".$commentaire. "\n";
+				$fichier.="DESCRIPTION;LANGUAGE=fr-CA:MATIERE : ".$cursename[1]." - ".$type."\nGROUPE : ".$nomgroupe."\nDUREE : ".$heureduree."h".$minduree. "\nCOMMENTAIRE : ".$commentaire. "\n";
 				}
 				else
 				{
-				$fichier.="DESCRIPTION;LANGUAGE=fr-CA:MATIERE : ".$cursename[1]." - ".$type."\\nGROUPE : ".$nomgroupe."\\nDUREE : ".$heureduree."h".$minduree."\n";
+				$fichier.="DESCRIPTION;LANGUAGE=fr-CA:MATIERE : ".$cursename[1]." - ".$type."\nGROUPE : ".$nomgroupe."\nDUREE : ".$heureduree."h".$minduree."\n";
 				}
 
 			$fichier.="DTSTAMP:".$annee.$mois.$jour."T".$heure.$minute."00Z". "\n";
@@ -241,7 +241,7 @@ while ($reservation_salle = mysql_fetch_array($reservations_salles) )
 
 
 				//detail de la seance
-				$fichier.="DESCRIPTION;LANGUAGE=fr-CA:INTITULE : ".$commentaire." \\nDUREE : ".$heureduree."h".$minduree."\n";
+				$fichier.="DESCRIPTION;LANGUAGE=fr-CA:INTITULE : ".$commentaire." \nDUREE : ".$heureduree."h".$minduree."\n";
 
 
 
@@ -260,8 +260,10 @@ while ($reservation_salle = mysql_fetch_array($reservations_salles) )
 
 		$nomfichier=$salle['nom'].".ics";
 		//$nomfichier=ereg_replace("[ ]","_",$nomfichier);
-		$nomfichier=preg_replace('/\s\s+/',"_",$nomfichier);
+		//$nomfichier=preg_replace('/\s\s+/',"_",$nomfichier);
+		$nomfichier=str_replace(" ","_",$nomfichier);
 		$nomfichier=strtolower($nomfichier);
+		
 		file_put_contents($nomfichier,$fichier);
 
 		//CALDav project - START ------
