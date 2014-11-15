@@ -17,6 +17,9 @@ $annee=date('Y');
 $heure=date('H');
 $minute=date('i');
 $i=0;
+$newline = "\n";
+
+depart_timer("ICSPROF");
 
 // Pour générer un calendrier précis
 // recuperation de : ID NOM PRENOM
@@ -27,8 +30,8 @@ if(	isset($_POST['idprof']) &&
 		isset($_POST['prenom']) &&
 		!empty($_POST['prenom'])
 ) {
-		$idProf			= $_POST['idprof'];
-		$nomProf		= $_POST['nom'];
+		$idProf		= $_POST['idprof'];
+		$nomProf	= $_POST['nom'];
 		$prenomProf	= $_POST['prenom'];
 
 		$requete_precision_prof = "AND codeProf=$idProf AND nom='$nomProf' AND prenom='$prenomProf'";
@@ -38,28 +41,29 @@ if(	isset($_POST['idprof']) &&
 }
 
 // constitution de la requête
-$ressources_profs = mysql_query("SELECT * FROM $dernierebase.ressources_profs WHERE deleted='0' $requete_precision_prof ;");
+$ressources_profs = "SELECT * FROM $dernierebase.ressources_profs WHERE deleted=0 $requete_precision_prof";
 
-while($prof = mysql_fetch_array($ressources_profs)) {
-		$fichier="";
-		$fichier="BEGIN:VCALENDAR". "\n";
-		$fichier.="VERSION:2.0". "\n";
-		$fichier.="PRODID:-//Developpe par Bruno Million//NONSGML v1.0//EN". "\n";
-		$fichier.="CALSCALE:GREGORIAN". "\n";
-		$fichier.="METHOD:PUBLISH". "\n";
-		$fichier.="X-WR-CALNAME:".$prof['prenom']." ".$prof['nom']. "\n";
-		$fichier.="X-WR-TIMEZONE:Europe/paris"."\n";
+foreach($dbh->query($ressources_profs) as $prof) {
+
+		$fichier = "BEGIN:VCALENDAR" . $newline;
+		$fichier .= "VERSION:2.0" . $newline;
+		$fichier .= "PRODID:-//Developpe par Bruno Million//NONSGML v1.0//EN" . $newline;
+		$fichier .= "CALSCALE:GREGORIAN" . $newline;
+		$fichier .= "METHOD:PUBLISH" . $newline;
+		$fichier .= "X-WR-CALNAME:".$prof['prenom']." ".$prof['nom'] . $newline;
+		$fichier .= "X-WR-TIMEZONE:Europe/paris" . $newline;
 
 		for($k=0;$k<=$nbdebdd-1;$k++) {
 				mysql_select_db("$base[$k]");
-				$seances_profs=mysql_query("SELECT * FROM $base[$k].seances_profs WHERE codeRessource='".$prof['codeProf']."' AND deleted= '0'");
+				$seances_profs = "SELECT * FROM $base[$k].seances_profs WHERE codeRessource='$prof[codeProf]' AND deleted=0";
 
-				while($seances_prof = mysql_fetch_array($seances_profs) ) {
-						$seances=mysql_query("SELECT * FROM $base[$k].seances WHERE codeSeance='$seances_prof[codeSeance]' AND deleted= '0'");
-						$seances_salles=mysql_query("SELECT * FROM $base[$k].seances_salles WHERE codeSeance='$seances_prof[codeSeance]' AND deleted= '0'");
+				foreach($dbh->query($seances_profs) as $seances_prof) {
 
-						while($seance = mysql_fetch_array($seances)) {
-								$fichier.="BEGIN:VEVENT". "\n";
+						$seances = "SELECT * FROM $base[$k].seances WHERE codeSeance='$seances_prof[codeSeance]' AND deleted=0";
+						$seances_salles = "SELECT * FROM $base[$k].seances_salles WHERE codeSeance='$seances_prof[codeSeance]' AND deleted=0";
+
+						foreach($dbh->query($seances) as $seance) {
+								$fichier .= "BEGIN:VEVENT" . $newline;
 
 								//nom de la seance
 								$enseignements=mysql_query("SELECT * FROM $base[$k].enseignements WHERE codeEnseignement='$seance[codeEnseignement]' AND deleted= '0'");
@@ -73,21 +77,22 @@ while($prof = mysql_fetch_array($ressources_profs)) {
 								//récupération de différentes infos du champs nom de la table enseignement
 								$cursename=explode("_",$enseignement['nom']);
 								//récuperation de la liste des groupes
-								$seances_groupes=mysql_query("SELECT * FROM $base[$k].seances_groupes WHERE codeSeance='$seances_prof[codeSeance]' AND deleted= '0'");
-								$nomgroupe="";
-								while ($seance_groupe = mysql_fetch_array($seances_groupes)) {
-										$groupes=mysql_query("SELECT * FROM $base[$k].ressources_groupes WHERE codeGroupe='$seance_groupe[codeRessource]' AND deleted= '0'");
-										$groupe = mysql_fetch_array($groupes);
-										$nomgroupe=$nomgroupe.$groupe['nom']." ";
-								}
+								$seances_groupes = "SELECT * FROM $base[$k].seances_groupes WHERE codeSeance='$seances_prof[codeSeance]' AND deleted=0";
 
-								$nomgroupe=trim($nomgroupe);
-								$fichier.="SUMMARY:".$cursename[1]." - ".$type." - ".$nomgroupe."\n";
-								$fichier.="CATEGORIES:".$cursename[0]."\n";
+								$groupes_sql = "SELECT * FROM $base[$k].ressources_groupes WHERE codeGroupe='$seance_groupe[codeRessource]' AND deleted=0";
+								$groupes_stmt = $dbh->prepare($groupes_sql);
+								$groupes_stmt->execute();
+								$groupe = $groupes_stmt->fetch();
+
+								$nomgroupe = $groupe['nom'];
+
+								$nomgroupe = trim($nomgroupe);
+								$fichier .= "SUMMARY:".$cursename[1]." - ".$type." - ".$nomgroupe . $newline;
+								$fichier .= "CATEGORIES:".$cursename[0] . $newline;
 
 								//date debut seance
-								$dateseance=$seance['dateSeance'];
-								$dateseance=str_replace("-","",$dateseance);
+								$dateseance = $seance['dateSeance'];
+								$dateseance = str_replace("-","",$dateseance);
 								$heuredebutseance=$seance['heureSeance'];
 								if (strlen($heuredebutseance)<=3) {
 										$heuredebutseance="0".$heuredebutseance;
@@ -100,7 +105,7 @@ while($prof = mysql_fetch_array($ressources_profs)) {
 
 								$dates= gmstrftime("DTSTART:%Y%m%dT%H%M%SZ", mktime($heureseance, $minuteseance, 0, $moisseance, $jourseance, $anneeseance));
 
-								$fichier.=$dates."\n";
+								$fichier .= $dates . $newline;
 
 								//date fin seance
 								$heuredebut=gmstrftime("%H", mktime($heureseance, $minuteseance, 0, $moisseance, $jourseance, $anneeseance));
@@ -129,60 +134,57 @@ while($prof = mysql_fetch_array($ressources_profs)) {
 								if (strlen($minfin)==1) {
 										$minfin="0".$minfin;
 								}
-								$fichier.="DTEND:".$dateseance."T".$heurefin.$minfin."00Z"."\n";
+								$fichier .= "DTEND:".$dateseance."T".$heurefin.$minfin."00Z" . $newline;
 
 								//numero de la salle
-								$nomsalle="";
-								while($seance_salle = mysql_fetch_array($seances_salles)) {
-										$ressources_salles=mysql_query("SELECT * FROM $base[$k].ressources_salles WHERE codeSalle='$seance_salle[codeRessource]' AND deleted= '0'");
-										$salle = mysql_fetch_array($ressources_salles);
-										$nomsalle = $nomsalle.$salle['nom']." ";
-								}
-								$nomsalle=trim($nomsalle);
-								$fichier.="LOCATION:".$nomsalle. "\n";
+								$ressources_salles_sql = "SELECT * FROM $base[$k].ressources_salles WHERE codeSalle='$seance_salle[codeRessource]' AND deleted=0";
+								$ressources_salles_stmt = $dbh->prepare($ressources_salles_sql);
+								$ressources_salles_stmt->execute();
+								$salle = $ressources_salles_stmt->fetch();
+								$nomsalle = trim($salle['nom']);
+
+								$fichier .= "LOCATION:" . $nomsalle . $newline;
 
 								//detail de la seance
 
 								if($seance['commentaire']!="") {
-										$commentaire=utf8_encode($seance['commentaire']);
-										$commentaire=str_replace(array('à', 'â', 'ä', 'á', 'ã', 'å','î', 'ï', 'ì', 'í', 'ô', 'ö', 'ò', 'ó', 'õ', 'ø','ù', 'û', 'ü', 'ú','é', 'è', 'ê', 'ë','ç', 'ÿ', 'ñ'),array('a', 'a', 'a', 'a', 'a', 'a','i', 'i', 'i', 'i','o', 'o', 'o', 'o', 'o', 'o','u', 'u', 'u', 'u','e', 'e', 'e', 'e','c', 'y', 'n'),$commentaire);
-										$commentaire=strtoupper($commentaire);
+									$commentaire=utf8_encode($seance['commentaire']);
+									$commentaire=str_replace(array('à', 'â', 'ä', 'á', 'ã', 'å','î', 'ï', 'ì', 'í', 'ô', 'ö', 'ò', 'ó', 'õ', 'ø','ù', 'û', 'ü', 'ú','é', 'è', 'ê', 'ë','ç', 'ÿ', 'ñ'),array('a', 'a', 'a', 'a', 'a', 'a','i', 'i', 'i', 'i','o', 'o', 'o', 'o', 'o', 'o','u', 'u', 'u', 'u','e', 'e', 'e', 'e','c', 'y', 'n'),$commentaire);
+									$commentaire=strtoupper($commentaire);
 
-										$fichier.="DESCRIPTION;LANGUAGE=fr-CA:MATIERE : ".$cursename[1]." - ".$type."\\nGROUPE : ".$nomgroupe."\\nDUREE : ".$heureduree."h".$minduree. "\\nCOMMENTAIRE : ".$commentaire. "\n";
+									$fichier .= "DESCRIPTION;LANGUAGE=fr-CA:MATIERE : ".$cursename[1]." - ".$type."\\nGROUPE : ".$nomgroupe."\\nDUREE : ".$heureduree."h".$minduree. "\\nCOMMENTAIRE : ".$commentaire. "\n";
 								}
 								else {
-										$fichier.="DESCRIPTION;LANGUAGE=fr-CA:MATIERE : ".$cursename[1]." - ".$type."\\nGROUPE : ".$nomgroupe."\\nDUREE : ".$heureduree."h".$minduree."\n";
+									$fichier .= "DESCRIPTION;LANGUAGE=fr-CA:MATIERE : ".$cursename[1]." - ".$type."\\nGROUPE : ".$nomgroupe."\\nDUREE : ".$heureduree."h".$minduree . $newline;
 								}
 
-								$fichier.="DTSTAMP:".$annee.$mois.$jour."T".$heure.$minute."00Z". "\n";
-								$fichier.="UID:".$annee.$mois.$jour."T"."000001Z-".$i."@ufrsitec.u-paris10.fr". "\n";
+								$fichier .= "DTSTAMP:".$annee.$mois.$jour."T".$heure.$minute."00Z" . $newline;
+								$fichier .= "UID:".$annee.$mois.$jour."T"."000001Z-".$i."@ufrsitec.u-paris10.fr" . $newline;
 								$i=$i+1;
-								//$fichier.="CATEGORIES:Emplois du temps du PST". "\n";
+								//$fichier .= "CATEGORIES:Emplois du temps du PST". "\n";
 
-								$fichier.="END:VEVENT". "\n";
+								$fichier .= "END:VEVENT" . $newline;
 						}
 				}
 
 
 				//reservations
-				$reservations_profs=mysql_query("SELECT * FROM $base[$k].reservations_profs WHERE codeRessource='$prof[codeProf]' AND deleted= '0'");
-				while ($reservation_prof = mysql_fetch_array($reservations_profs) ) {
-							$reservations=mysql_query("SELECT * FROM $base[$k].reservations WHERE codeReservation='$reservation_prof[codeReservation]' AND deleted= '0' ");
-							$reservations_salles=mysql_query("SELECT * FROM $base[$k].reservations_salles WHERE codeReservation='$reservation_prof[codeReservation]' AND deleted= '0'");
+				//$reservations_profs = mysql_query("SELECT * FROM $base[$k].reservations_profs WHERE codeRessource='$prof[codeProf]' AND deleted= '0'");
+				$reservations_profs = "SELECT * FROM $base[$k].reservations_profs WHERE codeRessource='$prof[codeProf]' AND deleted=0";
 
+				foreach($dbh->query($reservations_profs) as $reservation_prof) {
+							$reservations = "SELECT * FROM $base[$k].reservations WHERE codeReservation='$reservation_prof[codeReservation]' AND deleted=0";
 
-							while ($reservation = mysql_fetch_array($reservations) ) {
-									$fichier.="BEGIN:VEVENT". "\n";
-
-
+							foreach($dbh->query($reservations) as $reservation) {
+									$fichier .= "BEGIN:VEVENT" . $newline;
 
 									//nom de la reservation
 									$commentaire=utf8_encode($reservation['commentaire']);
 									$commentaire=str_replace(array('à', 'â', 'ä', 'á', 'ã', 'å','î', 'ï', 'ì', 'í', 'ô', 'ö', 'ò', 'ó', 'õ', 'ø','ù', 'û', 'ü', 'ú','é', 'è', 'ê', 'ë','ç', 'ÿ', 'ñ'),array('a', 'a', 'a', 'a', 'a', 'a','i', 'i', 'i', 'i','o', 'o', 'o', 'o', 'o', 'o','u', 'u', 'u', 'u','e', 'e', 'e', 'e','c', 'y', 'n'),$commentaire);
 									$commentaire=strtoupper($commentaire);
-									$fichier.="SUMMARY:".$commentaire."\n";
+									$fichier .= "SUMMARY:".$commentaire . $newline;
 
-									$fichier.="CLASS:PUBLIC". "\n";
+									$fichier .= "CLASS:PUBLIC" . $newline;
 
 									//date debut reservation
 									$datereservation=$reservation['dateReservation'];
@@ -199,7 +201,7 @@ while($prof = mysql_fetch_array($ressources_profs)) {
 
 									$dates= gmstrftime("DTSTART:%Y%m%dT%H%M%SZ", mktime($heurereservation, $minutereservation, 0, $moisreservation, $jourreservation, $anneereservation));
 
-									$fichier.=$dates."\n";
+									$fichier .= $dates . $newline;
 
 									//date fin reservation
 									$heuredebut=gmstrftime("%H", mktime($heurereservation, $minutereservation, 0, $moisreservation, $jourreservation, $anneereservation));
@@ -228,42 +230,40 @@ while($prof = mysql_fetch_array($ressources_profs)) {
 									if (strlen($minfin)==1) {
 											$minfin="0".$minfin;
 									}
-									$fichier.="DTEND:".$datereservation."T".$heurefin.$minfin."00Z"."\n";
+									$fichier .= "DTEND:".$datereservation."T".$heurefin.$minfin."00Z" . $newline;
 
 									//numero de la salle
-									$nomsalle="";
-									$reservations_salles=mysql_query("SELECT * FROM $base[$k].reservations_salles WHERE codeReservation='$reservation_prof[codeReservation]' AND deleted= '0' AND codeRessource!='0'");
+									$ressources_salles_sql = "SELECT * FROM $base[$k].ressources_salles WHERE codeSalle='$reservation_salle[codeRessource]' AND deleted=0 AND codeRessource!=0";
+									$ressources_salles_stmt = $dbh->prepare($ressources_salles_sql);
+									$ressources_salles_stmt->execute();
+									$salle = $ressources_salles_stmt->fetch();
 
-									while($reservation_salle = mysql_fetch_array($reservations_salles)) {
-											$ressources_salles=mysql_query("SELECT * FROM $base[$k].ressources_salles WHERE codeSalle='$reservation_salle[codeRessource]' AND deleted= '0' ");
-											while($salle = mysql_fetch_array($ressources_salles)) {
-													$nomsalle = $nomsalle.$salle['nom']." ";
-											}
-									}
-									$nomsalle=trim($nomsalle);
-									$fichier.="LOCATION:".$nomsalle. "\n";
+									$nomsalle = trim($salle['nom']);
+
+									$fichier .= "LOCATION:".$nomsalle . $newline;
 
 									//detail de la seance
-									$fichier.="DESCRIPTION;LANGUAGE=fr-CA:INTITULE : ".$commentaire." \\nDUREE : ".$heureduree."h".$minduree."\n";
+									$fichier .= "DESCRIPTION;LANGUAGE=fr-CA:INTITULE : ".$commentaire." \\nDUREE : ".$heureduree."h".$minduree . $newline;
 
-
-
-									$fichier.="CATEGORIES:Emplois du temps du PST". "\n";
-									$fichier.="DTSTAMP:".$annee.$mois.$jour."T".$heure.$minute."00Z". "\n";
-									$fichier.="UID:".$annee.$mois.$jour."T"."000001Z-".$i."@ufrsitec.u-paris10.fr". "\n";
+									$fichier .= "CATEGORIES:Emplois du temps du PST" . $newline;
+									$fichier .= "DTSTAMP:".$annee.$mois.$jour."T".$heure.$minute."00Z" . $newline;
+									$fichier .= "UID:".$annee.$mois.$jour."T"."000001Z-".$i."@ufrsitec.u-paris10.fr" . $newline;
 									$i=$i+1;
-									$fichier.="END:VEVENT". "\n";
+									$fichier .= "END:VEVENT" . $newline;
 							}
 					}
 			}
 
-			$fichier.="END:VCALENDAR";
+			$fichier .= "END:VCALENDAR";
 
 			$nomfichier=$prof['nom']."_".$prof['prenom'].".ics";
 			$nomfichier=str_replace(" ","_",$nomfichier);
 			$nomfichier=strtolower($nomfichier);
 
 			file_put_contents($nomfichier,$fichier);
+
+fin_timer("ICSPROF");
+echo afficher_timer("ICSPROF");
 
 			//CALDav project - START ------
 			$uid = $annee.$mois.$jour."T"."000001Z-".$i."@ufrsitec.u-paris10.fr";

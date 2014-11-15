@@ -63,4 +63,35 @@ function writeLog($msg,$subject){
         fclose($vide);
     }
 }
+
+/*
+ * IDE - Fonction pour benchmarker 
+ * les scripts de génération des calendriers
+ */
+function depart_timer($nom)
+{
+	$temp = explode(' ',microtime());
+	$nom = strtoupper($nom);
+	define('TIMER'.$nom.'DEBUT', $temp[1].substr($temp[0],1));
+	unset($temp);
+	return 1;
+}
+
+function fin_timer($nom)
+{
+	$temp = explode(' ',microtime());
+	$nom = strtoupper($nom);
+	define('TIMER'.$nom.'FIN', $temp[1].substr($temp[0],1));
+	unset($temp);
+	return 1;
+}
+
+function afficher_timer($nom)
+{
+	$nom = strtoupper($nom);
+	define('TIMER'.$nom.'RESULTAT', bcsub(constant('TIMER'.$nom.'FIN'),constant('TIMER'.$nom.'DEBUT'),6)*1000);
+	return constant('TIMER'.$nom.'RESULTAT');
+}
+
+
 ?>
