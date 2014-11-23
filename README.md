@@ -6,7 +6,7 @@ Le <a href="https://github.com/edmondsnadane/Projet-R-D.git" title="projet VT2">
 <b>Ce projet VT2 bis vise à proposer une évolution supplémentaire : la synchronisation d'agendas sur des postes clients.</b> 
 
 ### OBJECTIFS 
-* La <b>mise en place d'un serveur CalDAV</b> (http://www.radicale.org/) pour les enseignants, les groupes d'étudiant, lles salles, <i>(le matériel ?)</i>.
+* La <b>mise en place d'un serveur CalDAV</b> (http://www.radicale.org/) pour les enseignants, les groupes d'étudiant, les salles, <i>(le matériel ?)</i>.
     - Ce serveur doit être sécurisé via <b>utilisation du protocole HTTPS</b>
     - L'authentification doit être supporté par le <b>module WSGI</b> (composant Apache mod_wsgi).
 * Ajouter un nouveau service à l'application Web VT :
