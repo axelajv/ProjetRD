@@ -19,8 +19,6 @@ $minute=date('i');
 $i=0;
 $newline = "\n";
 
-depart_timer("ICSPROF");
-
 // Pour générer un calendrier précis
 // recuperation de : ID NOM PRENOM
 if(	isset($_POST['idprof']) &&
@@ -43,6 +41,8 @@ if(	isset($_POST['idprof']) &&
 // constitution de la requête
 $ressources_profs = "SELECT * FROM $dernierebase.ressources_profs WHERE deleted=0 $requete_precision_prof";
 
+depart_timer("ICSPROF");
+
 foreach($dbh->query($ressources_profs) as $prof) {
 
 		$fichier = "BEGIN:VCALENDAR" . $newline;
@@ -58,7 +58,6 @@ foreach($dbh->query($ressources_profs) as $prof) {
 				$seances_profs = "SELECT * FROM $base[$k].seances_profs WHERE codeRessource='$prof[codeProf]' AND deleted=0";
 
 				foreach($dbh->query($seances_profs) as $seances_prof) {
-
 						$seances = "SELECT * FROM $base[$k].seances WHERE codeSeance='$seances_prof[codeSeance]' AND deleted=0";
 						$seances_salles = "SELECT * FROM $base[$k].seances_salles WHERE codeSeance='$seances_prof[codeSeance]' AND deleted=0";
 
@@ -66,7 +65,7 @@ foreach($dbh->query($ressources_profs) as $prof) {
 								$fichier .= "BEGIN:VEVENT" . $newline;
 
 								//nom de la seance
-								$enseignements=mysql_query("SELECT * FROM $base[$k].enseignements WHERE codeEnseignement='$seance[codeEnseignement]' AND deleted= '0'");
+								$enseignements=mysql_query("SELECT * FROM $base[$k].enseignements WHERE codeEnseignement='$seance[codeEnseignement]' AND deleted=0");
 								$enseignement = mysql_fetch_array($enseignements);
 								$numero_type=$enseignement['codeTypeActivite'];
 								$types=mysql_query("SELECT * FROM $base[$k].types_activites WHERE codeTypeActivite='$numero_type'");
@@ -79,14 +78,14 @@ foreach($dbh->query($ressources_profs) as $prof) {
 								//récuperation de la liste des groupes
 								$seances_groupes = "SELECT * FROM $base[$k].seances_groupes WHERE codeSeance='$seances_prof[codeSeance]' AND deleted=0";
 
-								$groupes_sql = "SELECT * FROM $base[$k].ressources_groupes WHERE codeGroupe='$seance_groupe[codeRessource]' AND deleted=0";
-								$groupes_stmt = $dbh->prepare($groupes_sql);
-								$groupes_stmt->execute();
-								$groupe = $groupes_stmt->fetch();
+								foreach($dbh->query($seances_groupes) as $seance_groupe) {
+									$groupes_sql = "SELECT * FROM $base[$k].ressources_groupes WHERE codeGroupe='$seance_groupe[codeRessource]' AND deleted=0";
+									$groupes_stmt = $dbh->prepare($groupes_sql);
+									$groupes_stmt->execute();
+									$groupe = $groupes_stmt->fetch();
+								}
+								$nomgroupe = '' . trim($groupe['nom']);
 
-								$nomgroupe = $groupe['nom'];
-
-								$nomgroupe = trim($nomgroupe);
 								$fichier .= "SUMMARY:".$cursename[1]." - ".$type." - ".$nomgroupe . $newline;
 								$fichier .= "CATEGORIES:".$cursename[0] . $newline;
 
@@ -127,21 +126,20 @@ foreach($dbh->query($ressources_profs) as $prof) {
 								$heurefinenmin=$heuredebutenmin+$heureduree*60+$minduree;
 								$heurefin=intval($heurefinenmin/60);
 
-								if (strlen($heurefin)==1)	{
-										$heurefin="0".$heurefin;
-								}
+								if (strlen($heurefin)==1) $heurefin="0".$heurefin;
 								$minfin=$heurefinenmin%60;
-								if (strlen($minfin)==1) {
-										$minfin="0".$minfin;
-								}
-								$fichier .= "DTEND:".$dateseance."T".$heurefin.$minfin."00Z" . $newline;
+								if (strlen($minfin)==1) $minfin="0".$minfin;
 
+								$fichier .= "DTEND:".$dateseance."T".$heurefin.$minfin."00Z" . $newline;
 								//numero de la salle
-								$ressources_salles_sql = "SELECT * FROM $base[$k].ressources_salles WHERE codeSalle='$seance_salle[codeRessource]' AND deleted=0";
-								$ressources_salles_stmt = $dbh->prepare($ressources_salles_sql);
-								$ressources_salles_stmt->execute();
-								$salle = $ressources_salles_stmt->fetch();
-								$nomsalle = trim($salle['nom']);
+
+								foreach($dbh->query($seances_salles) as $seance_salle) {
+									$ressources_salles_sql = "SELECT * FROM $base[$k].ressources_salles WHERE codeSalle='$seance_salle[codeRessource]' AND deleted=0";
+									$ressources_salles_stmt = $dbh->prepare($ressources_salles_sql);
+									$ressources_salles_stmt->execute();
+									$salle = $ressources_salles_stmt->fetch();
+								}
+								$nomsalle = '' . trim($salle['nom']);
 
 								$fichier .= "LOCATION:" . $nomsalle . $newline;
 
@@ -157,16 +155,13 @@ foreach($dbh->query($ressources_profs) as $prof) {
 								else {
 									$fichier .= "DESCRIPTION;LANGUAGE=fr-CA:MATIERE : ".$cursename[1]." - ".$type."\\nGROUPE : ".$nomgroupe."\\nDUREE : ".$heureduree."h".$minduree . $newline;
 								}
-
 								$fichier .= "DTSTAMP:".$annee.$mois.$jour."T".$heure.$minute."00Z" . $newline;
 								$fichier .= "UID:".$annee.$mois.$jour."T"."000001Z-".$i."@ufrsitec.u-paris10.fr" . $newline;
 								$i=$i+1;
-								//$fichier .= "CATEGORIES:Emplois du temps du PST". "\n";
 
 								$fichier .= "END:VEVENT" . $newline;
 						}
 				}
-
 
 				//reservations
 				//$reservations_profs = mysql_query("SELECT * FROM $base[$k].reservations_profs WHERE codeRessource='$prof[codeProf]' AND deleted= '0'");
@@ -232,14 +227,16 @@ foreach($dbh->query($ressources_profs) as $prof) {
 									}
 									$fichier .= "DTEND:".$datereservation."T".$heurefin.$minfin."00Z" . $newline;
 
+									$nomsalle = '';
+
 									//numero de la salle
-									$ressources_salles_sql = "SELECT * FROM $base[$k].ressources_salles WHERE codeSalle='$reservation_salle[codeRessource]' AND deleted=0 AND codeRessource!=0";
-									$ressources_salles_stmt = $dbh->prepare($ressources_salles_sql);
-									$ressources_salles_stmt->execute();
-									$salle = $ressources_salles_stmt->fetch();
-
-									$nomsalle = trim($salle['nom']);
-
+									$reservations_salles = "SELECT * FROM $base[$k].reservations_salles WHERE codeReservation='$reservation_prof[codeReservation]' AND deleted=0 AND codeRessource!=0";
+									foreach($dbh->query($reservations_salles) as $reservation_salle) {
+											$ressources_salles = "SELECT * FROM $base[$k].ressources_salles WHERE codeSalle='$reservation_salle[codeRessource]' AND deleted=0";
+											foreach($dbh->query($ressources_salles) as $ressource_salle) {
+												$nomsalle = trim($salle['nom']);
+											}
+									}
 									$fichier .= "LOCATION:".$nomsalle . $newline;
 
 									//detail de la seance
@@ -256,14 +253,16 @@ foreach($dbh->query($ressources_profs) as $prof) {
 
 			$fichier .= "END:VCALENDAR";
 
+			fin_timer("ICSPROF");
+			echo afficher_timer("ICSPROF");
+
 			$nomfichier=$prof['nom']."_".$prof['prenom'].".ics";
 			$nomfichier=str_replace(" ","_",$nomfichier);
 			$nomfichier=strtolower($nomfichier);
 
 			file_put_contents($nomfichier,$fichier);
 
-fin_timer("ICSPROF");
-echo afficher_timer("ICSPROF");
+
 
 			//CALDav project - START ------
 			$uid = $annee.$mois.$jour."T"."000001Z-".$i."@ufrsitec.u-paris10.fr";

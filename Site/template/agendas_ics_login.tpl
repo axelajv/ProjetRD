@@ -24,7 +24,6 @@
         <!-- Page styles -->
         <link rel="stylesheet" href="API/bootstrap/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="css/common.css"/>
-        <link rel="stylesheet" href="css/login_agendas_ics.css"/>
 
         <!-- scripts -->
         <script src="API/jquery/jquery.js"></script>
