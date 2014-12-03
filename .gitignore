@@ -26,3 +26,5 @@ Site/templates_c/*
 Site/config/config.php
 
 Site/config/config.php
+
+Site/ics/icssalle/log_CalDAVCommunication.txt

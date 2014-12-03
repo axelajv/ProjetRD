@@ -11,22 +11,23 @@ include("../../script/CalDAVCommunication.php");
 
 date_default_timezone_set('Europe/Paris');
 setlocale(LC_TIME, 'fr_FR');
-$jour=date('d');
-$mois=date('m');
-$annee=date('Y');
-$heure=date('H');
-$minute=date('i');
+$jour	= date('d');
+$mois 	= date('m');
+$annee	= date('Y');
+$heure	= date('H');
+$minute	= date('i');
 $i=0;
 $newline = "\n";
 
 // Pour générer un calendrier précis
 // recuperation de : ID NOM PRENOM
-if(	isset($_POST['idprof']) &&
-		!empty($_POST['idprof']) &&
-		isset($_POST['nom']) &&
-		!empty($_POST['nom']) &&
-		isset($_POST['prenom']) &&
-		!empty($_POST['prenom'])
+if(	isset($_POST['idprof'])
+	&& !empty($_POST['idprof'])
+	&& isset($_POST['nom'])
+	&& !empty($_POST['nom'])
+	&& isset($_POST['prenom'])
+	&& !empty($_POST['prenom'])
+	// user == prof logged
 ) {
 		$idProf		= $_POST['idprof'];
 		$nomProf	= $_POST['nom'];
@@ -78,13 +79,15 @@ foreach($dbh->query($ressources_profs) as $prof) {
 								//récuperation de la liste des groupes
 								$seances_groupes = "SELECT * FROM $base[$k].seances_groupes WHERE codeSeance='$seances_prof[codeSeance]' AND deleted=0";
 
+								$nomgroupe = '';
+
 								foreach($dbh->query($seances_groupes) as $seance_groupe) {
 									$groupes_sql = "SELECT * FROM $base[$k].ressources_groupes WHERE codeGroupe='$seance_groupe[codeRessource]' AND deleted=0";
 									$groupes_stmt = $dbh->prepare($groupes_sql);
 									$groupes_stmt->execute();
 									$groupe = $groupes_stmt->fetch();
+									$nomgroupe = trim($groupe['nom']);
 								}
-								$nomgroupe = '' . trim($groupe['nom']);
 
 								$fichier .= "SUMMARY:".$cursename[1]." - ".$type." - ".$nomgroupe . $newline;
 								$fichier .= "CATEGORIES:".$cursename[0] . $newline;
