@@ -1,4 +1,4 @@
-# This means all users starting with "admin" may read any collection
+# This means all users starting with "admin" may read and write any collection
 [admin]
 user: ^admin.*
 collection: .*
