@@ -9,6 +9,8 @@ mysql_select_db($dernierebase);
 include("../../script/CalDAVCommunication.php");
 //CALDav project - FIN --------
 
+error_reporting(E_ERROR | E_PARSE | E_NOTICE);
+
 date_default_timezone_set('Europe/Paris');
 setlocale(LC_TIME, 'fr_FR');
 $jour=date('d');
@@ -17,6 +19,8 @@ $annee=date('Y');
 $heure=date('H');
 $minute=date('i');
 $i=0;
+
+$noData=true;
 
 // Pour générer un calendrier précis
 // recuperation de : ID NOM
@@ -38,6 +42,9 @@ $ressources_groupes = mysql_query("SELECT * FROM ressources_groupes WHERE delete
 
 while ( $groupe = mysql_fetch_array($ressources_groupes) )
 {
+
+    $noData=false;
+
     $fichier    = "";
     $fichier    = "BEGIN:VCALENDAR". "\n";
     $fichier    .= "VERSION:2.0". "\n";
@@ -293,16 +300,22 @@ while ( $groupe = mysql_fetch_array($ressources_groupes) )
     }
     $fichier.="END:VCALENDAR";
 
-    $nomfichier=$groupe['nom'].".ics";
-    //$nomfichier=ereg_replace("[ ]","_",$nomfichier);
-    $nomfichier=preg_replace('/\s/',"_",$nomfichier);
-    $nomfichier=strtolower($nomfichier);
-    file_put_contents($nomfichier,$fichier);
+    if(!$noData)
+    {       
+        echo "OK";
+        $nomfichier=$groupe['nom'].".ics";
+        //$nomfichier=ereg_replace("[ ]","_",$nomfichier);
+        $nomfichier=preg_replace('/\s/',"_",$nomfichier);
+        $nomfichier=strtolower($nomfichier);
+        file_put_contents($nomfichier,$fichier);
 
-    //CALDav project - START ------
-    $uid = $annee.$mois.$jour."T"."000001Z-".$i."@ufrsitec.u-paris10.fr";
-    sendICSFile($nomfichier,$fichier,$FILIERE,$uid);
-    //---------------- FIN --------
-
+        //CALDav project - START ------
+        $uid = $annee.$mois.$jour."T"."000001Z-".$i."@ufrsitec.u-paris10.fr";
+        sendICSFile($nomfichier,$fichier,$FILIERE,$uid);
+        //---------------- FIN --------
+    }
 }
+
+if($noData) 
+echo "NO_DATA";
 ?>

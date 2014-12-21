@@ -249,11 +249,15 @@ function callIcsCreator(selecteurCSS, urlRadicale, typeICS) {
                 })
                 .done(function(data) {
                     $("#lien_" + obj.var1)
-                        .removeClass('btn-default')
-                        .html('<span class="glyphicon glyphicon-ok"></span>')
-                        .addClass('btn-success')
-                        .attr('href', urlRadicale + "/" + typeICS + "/" + icsFile + ".ics/");
-                    window.open($("#lien_" + obj.var1).attr('href'));
+                            .removeClass('btn-default')
+                            .html('<span class="glyphicon glyphicon-ok"></span>')
+                            .addClass('btn-success')
+                            .attr('href', urlRadicale + "/" + typeICS + "/" + icsFile + ".ics/");
+                    if(data=="NO_DATA"){
+                        alert("Le calendrier séléctionné ne contient aucune donnée.");
+                    }else{
+                        window.open($("#lien_" + obj.var1).attr('href'));
+                    }
                 })
                 .fail(function(data) {
                     $("#lien_" + obj.var1)

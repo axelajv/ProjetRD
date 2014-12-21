@@ -9,6 +9,8 @@ mysql_select_db($dernierebase);
 include("../../script/CalDAVCommunication.php");
 //CALDav project - FIN --------
 
+error_reporting(E_ERROR | E_PARSE | E_NOTICE);
+
 date_default_timezone_set('Europe/Paris');
 setlocale(LC_TIME, 'fr_FR');
 $jour	= date('d');
@@ -18,6 +20,8 @@ $heure	= date('H');
 $minute	= date('i');
 $i=0;
 $newline = "\n";
+
+$noData=true;
 
 // Pour générer un calendrier de salle précis
 // recuperation de : ID NOM
@@ -42,6 +46,9 @@ $ressources_salles = "SELECT * FROM ressources_salles WHERE deleted=0 $requete_p
 depart_timer("ICSSALLE");
 
 foreach($dbh->query($ressources_salles) as $salle) {
+
+	$noData = false;
+
 	$fichier = "";
 	$fichier = "BEGIN:VCALENDAR". $newline;
 	$fichier .= "VERSION:2.0". $newline;
@@ -259,17 +266,26 @@ foreach($dbh->query($ressources_salles) as $salle) {
 	$fichier .= "END:VCALENDAR";
 
 	fin_timer("ICSSALLE");
-	echo afficher_timer("ICSSALLE");
+	//echo afficher_timer("ICSSALLE");
 
 	/*
 	* Fin du traitement - création du fichier ICS
 	*/
-	$nomfichier = $salle['nom'].".ics";
-	$nomfichier	= str_replace(" ","_",$nomfichier);
-	$nomfichier	= strtolower($nomfichier);
-	file_put_contents($nomfichier,$fichier);
+	if(!$noData)
+    {       
+        echo "OK";
+		$nomfichier = $salle['nom'].".ics";
+		$nomfichier	= str_replace(" ","_",$nomfichier);
+		$nomfichier	= strtolower($nomfichier);
+		file_put_contents($nomfichier,$fichier);
 
-	$uid = $annee . $mois . $jour . "T" . "000001Z-" . $i . "@ufrsitec.u-paris10.fr";
-	sendICSFile($nomfichier, $fichier, $SALLE, $uid);
+		$uid = $annee . $mois . $jour . "T" . "000001Z-" . $i . "@ufrsitec.u-paris10.fr";
+		sendICSFile($nomfichier, $fichier, $SALLE, $uid);
+	}
 }
+
+
+if($noData) 
+echo "NO_DATA";	
+
 ?>

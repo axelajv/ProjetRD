@@ -8,18 +8,25 @@ mysql_select_db($dernierebase);
 include("../CalDAV/CALDavCommunication.php");
 //CALDav project - FIN --------
 
+error_reporting(E_ERROR | E_PARSE | E_NOTICE);
+
 $jour=date('d');
 $mois=date('m');
 $annee=date('Y');
 $heure=date('H');
 $minute=date('i');
 $i=0;
+
+$noData=true;
+
 setlocale(LC_TIME, 'fr_FR');	
 		
 $ressources_materiels = mysql_query("SELECT * FROM ressources_materiels WHERE deleted='0'");
 
-while ($materiel = mysql_fetch_array($ressources_materiels) )
-	{
+while ($materiel = mysql_fetch_array($ressources_materiels) )	
+{
+
+	$noData=false;
 	$fichier="";
 	$seances_materiels=mysql_query("SELECT * FROM seances_materiels WHERE codeRessource='$materiel[codeMateriel]' AND deleted= '0'");
 	$fichier="BEGIN:VCALENDAR". "\n";
@@ -247,20 +254,26 @@ while ($reservation_materiel = mysql_fetch_array($reservations_materiels) )
 
 	$fichier.="END:VCALENDAR";
 
-	$nomfichier=$materiel['nom'].".ics";
-	$nomfichier=str_replace(" ","_",$nomfichier);
+	if(!$noData)
+    {       
+        echo "OK";
+		$nomfichier=$materiel['nom'].".ics";
+		$nomfichier=str_replace(" ","_",$nomfichier);
 
 
-	$nomfichier=strtolower($nomfichier);
-	file_put_contents($nomfichier,$fichier);
-	
-	//CALDav project - START ------
-	$uid = $annee.$mois.$jour."T"."000001Z-".$i."@ufrsitec.u-paris10.fr";
-	sendICSFile($nomfichier,$fichier,$ENSEIGNANT,$uid);
-	//---------------- FIN --------
-	
+		$nomfichier=strtolower($nomfichier);
+		file_put_contents($nomfichier,$fichier);
+
+		//CALDav project - START ------
+		$uid = $annee.$mois.$jour."T"."000001Z-".$i."@ufrsitec.u-paris10.fr";
+		sendICSFile($nomfichier,$fichier,$ENSEIGNANT,$uid);
+		//---------------- FIN --------
 	}
 	
+}
+
+if($noData) 
+echo "NO_DATA";	
 
 	
 

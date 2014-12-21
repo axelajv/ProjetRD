@@ -9,6 +9,8 @@ mysql_select_db($dernierebase);
 include("../../script/CalDAVCommunication.php");
 //CALDav project - FIN --------
 
+error_reporting(E_ERROR | E_PARSE | E_NOTICE);
+
 date_default_timezone_set('Europe/Paris');
 setlocale(LC_TIME, 'fr_FR');
 $jour	= date('d');
@@ -44,7 +46,10 @@ $ressources_profs = "SELECT * FROM $dernierebase.ressources_profs WHERE deleted=
 
 depart_timer("ICSPROF");
 
+$noData=true;
+
 foreach($dbh->query($ressources_profs) as $prof) {
+		$noData = false;
 
 		$fichier = "BEGIN:VCALENDAR" . $newline;
 		$fichier .= "VERSION:2.0" . $newline;
@@ -257,19 +262,26 @@ foreach($dbh->query($ressources_profs) as $prof) {
 			$fichier .= "END:VCALENDAR";
 
 			fin_timer("ICSPROF");
-			echo afficher_timer("ICSPROF");
-
-			$nomfichier=$prof['nom']."_".$prof['prenom'].".ics";
-			$nomfichier=str_replace(" ","_",$nomfichier);
-			$nomfichier=strtolower($nomfichier);
-
-			file_put_contents($nomfichier,$fichier);
+			//echo afficher_timer("ICSPROF");
 
 
+			if(!$noData)
+			{	
+				echo "OK";
+				$nomfichier=$prof['nom']."_".$prof['prenom'].".ics";
+				$nomfichier=str_replace(" ","_",$nomfichier);
+				$nomfichier=strtolower($nomfichier);
 
-			//CALDav project - START ------
-			$uid = $annee.$mois.$jour."T"."000001Z-".$i."@ufrsitec.u-paris10.fr";
-			sendICSFile($nomfichier,$fichier,$ENSEIGNANT,$uid);
-			//---------------- FIN --------
+				file_put_contents($nomfichier,$fichier);
+
+				//CALDav project - START ------
+				$uid = $annee.$mois.$jour."T"."000001Z-".$i."@ufrsitec.u-paris10.fr";
+				sendICSFile($nomfichier,$fichier,$ENSEIGNANT,$uid);
+				//---------------- FIN --------
+			}
 }
+
+if($noData) 
+echo "NO_DATA";
+
 ?>
