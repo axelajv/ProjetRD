@@ -25,7 +25,7 @@ $noData = true;
 $ressources_etudiants = "SELECT * FROM ressources_etudiants WHERE deleted='0'";
 
 foreach($dbh->query($ressources_etudiants) as $etudiant) {
-	$noData = false;
+
 	$fichier = "";
 	$fichier = "BEGIN:VCALENDAR" . $newline;
 	$fichier.= "VERSION:2.0" . $newline;
@@ -36,15 +36,16 @@ foreach($dbh->query($ressources_etudiants) as $etudiant) {
 	$fichier.= "X-WR-TIMEZONE:Europe/paris" . $newline;
 	$code_etudiant = $etudiant['codeEtudiant'];
 	$groupes = "SELECT * FROM ressources_groupes_etudiants RIGHT JOIN ressources_groupes ON ressources_groupes_etudiants.codeGroupe=ressources_groupes.codeGroupe WHERE ressources_groupes_etudiants.codeEtudiant='$code_etudiant' and ressources_groupes_etudiants.deleted='0' and ressources_groupes.deleted='0'";
-	
+
 	foreach($dbh->query($groupes) as $groupe) {
 		$seances_groupes = "SELECT * FROM seances_groupes WHERE codeRessource='$groupe[codeGroupe]' AND deleted= '0'";
-	
+
 		foreach($dbh->query($seances_groupes) as $seances_groupe) {
 			$seances = "SELECT * FROM seances WHERE codeSeance='$seances_groupe[codeSeance]' AND deleted= '0'";
 			$seances_salles = "SELECT * FROM seances_salles WHERE codeSeance='$seances_groupe[codeSeance]' AND deleted= '0'";
-			
+
 			foreach($dbh->query($seances) as $seance) {
+				$noData = false;
 				$fichier.= "BEGIN:VEVENT" . $newline;
 
 				// nom de la seance
@@ -216,12 +217,13 @@ foreach($dbh->query($ressources_etudiants) as $etudiant) {
 		// reservations
 
 		$reservations_groupes = "SELECT * FROM reservations_groupes WHERE codeRessource='$groupe[codeGroupe]' AND deleted= '0'";
-		
+
 		foreach($dbh->query($reservations_groupes) as $reservation_groupe) {
 			$reservations = "SELECT * FROM reservations WHERE codeReservation='$reservation_groupe[codeReservation]' AND deleted= '0' AND diffusable='1'";
 			$reservations_salles = "SELECT * FROM reservations_salles WHERE codeReservation='$reservation_groupe[codeReservation]' AND deleted= '0'";
-		
+
 			foreach($dbh->query($reservations) as $reservation) {
+				$noData = false;
 				$fichier.= "BEGIN:VEVENT" . $newline;
 
 				// nom de la reservation
@@ -404,6 +406,6 @@ foreach($dbh->query($ressources_etudiants) as $etudiant) {
 			}
 		}
 	}
-}	
+}
 	if ($noData) echo "NO_DATA";
 ?>

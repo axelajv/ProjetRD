@@ -254,7 +254,7 @@ function callIcsCreator(selecteurCSS, urlRadicale, typeICS) {
                             .addClass('btn-success')
                             .attr('href', urlRadicale + "/" + typeICS + "/" + icsFile + ".ics/");
                     if(data=="NO_DATA"){
-                        alert("Le calendrier séléctionné ne contient aucune donnée.");
+                        alert("Le calendrier séléctionné ne contient aucun événement.");
                     }else{
                         window.open($("#lien_" + obj.var1).attr('href'));
                     }

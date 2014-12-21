@@ -43,8 +43,6 @@ $ressources_groupes = mysql_query("SELECT * FROM ressources_groupes WHERE delete
 while ( $groupe = mysql_fetch_array($ressources_groupes) )
 {
 
-    $noData=false;
-
     $fichier    = "";
     $fichier    = "BEGIN:VCALENDAR". "\n";
     $fichier    .= "VERSION:2.0". "\n";
@@ -64,6 +62,7 @@ while ( $groupe = mysql_fetch_array($ressources_groupes) )
 
             while ($seance = mysql_fetch_array($seances) )
             {
+                $noData=false;
                 $fichier.="BEGIN:VEVENT". "\n";
 
                 //nom de la seance
@@ -193,9 +192,8 @@ while ( $groupe = mysql_fetch_array($ressources_groupes) )
 
             while ($reservation = mysql_fetch_array($reservations) )
             {
+                $noData=false;
                 $fichier.="BEGIN:VEVENT". "\n";
-
-
 
                 //nom de la reservation
                 $commentaire=utf8_encode($reservation['commentaire']);
@@ -301,7 +299,7 @@ while ( $groupe = mysql_fetch_array($ressources_groupes) )
     $fichier.="END:VCALENDAR";
 
     if(!$noData)
-    {       
+    {
         echo "OK";
         $nomfichier=$groupe['nom'].".ics";
         //$nomfichier=ereg_replace("[ ]","_",$nomfichier);
@@ -316,6 +314,6 @@ while ( $groupe = mysql_fetch_array($ressources_groupes) )
     }
 }
 
-if($noData) 
+if($noData)
 echo "NO_DATA";
 ?>

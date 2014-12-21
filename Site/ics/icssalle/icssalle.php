@@ -47,8 +47,6 @@ depart_timer("ICSSALLE");
 
 foreach($dbh->query($ressources_salles) as $salle) {
 
-	$noData = false;
-
 	$fichier = "";
 	$fichier = "BEGIN:VCALENDAR". $newline;
 	$fichier .= "VERSION:2.0". $newline;
@@ -63,6 +61,8 @@ foreach($dbh->query($ressources_salles) as $salle) {
 
 		$seances = "SELECT * FROM seances WHERE codeSeance='$seances_salle[codeSeance]' AND deleted=0";
 		foreach($dbh->query($seances) as $seance) {
+			$noData = false;
+
 			$fichier .= "BEGIN:VEVENT". $newline;
 
 			//nom de la seance
@@ -176,6 +176,8 @@ foreach($dbh->query($ressources_salles) as $salle) {
 		$reservations = "SELECT * FROM reservations WHERE codeReservation='$reservation_salle[codeReservation]' AND deleted=0";
 
 		foreach($dbh->query($reservations) as $reservation) {
+			$noData = false;
+
 			$fichier .= "BEGIN:VEVENT". $newline;
 
 			//nom de la reservation
@@ -272,7 +274,7 @@ foreach($dbh->query($ressources_salles) as $salle) {
 	* Fin du traitement - création du fichier ICS
 	*/
 	if(!$noData)
-    {       
+    {
         echo "OK";
 		$nomfichier = $salle['nom'].".ics";
 		$nomfichier	= str_replace(" ","_",$nomfichier);
@@ -282,10 +284,7 @@ foreach($dbh->query($ressources_salles) as $salle) {
 		$uid = $annee . $mois . $jour . "T" . "000001Z-" . $i . "@ufrsitec.u-paris10.fr";
 		sendICSFile($nomfichier, $fichier, $SALLE, $uid);
 	}
+	else if($noData)
+		echo "NO_DATA";
 }
-
-
-if($noData) 
-echo "NO_DATA";	
-
 ?>

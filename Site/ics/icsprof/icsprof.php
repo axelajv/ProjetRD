@@ -49,7 +49,6 @@ depart_timer("ICSPROF");
 $noData=true;
 
 foreach($dbh->query($ressources_profs) as $prof) {
-		$noData = false;
 
 		$fichier = "BEGIN:VCALENDAR" . $newline;
 		$fichier .= "VERSION:2.0" . $newline;
@@ -68,6 +67,7 @@ foreach($dbh->query($ressources_profs) as $prof) {
 						$seances_salles = "SELECT * FROM $base[$k].seances_salles WHERE codeSeance='$seances_prof[codeSeance]' AND deleted=0";
 
 						foreach($dbh->query($seances) as $seance) {
+								$noData = false;
 								$fichier .= "BEGIN:VEVENT" . $newline;
 
 								//nom de la seance
@@ -179,6 +179,7 @@ foreach($dbh->query($ressources_profs) as $prof) {
 							$reservations = "SELECT * FROM $base[$k].reservations WHERE codeReservation='$reservation_prof[codeReservation]' AND deleted=0";
 
 							foreach($dbh->query($reservations) as $reservation) {
+									$noData = false;
 									$fichier .= "BEGIN:VEVENT" . $newline;
 
 									//nom de la reservation
@@ -266,7 +267,7 @@ foreach($dbh->query($ressources_profs) as $prof) {
 
 
 			if(!$noData)
-			{	
+			{
 				echo "OK";
 				$nomfichier=$prof['nom']."_".$prof['prenom'].".ics";
 				$nomfichier=str_replace(" ","_",$nomfichier);
@@ -279,9 +280,8 @@ foreach($dbh->query($ressources_profs) as $prof) {
 				sendICSFile($nomfichier,$fichier,$ENSEIGNANT,$uid);
 				//---------------- FIN --------
 			}
+			else if($noData)
+				echo "NO_DATA";
 }
-
-if($noData) 
-echo "NO_DATA";
 
 ?>
