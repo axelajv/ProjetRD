@@ -268,7 +268,6 @@ foreach($dbh->query($ressources_profs) as $prof) {
 
 			if(!$noData)
 			{
-				echo "OK";
 				$nomfichier=$prof['nom']."_".$prof['prenom'].".ics";
 				$nomfichier=str_replace(" ","_",$nomfichier);
 				$nomfichier=strtolower($nomfichier);
@@ -280,12 +279,11 @@ foreach($dbh->query($ressources_profs) as $prof) {
 				sendICSFile($nomfichier,$fichier,$ENSEIGNANT,$uid);
 				//---------------- FIN --------
 			}
-			else if($noData)
-				echo "NO_DATA";
 }
 
 //si on ne passe pas dans le boucle (ex: id incorect), on informe quand meme qu'il n'y a pas de donnée
 if($noData)
-echo "NO_DATA";
-
+	echo "NO_DATA";
+else
+	echo "OK";
 ?>

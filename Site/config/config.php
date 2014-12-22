@@ -1,6 +1,6 @@
 <?php
 $user='root';
-$pass='Nicolas';
+$pass='root';
 $serveur='localhost';
 
 $motDePasseEtudiant="etudiant";
