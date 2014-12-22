@@ -1,7 +1,9 @@
 <?php
 $user='root';
-$pass='root';
+$pass='Nicolas';
 $serveur='localhost';
+
+$motDePasseEtudiant="etudiant";
 
 $base=array();
 $annee_scolaire=array();

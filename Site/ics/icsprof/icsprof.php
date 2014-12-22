@@ -284,4 +284,8 @@ foreach($dbh->query($ressources_profs) as $prof) {
 				echo "NO_DATA";
 }
 
+//si on ne passe pas dans le boucle (ex: id incorect), on informe quand meme qu'il n'y a pas de donnée
+if($noData)
+echo "NO_DATA";
+
 ?>

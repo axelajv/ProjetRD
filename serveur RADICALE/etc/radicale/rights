@@ -5,7 +5,8 @@ collection: .*
 permission: rw
 
 # This means all users starting with "read" may read any collection
-[read]
 user: ^read.*
 collection: .*
 permission: r
+
+

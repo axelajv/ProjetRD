@@ -407,5 +407,5 @@ foreach($dbh->query($ressources_etudiants) as $etudiant) {
 		}
 	}
 }
-	if ($noData) echo "NO_DATA";
+if ($noData) echo "NO_DATA";
 ?>

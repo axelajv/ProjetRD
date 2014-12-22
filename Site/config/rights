@@ -1,0 +1,432 @@
+user: DEDGAR
+collection: (^Etudiants$)|(^Filieres$)|(^Salles$)
+permission: r
+
+user: ETUDIANT_L1_G8
+collection: (^Etudiants$)|(^Filieres$)|(^Salles$)
+permission: r
+
+user: ETUDIANT_L1_G1
+collection: (^Etudiants$)|(^Filieres$)|(^Salles$)
+permission: r
+
+user: ETUDIANT_M2_MIAGE_APP
+collection: (^Etudiants$)|(^Filieres$)|(^Salles$)
+permission: r
+
+user: ETUDIANT_L1_G3
+collection: (^Etudiants$)|(^Filieres$)|(^Salles$)
+permission: r
+
+user: nagoulm1
+collection: .*
+permission: r
+
+user: eangel1
+collection: .*
+permission: r
+
+user: tatmaca1
+collection: .*
+permission: r
+
+user: abaczko1
+collection: .*
+permission: r
+
+user: fbelard1
+collection: .*
+permission: r
+
+user: jbenzak1
+collection: .*
+permission: r
+
+user: xbernar1
+collection: .*
+permission: r
+
+user: lblin1
+collection: .*
+permission: r
+
+user: oboloka1
+collection: .*
+permission: r
+
+user: sbourli1
+collection: .*
+permission: r
+
+user: abradai1
+collection: .*
+permission: r
+
+user: rbrault1
+collection: .*
+permission: r
+
+user: pbrocha1
+collection: .*
+permission: r
+
+user: cbrouar1
+collection: .*
+permission: r
+
+user: nbrunel1
+collection: .*
+permission: r
+
+user: gburel1
+collection: .*
+permission: r
+
+user: acavall1
+collection: .*
+permission: r
+
+user: scerrit1
+collection: .*
+permission: r
+
+user: fchamme1
+collection: .*
+permission: r
+
+user: jchapel1
+collection: .*
+permission: r
+
+user: vchau1
+collection: .*
+permission: r
+
+user: echerka1
+collection: .*
+permission: r
+
+user: cchetta1
+collection: .*
+permission: r
+
+user: dcinzia1
+collection: .*
+permission: r
+
+user: dconan1
+collection: .*
+permission: r
+
+user: econdet1
+collection: .*
+permission: r
+
+user: dcourta1
+collection: .*
+permission: r
+
+user: acox1
+collection: .*
+permission: r
+
+user: fdalche1
+collection: .*
+permission: r
+
+user: adavid1
+collection: .*
+permission: r
+
+user: pdecler1
+collection: .*
+permission: r
+
+user: bdefude1
+collection: .*
+permission: r
+
+user: pdelann1
+collection: .*
+permission: r
+
+user: fdelapl1
+collection: .*
+permission: r
+
+user: jdelosm1
+collection: .*
+permission: r
+
+user: bdjafri1
+collection: .*
+permission: r
+
+user: pdossan1
+collection: .*
+permission: r
+
+user: cdubois1
+collection: .*
+permission: r
+
+user: jdupas1
+collection: .*
+permission: r
+
+user: ddupont1
+collection: .*
+permission: r
+
+user: melati1
+collection: .*
+permission: r
+
+user: mguilla1
+collection: .*
+permission: r
+
+user: dhanich1
+collection: .*
+permission: r
+
+user: lhannac1
+collection: .*
+permission: r
+
+user: hautre1
+collection: .*
+permission: r
+
+user: ghutzle1
+collection: .*
+permission: r
+
+user: jjanode1
+collection: .*
+permission: r
+
+user: ljouann1
+collection: .*
+permission: r
+
+user: hklaude1
+collection: .*
+permission: r
+
+user: nkowals1
+collection: .*
+permission: r
+
+user: ylabord1
+collection: .*
+permission: r
+
+user: dlahbib1
+collection: .*
+permission: r
+
+user: tlavall1
+collection: .*
+permission: r
+
+user: ylecorn1
+collection: .*
+permission: r
+
+user: cle1
+collection: .*
+permission: r
+
+user: fledoux1
+collection: .*
+permission: r
+
+user: ylegran1
+collection: .*
+permission: r
+
+user: bleland1
+collection: .*
+permission: r
+
+user: sleland1
+collection: .*
+permission: r
+
+user: nlim1
+collection: .*
+permission: r
+
+user: clouvea1
+collection: .*
+permission: r
+
+user: dlubin1
+collection: .*
+permission: r
+
+user: glucare1
+collection: .*
+permission: r
+
+user: plucas1
+collection: .*
+permission: r
+
+user: rmacnam1
+collection: .*
+permission: r
+
+user: tmellit1
+collection: .*
+permission: r
+
+user: amezine1
+collection: .*
+permission: r
+
+user: dmillot1
+collection: .*
+permission: r
+
+user: cmoulin1
+collection: .*
+permission: r
+
+user: amunier1
+collection: .*
+permission: r
+
+user: jmunier1
+collection: .*
+permission: r
+
+user: enadam1
+collection: .*
+permission: r
+
+user: knguyen1
+collection: .*
+permission: r
+
+user: vnguyen1
+collection: .*
+permission: r
+
+user: cniermo1
+collection: .*
+permission: r
+
+user: snollet1
+collection: .*
+permission: r
+
+user: fpapado1
+collection: .*
+permission: r
+
+user: jperrau1
+collection: .*
+permission: r
+
+user: ppetit1
+collection: .*
+permission: r
+
+user: dploix1
+collection: .*
+permission: r
+
+user: lpolign1
+collection: .*
+permission: r
+
+user: fpommer1
+collection: .*
+permission: r
+
+user: opons1
+collection: .*
+permission: r
+
+user: vprevos1
+collection: .*
+permission: r
+
+user: aprot1
+collection: .*
+permission: r
+
+user: bprum1
+collection: .*
+permission: r
+
+user: mrahoua1
+collection: .*
+permission: r
+
+user: drajche1
+collection: .*
+permission: r
+
+user: dregnau1
+collection: .*
+permission: r
+
+user: mrozenb1
+collection: .*
+permission: r
+
+user: asayed1
+collection: .*
+permission: r
+
+user: jsignol1
+collection: .*
+permission: r
+
+user: tsimon1
+collection: .*
+permission: r
+
+user: gsoubri1
+collection: .*
+permission: r
+
+user: ysoulab1
+collection: .*
+permission: r
+
+user: ctacone1
+collection: .*
+permission: r
+
+user: ftahi1
+collection: .*
+permission: r
+
+user: pthory1
+collection: .*
+permission: r
+
+user: fvermil1
+collection: .*
+permission: r
+
+user: oyedyny1
+collection: .*
+permission: r
+
+user: fzaidi1
+collection: .*
+permission: r
+
+user: fzehrao1
+collection: .*
+permission: r
+
+user: anicola1
+collection: .*
+permission: r
+
