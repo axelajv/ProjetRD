@@ -11,7 +11,7 @@
 
 	if (isset($_POST['module']) && !empty($_POST['module']))
 	{
-		$nom_module=$_POST['module']."\_";
+		$nom_module=$_POST['module'];
 		$sql="SELECT *,  enseignements.nom as nom_enseignement,seances.dureeSeance as seanceDuree, seances.commentaire as seancesCommentaire FROM seances LEFT JOIN (enseignements) ON (seances.codeEnseignement=enseignements.codeEnseignement)   where seances.deleted='0' and seances.codeSeance!=''  AND enseignements.deleted='0' and enseignements.nom like ".$dbh->quote("%".$nom_module."%", PDO::PARAM_STR)." order by seances.dateSeance,seances.heureSeance ";		
 		$req4=$dbh->prepare($sql);
 		$req4->execute();
@@ -38,6 +38,10 @@
 			// enseignement
 			$type=explode("_",$res_4['nom_enseignement']);
 			$enseignement=$type[1];
+			if ($enseignement == $nom_type_seance)
+			{
+				$enseignement = $type[0];
+			}
 		
 			$duree = pad_zero(floor($res_4["seanceDuree"] / 100)).'h'.pad_zero(floor($res_4["seanceDuree"] % 100));
 			$heure = pad_zero(floor($res_4["heureSeance"] / 100)).'h'.pad_zero(floor($res_4["heureSeance"] % 100));

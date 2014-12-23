@@ -20,7 +20,6 @@ while($ligne = $req->fetch())
 		'configuration' 	 => $ligne['configuration'],
 		'reservation' 		 => $ligne['reservation'],
 		'module' 			 => $ligne['module'],
-		'seance_clicable' 	 => $ligne['seance_clicable'],
 		'dialogue' 		  	 => $ligne['dialogue'],
 		'agendas_ics'		 => 1
 	);

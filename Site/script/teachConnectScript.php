@@ -8,51 +8,54 @@ include('../config/config.php');
 
 // tableau suivant l'état de la connexion
 $tableau = array("message"	 => "En attente",
-				"connexion" => FALSE);
+				 "connexion" => false);
+$ligne = array();
 
+// script
 if (isset($_POST['teachLogin']) && isset($_POST['teachPwd']) && !empty($_POST['teachLogin']) && !empty($_POST['teachPwd']))
 {
-	// variables
-	$find 		= FALSE;
-	$teachLogin = $_POST['teachLogin'];
-	$teachPwd 	= md5($_POST['teachPwd']);
+	$find = FALSE;
 
-	// si tous les champs sont remplis alors on vérifie l'existence en BDD
-	$req = $dbh->prepare('SELECT * FROM login_prof WHERE login = :teachLogin AND motPasse = :teachPwd');
-	$req->bindParam(':teachLogin', $teachLogin, PDO::PARAM_STR);
-	$req->bindParam(':teachPwd', $teachPwd, PDO::PARAM_STR);
+	// si tout les champs sont remplis alors on regarde si le nom de compte rentré existe bien dans la base de données.
+	$sql = "SELECT * FROM login_prof WHERE login = ".$dbh->quote($_POST['teachLogin'], PDO::PARAM_STR);
+	$req = $dbh->prepare($sql);
 	$req->execute();
+		   
+	// Si oui, on continue le script...
+	while($find == FALSE && $ligne = $req->fetch())
+	{    
+		// Si le mot de passe entré à la même valeur que celui de la base de données, on l'autorise a se connecter...
+		if(md5($_POST["teachPwd"]) == $ligne['motPasse'])
+		{
+			$find = TRUE;
+			$sql="UPDATE compteur SET valeur=valeur+1 WHERE id_compteur='1'";
+			$dbh->exec($sql);
+		}
+	}
 
-	// $find == 1 si une ligne correspond
-	$find = $req->rowCount();
+	$req->closeCursor();	
 
-	if($find === 1) // connexion réussie
+	// Sinon on lui affiche un message d'erreur.
+	if($find == FALSE)
 	{
-		// compteur de connexion
-		$dbh->exec('UPDATE compteur SET valeur=valeur+1 WHERE id_compteur=1');
+		$tableau["message"]	  = "informations incorrectes";
+		$tableau["connexion"] = false;
+	}
+	else
+	{
+		$_SESSION['teachLogin'] = $_POST['teachLogin'];
+		$_SESSION['teachCodeProf'] = $ligne['codeProf'];
 
-		// init variable de session
-		$_SESSION['teachLogin'] = $teachLogin;
-
-		// $tableau sert de réponse à l'appel ajax
 		$tableau["message"]	  	= "Connexion en cours";
-		$tableau["connexion"]	= TRUE;
+		$tableau["connexion"] 	= true;
 	}
-	else // connexion échouée
-	{
-		// $tableau sert de réponse à l'appel ajax
-		$tableau["message"]	  = "Connexion impossible";
-		$tableau["connexion"] = FALSE;
-	}
-	// fermeture de la connexion
-	$req->closeCursor();
-
+	echo json_encode($tableau);
 }
 else
 {
-	// $tableau sert de réponse à l'appel ajax
-	$tableau["message"]	  = "Indiquer login et mot de passe";
-	$tableau["connexion"] = FALSE;
+	$tableau["message"]	  = "informations incorrectes";
+	$tableau["connexion"] = false;
+	echo json_encode($tableau);
 }
 
-echo json_encode($tableau);
+?>

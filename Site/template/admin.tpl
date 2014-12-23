@@ -1,64 +1,85 @@
 <html>
 	<head>
-		<meta charset="utf-8">
-		<title>VT Calendar - Gestion des droits</title>
+		<meta name="viewport" content="width = device-width, initial-scale = 1.0, minimum-scale = 1.0, maximum-scale = 1.0, user-scalable = no" charset="utf-8"/>
+		<title>VT Agenda - Gestion des droits</title>
+		<link rel="icon" type="image/png" href="img/glyphicons_calendar_title.png"/>
 		<link rel="stylesheet" href="API/bootstrap/css/bootstrap.min.css"/>
 		<link rel="stylesheet" href="css/common.css"/>
 		<link rel="stylesheet" href="css/admin.css"/>
-		<link rel="stylesheet" href="API/dataTables/css/dataTables.css"/>
 		<script src="API/jquery/jquery.js"></script>
-		<script src="API/jquery/jquery.tablesorter.min.js"></script>
-		<script src="API/dataTables/js/jquery.dataTables.min.js"></script>
 		<script type="text/javascript" src="API/bootstrap/js/bootstrap.js"></script>
 		<script type="text/javascript" src="js/loadPage.js"></script>
-		<script type="text/javascript" src="js/filterTable.js"></script>
+		<script type="text/javascript" src="js/admin.js"></script>
 	</head>
 	<body>
 		
 		{include file='template/include/header.tpl'}
 		<div class="container">
-		<form>
-				<table class="table-striped table center-table col-md-12 sortTable dataTable">
-					<thead>
-						<tr>
-						   <th>Nom</th>
-						   <th>Prenom</th>
-						   <th>Administrateur</th>
-						   <th>Export vers Giseh</th>
-						   <th>Bilan des salles</th>
-						   <th>Bilan des heures des profs</th>
-						   <th>Bilan des formations</th>
-						   <th>Afficher ses droits</th>
-						   <th>Bilan de ses heures</th>
-						   <th>Export PDF</th>
-						   <th>RSS</th>
-						   <th>Configuration</th>
-						   <th>Reservation</th>
-						   <th>Detail des modules</th>
-						   <th>Séances clicables</th>
-						   <th>Dialogue de Gestion</th>
-						   <th>Agenda ICS</th>
-						</tr>
-					</thead>
-					<tbody  class="searchable">
-						{foreach from=$allTeachers item=teacher}
-							<tr>
-							   <td>{$teacher.prenom}</td>
-							   <td>{$teacher.nom}</td>
-							   {foreach from=$teacher.droits item=droit}
-									<td {if $droit == 1} class="success" {else} class="danger" {/if} >
-										<div class="checkbox">
-											<input type="checkbox" {if $droit == 1} checked {/if} >
-										</div>
-									</td>
-							   {/foreach}
-							</tr>
-						{/foreach}
-					</tbody>
-				</table>
+			<div class="col-md-4 col-centered">
 			
-			<button type="submit" class="btn btn-default">Sauvegarder</button>
-		</form>
+				<!-- div - retour login.js -->
+					<div id="retourLoginJs"></div>
+				<!-- ./div - retour login.js -->
+				
+				
+				<div class="panel panel-default">
+					<form class="form-horizontal" role="form" id="modifyConfigForm">
+						<div class="panel-body">
+							<div class="form-group">
+								<label for="profs" class="col-sm-3 control-label">Enseignent </label>
+								<div class="col-sm-9">
+									<select name="profs" class="form-control" id="profs" required="" onChange="displayDroits()">
+										{foreach from=$allTeachers item=teacher}
+											<option value={$teacher.codeProf}>{$teacher.nom} {$teacher.prenom}</option>
+										{/foreach}
+									</select>
+								</div>
+							</div>
+							<div data-toggle="buttons" id="userDroits">
+								<label class="btn btn-primary"  name="admin" id="admin">
+									<input type="checkbox" autocomplete="off"><span class="glyphicon glyphicon-eye-open"></span> Admin
+								</label>
+								<label class="btn btn-primary" name="giseh" id="giseh">
+									<input type="checkbox" autocomplete="off"><span class="glyphicon glyphicon-send"></span> Giseh
+								</label>
+								<label class="btn btn-primary" name="bilan_salle" id="bilan_salle">
+									<input type="checkbox" autocomplete="off"><span class="glyphicon glyphicon-home"></span> Bilan Salles
+								</label>
+								<label class="btn btn-primary" name="bilan_heure" id="bilan_heure">
+									<input type="checkbox" autocomplete="off"><span class="glyphicon glyphicon-dashboard"></span> Bilan Heures
+								</label>
+								<label class="btn btn-primary" name="droits" id="droits">
+									<input type="checkbox" autocomplete="off"><span class="glyphicon glyphicon-lock"></span> Mes Droits
+								</label>
+								<label class="btn btn-primary" name="heures" id="heures">
+									<input type="checkbox" autocomplete="off"><span class="glyphicon glyphicon-time"></span> Mes Heures
+								</label>
+								<label class="btn btn-primary" name="pdf" id="pdf">
+									<input type="checkbox" autocomplete="off"><span class="glyphicon glyphicon-file"></span> PDF
+								</label>
+								<label class="btn btn-primary" name="rss" id="rss">
+									<input type="checkbox" autocomplete="off"><span class="glyphicon glyphicon-transfer"></span> RSS
+								</label>
+								<label class="btn btn-primary" name="config" id="config">
+									<input type="checkbox" autocomplete="off"><span class="glyphicon glyphicon-cog"></span> Configuration
+								</label>
+								<label class="btn btn-primary" name="reservation" id="reservation">
+									<input type="checkbox" autocomplete="off"><span class="glyphicon glyphicon-shopping-cart"></span> Reservation
+								</label>
+								<label class="btn btn-primary" name="modules" id="modules">
+									<input type="checkbox" autocomplete="off"><span class="glyphicon glyphicon-th-large"></span> Modules
+								</label>
+								<label class="btn btn-primary" name="dialogue" id="dialogue">
+									<input type="checkbox" autocomplete="off"><span class="glyphicon glyphicon-comment"></span> Dialogue
+								</label>
+							</div>
+						</div>
+						<div class="panel-footer">
+							<button type="submit" class="btn btn-success" name="modify" id="modify">Modifier les droits</button>
+						</div>
+					</form>
+				</div>
+			</div>
 		</div>
 		{include file='template/include/footer.tpl'}
 	</body>

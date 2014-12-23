@@ -1,26 +1,30 @@
 <html>
 	<head>
-		<meta charset="utf-8">
-		<title>VT Calendar - Configuration</title>
+		<meta name="viewport" content="width = device-width, initial-scale = 1.0, minimum-scale = 1.0, maximum-scale = 1.0, user-scalable = no" charset="utf-8"/>
+		<title>VT Agenda - Configuration</title>
+		<link rel="icon" type="image/png" href="img/glyphicons_calendar_title.png"/>
 		<link rel="stylesheet" href="API/bootstrap/css/bootstrap.min.css"/>
 		<link rel="stylesheet" href="css/common.css"/>
-		<script type="text/javascript" src="js/loadPage.js"></script>
 		<script type="text/javascript" src="API/jquery/jquery.js"></script>
 		<script type="text/javascript" src="API/bootstrap/js/bootstrap.js"></script>
+		<script type="text/javascript" src="js/loadPage.js"></script>
+		<script type="text/javascript" src="js/config.js"></script>
 	</head>
 	<body>
 		{include file='template/include/header.tpl'}
 		<div class="container">
 			<div class="col-md-4 col-centered">
-				{if isset($successMsg)}
-					<div class="alert alert-success" role="alert">{$successMsg}</div>
-				{/if}
+			
+				<!-- div - retour login.js -->
+					<div id="retourLoginJs"></div>
+				<!-- ./div - retour login.js -->
+				
 				<div class="panel panel-default">
 					<div class="panel-heading"> 
 						<strong class="">Modifier votre configuration</strong>
 					</div>
 					<div class="panel-body">
-						<form class="form-horizontal" role="form" method="post" action="script/modifyConfig.php" onSubmit="return true;">
+						<form class="form-horizontal" id="modifyConfigForm" role="form" method="post" action="#">
 							<div class="form-group">
 								<label for="weekend" class="col-sm-3 control-label">Weekend ?</label>
 								<div class="col-sm-9">
@@ -47,94 +51,6 @@
 									<select name="endTime" class="form-control" id="endTime" required="">
 										{foreach from=$userConfs.listHeuresFin item=heureFin}
 											<option value={$heureFin.codeHeure}>{$heureFin.heure}h{$heureFin.minute}</option>
-										{/foreach}
-									</select>
-								</div>
-							</div>
-							
-							Bouton 1
-							<div class="form-group">
-								<label for="beginBtn1" class="col-sm-3 control-label">Début</label>
-								<div class="col-sm-9">
-									<select name="beginBtn1" class="form-control" id="beginBtn1" required="">
-										{foreach from=$userConfs.listHeuresBouton item=heureBouton}
-											<option value={$heureBouton.codeHeure}>{$heureBouton.heure}h{$heureBouton.minute}</option>
-										{/foreach}
-									</select>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="endBtn1" class="col-sm-3 control-label">Fin</label>
-								<div class="col-sm-9">
-									<select name="endBtn1" class="form-control" id="endBtn1" required="">
-										{foreach from=$userConfs.listHeuresBouton item=heureBouton}
-											<option value={$heureBouton.codeHeure}>{$heureBouton.heure}h{$heureBouton.minute}</option>
-										{/foreach}
-									</select>
-								</div>
-							</div>
-							
-							Bouton 2
-							<div class="form-group">
-								<label for="beginBtn2" class="col-sm-3 control-label">Début</label>
-								<div class="col-sm-9">
-									<select name="beginBtn2" class="form-control" id="beginBtn2" required="">
-										{foreach from=$userConfs.listHeuresBouton item=heureBouton}
-											<option value={$heureBouton.codeHeure}>{$heureBouton.heure}h{$heureBouton.minute}</option>
-										{/foreach}
-									</select>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="endBtn2" class="col-sm-3 control-label">Fin</label>
-								<div class="col-sm-9">
-									<select name="endBtn2" class="form-control" id="endBtn2" required="">
-										{foreach from=$userConfs.listHeuresBouton item=heureBouton}
-											<option value={$heureBouton.codeHeure}>{$heureBouton.heure}h{$heureBouton.minute}</option>
-										{/foreach}
-									</select>
-								</div>
-							</div>
-							
-							Bouton 3
-							<div class="form-group">
-								<label for="beginBtn3" class="col-sm-3 control-label">Début</label>
-								<div class="col-sm-9">
-									<select name="beginBtn3" class="form-control" id="beginBtn3" required="">
-										{foreach from=$userConfs.listHeuresBouton item=heureBouton}
-											<option value={$heureBouton.codeHeure}>{$heureBouton.heure}h{$heureBouton.minute}</option>
-										{/foreach}
-									</select>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="endBtn3" class="col-sm-3 control-label">Fin</label>
-								<div class="col-sm-9">
-									<select name="endBtn3" class="form-control" id="endBtn3" required="">
-										{foreach from=$userConfs.listHeuresBouton item=heureBouton}
-											<option value={$heureBouton.codeHeure}>{$heureBouton.heure}h{$heureBouton.minute}</option>
-										{/foreach}
-									</select>
-								</div>
-							</div>
-							
-							Bouton 4
-							<div class="form-group">
-								<label for="beginBtn4" class="col-sm-3 control-label">Début</label>
-								<div class="col-sm-9">
-									<select name="beginBtn4" class="form-control" id="beginBtn4" required="">
-										{foreach from=$userConfs.listHeuresBouton item=heureBouton}
-											<option value={$heureBouton.codeHeure}>{$heureBouton.heure}h{$heureBouton.minute}</option>
-										{/foreach}
-									</select>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="endBtn4" class="col-sm-3 control-label">Fin</label>
-								<div class="col-sm-9">
-									<select name="endBtn4" class="form-control" id="endBtn4" required="">
-										{foreach from=$userConfs.listHeuresBouton item=heureBouton}
-											<option value={$heureBouton.codeHeure}>{$heureBouton.heure}h{$heureBouton.minute}</option>
 										{/foreach}
 									</select>
 								</div>

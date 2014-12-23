@@ -2,6 +2,8 @@
 
 	session_start();
 	include('../config/config.php');
+	
+	$liste_enseignement = array();
 
 	if (isset($_POST['code']))
 	{
@@ -21,7 +23,6 @@
 		$sql="SELECT distinct (codeEnseignement)  FROM seances WHERE ".$condition1." deleted='0'";
 		$req_seance_groupe2=$dbh->prepare($sql);
 		$req_seance_groupe2->execute();
-		$liste_enseignement = array();
 		
 		while($res_seance_groupe2 = $req_seance_groupe2->fetch())
 		{
@@ -39,10 +40,9 @@
 				}
 			}
 		}
-		
-		asort($liste_enseignement);
-		
-		echo implode('~', $liste_enseignement);
 	}
-
+	
+	asort($liste_enseignement);
+		
+	echo implode('~', $liste_enseignement);
 ?>

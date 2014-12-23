@@ -1,5 +1,5 @@
 function deconnect() {
-    window.location.replace('index.php?page=deconnection');
+    window.location.replace('index.php?page=deconnexion');
 }
 
 function loadConfig() {
@@ -61,3 +61,11 @@ function loadOccupationSalle() {
 function loadBilanFormation() {
     window.location.replace('index.php?page=bilanFormation');
 }
+
+function loadQuiSommesNous() {
+	window.location.replace('index.php?page=nous');
+}
+
+function loadHelp() {
+	window.location.replace('config/aide.pdf');
+ }

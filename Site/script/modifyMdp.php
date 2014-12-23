@@ -6,6 +6,10 @@ session_start();
 
 include('../config/config.php');
 
+// tableau suivant l'état de la connexion
+$tableau = array("message"	 => "En attente",
+				"connexion" => false);
+
 if(isset($_POST['loginTeach']) && isset($_POST['oldMdp']) && isset($_POST['newMdp1']) && isset($_POST['newMdp2']) && !empty($_POST['loginTeach']) && !empty($_POST['oldMdp']) && !empty($_POST['newMdp1']) && !empty($_POST['newMdp2']))
 {   	       		
 	if ($_POST['newMdp1'] == $_POST['newMdp2'])
@@ -24,24 +28,26 @@ if(isset($_POST['loginTeach']) && isset($_POST['oldMdp']) && isset($_POST['newMd
 			$sql="UPDATE login_prof SET motPasse=".$dbh->quote($nouveau_mot_passe, PDO::PARAM_STR)." WHERE login=".$dbh->quote($login, PDO::PARAM_STR)." AND motPasse=".$dbh->quote($ancien_mot_passe, PDO::PARAM_STR);
 			$req_login_maj=$dbh->prepare($sql);
 			$req_login_maj->execute();
-			header('Location: ../index.php?successId=1');
-			exit();
+			$tableau["message"]	  	= "Votre mot de passe a été modifié";
+			$tableau["connexion"] 	= true;
 		}
 		else
 		{
-			header('Location: ../index.php?errorID=3');
-			exit();
+			$tableau["message"]	  = "informations incorrectes";
+			$tableau["connexion"] = false;
 		}
 	}
 	else
 	{
-		header('Location: ../index.php?errorID=3');
-		exit();
+		$tableau["message"]	  = "informations incorrectes";
+		$tableau["connexion"] = false;
 	}
 }
 else
 {
-	header('Location: ../index.php?errorID=3');
-	exit();
+	$tableau["message"]	  = "informations incorrectes";
+	$tableau["connexion"] = false;
 }
+
+echo json_encode($tableau);
 ?>

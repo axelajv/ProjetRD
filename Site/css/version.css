@@ -12,3 +12,11 @@ li {
     float: none !important;
     margin: 0 auto !important;
 }
+
+.panel-heading a
+{
+    text-decoration: none ;
+}
+.panel-heading:hover {
+    cursor: pointer;
+}

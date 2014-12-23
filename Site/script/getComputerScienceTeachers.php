@@ -9,7 +9,7 @@ if(isset($_GET["composante"]) && $_GET["composante"] != "all") {
 	$req = $dbh->prepare($sql);
 	$req->execute(array(':code' => $code));
 } else {
-	$sql = "SELECT * FROM login_prof left join ressources_profs on (ressources_profs.codeProf=login_prof.codeProf) WHERE ressources_profs.deleted='0' order by ressources_profs.nom,ressources_profs.prenom Asc";
+	$sql = "SELECT * FROM login_prof left join ressources_profs on (ressources_profs.codeProf=login_prof.codeProf) WHERE ressources_profs.deleted='0' order by ressources_profs.nom Asc,ressources_profs.prenom ";
 	$req = $dbh->query($sql);
 }
 

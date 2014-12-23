@@ -1,15 +1,21 @@
 /* CSS commun à l'ensemble des pages */
+html {
+	position: relative;
+	min-height: 100%;
+}
 
 body {
     background: url('../img/bg4.jpg') no-repeat center center fixed;
     /*background-color: #F2F2F2;*/
-    
     text-align: center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    margin: 0 0 40px; /* bottom = footer height */
+    padding: 0 0 40px;
 }
+
 .col-centered {
     float: none !important;
     margin: 0 auto !important;
@@ -21,58 +27,52 @@ body {
 .form-group.last {
     margin-bottom: 0px;
 }
-a {
+a, #footerText span {
     cursor: pointer;
 }
 #bs-example-navbar-collapse-1 ul li {
     text-align: left;
 }
-/*@media (max-width: 770px) {
-	.navbar-toggle{
-		
-	}
-}*/
-/*
-@media (min-width: 1030px){
-.navbar-nav>li>a {
-padding-top: 15px;
-padding-bottom: 15px;
-}
-}
-@media (min-width: 1030px){
-	.navbar-toggle {
-	display: none;
-	}
-}*/
 
-.container {
-    padding: 0px 0 60px;
-    min-height: 100%;
-    height: auto !important
+footer{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 40px;
+    width: 100%;
+    background-color: #FBFBFB;
 }
-#footer {
-    padding-top: 60px;
-    background-color: #FBFBFB!important;
-    font-size: 10px!important;
-    height: 60px;
-    display: inline;
-}
+
 #footerText {
     background-color: #FBFBFB;
 }
-/*
-@media (min-height: 776px){
-	#footerB{
-		display: none !important;
-	}
-}
-@media screen and (device-height: 768px ){
-  #footerB {
-		display: none!important;
-		background-color: black;
-	}
-}*/
 
 table {
-    background-color: #FBFBFB !important;
+    background-color: white !important;
+}
+
+@media (max-width: 1200px) {
+  #calendarContainer {
+    padding: 0!important;
+  }
+}
+
+#aAccueil, #aConfig, #aAide {
+    padding-right: 0!important;
+}
+
+#cal-day-box .day-event {
+    position: absolute!important;
+    margin-left: 20px!important;
+}
+
+.cal-hours {
+    display: none;
+}
+
+/** FOOTER */
+
+#logoResponsive {
+	width: 40px;
+	height: auto;
 }

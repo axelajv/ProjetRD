@@ -16,6 +16,8 @@ $compteur=$compteur_res['0']['valeur'];
 $smarty->assign("compteur", $compteur);
 
 $smarty->assign("annees", $annee_scolaire);
+$smarty->assign("date_actuelle", $date_actuelle);
+
 
 /* l'utilisateur est connecté */
 if (isset($_SESSION['studyLogin']) || isset($_SESSION['teachLogin']))
@@ -45,10 +47,10 @@ if (isset($_SESSION['studyLogin']) || isset($_SESSION['teachLogin']))
 		// NAVIGATION ETUDIANT
 		if (isset($_SESSION['studyLogin']))
 		{
-			if ($_GET['page'] == "deconnection")
+			if ($_GET['page'] == "deconnexion")
 			{
 				include('script/disconnect.php');
-				$smarty->assign("successMsg", "Déconnection reussie");
+				$smarty->assign("successMsg", "Déconnexion reussie");
 				$smarty->display("template/login.tpl");
 			}
 			else if ($_GET['page'] == "module")
@@ -89,10 +91,10 @@ if (isset($_SESSION['studyLogin']) || isset($_SESSION['teachLogin']))
 		else
 		{
 			// NAVIGATION ENSEIGNANT
-			if ($_GET['page'] == "deconnection")
+			if ($_GET['page'] == "deconnexion")
 			{
 				include('script/disconnect.php');
-				$smarty->assign("successMsg", "Déconnection reussie");
+				$smarty->assign("successMsg", "Déconnexion reussie");
 				$smarty->display("template/login.tpl");
 			}
 			else if ($_GET['page'] == "occupationSalle")
@@ -118,9 +120,15 @@ if (isset($_SESSION['studyLogin']) || isset($_SESSION['teachLogin']))
 				$smarty->assign("code", $code);
 				include('script/getTeachersHours.php');
 				$smarty->assign("allSeances", $allSeances);
-				
-				
-				$smarty->display("template/heures.tpl");
+				$smarty->assign("codeProf", $codeProf);
+				$smarty->assign("heuresParMois", $heuresParMois);
+				if(isset($_GET['ajax'])) {
+					$smarty->display("template/heures_tab.tpl");
+				} else if (isset($_GET['json'])) {
+					$smarty->display("template/heures_chart_data.tpl");
+				} else {
+					$smarty->display("template/heures.tpl");
+				}
 			}
 			else if ($_GET['page' ] == "export" && ($droits['pdf'] == 1 || $droits['giseh'] == 1))
 			{
@@ -132,6 +140,15 @@ if (isset($_SESSION['studyLogin']) || isset($_SESSION['teachLogin']))
 			{
 				include('script/getUserConfig.php');
 				$smarty->assign("userConfs", $userConfs);
+				if (isset($_GET['successId']))
+				{
+					$successMsg = "";
+					if ($_GET['successId'] == 1)
+					{
+						$successMsg = "Modifications sauvegardées";
+					}
+					$smarty->assign("successMsg", $successMsg);
+				}
 				$smarty->display("template/maConfig.tpl");
 			}
 			else if ($_GET['page'] == "RSS")
@@ -207,34 +224,6 @@ else
 	}
 	else
 	{
-		if (isset($_GET['errorID']) && !empty($_GET['errorID']))
-		{	
-			$msg = "";
-			if($_GET['errorID'] == 1)
-			{
-				$msg = "Vous n'avez pas saisi toutes les informations";
-			}
-			elseif ($_GET['errorID'] == 2)
-			{
-				$msg = "L'utilisateur saisi n'existe pas";
-			}
-			elseif ($_GET['errorID'] == 3)
-			{
-				$msg = "La modification de mot de passe a echoué. Les variables saisies ne sont pas correctes";
-			}
-			
-			$smarty->assign("errorMsg", $msg);
-		}
-		else if (isset($_GET['successId']) && !empty($_GET['successId']))
-		{
-			$msg = "";
-			if($_GET['successId'] == 1)
-			{
-				$msg = "Votre mot de passe a été modifié";
-			}
-			$smarty->assign("successMsg", $msg);
-		}
-
 		$smarty->display("template/login.tpl");
 	}
 }

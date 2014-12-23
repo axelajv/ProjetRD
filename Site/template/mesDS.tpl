@@ -1,34 +1,34 @@
 <html>
 	<head>
-		<meta charset="utf-8">
-		<title>VT Calendar - Mes DS</title>
-
+		<meta name="viewport" content="width = device-width, initial-scale = 1.0, minimum-scale = 1.0, maximum-scale = 1.0, user-scalable = no" charset="utf-8"/>
+		<title>VT Agenda - Mes DS</title>
+		<link rel="icon" type="image/png" href="img/glyphicons_calendar_title.png"/>
 		<link rel="stylesheet" href="API/bootstrap/css/bootstrap.min.css">
-		<link rel="stylesheet" href="API/bootstrap/css/bootstrap-theme.min.css">
-		<link rel="stylesheet" href="API/bootstrap-calendar-master/css/calendar.css">
 		<link rel="stylesheet" href="css/common.css"/>
+		<link href="API/footable/css/footable.core.css?v=2-0-1" rel="stylesheet" type="text/css">
 		
-		<script type="text/javascript" src="js/loadPage.js"></script>
-		<script type="text/javascript" src="API/bootstrap-calendar-master/components/jquery/jquery.min.js"></script>
+		<script src="API/jquery/jquery.js"></script>
 		<script type="text/javascript" src="API/bootstrap/js/bootstrap.min.js"></script>
-		
+		<script type="text/javascript" src="js/loadPage.js"></script>
+		<script type="text/javascript" src="API/footable/js/footable.js"></script>
+		<script type="text/javascript" src="js/filterTable.js"></script>
 	</head>
 	<body>
 		
 		{include file='template/include/header.tpl'}
 		
 		<div class="container">
-				<table class="table-striped table center-table">
+				<table class="table center-table col-sm-9 footable">
 					<tr>
 						<th>Date</th>
-						<th>Groupes</th>
-						<th>Type</th>
+						<th data-hide="phone,tablet">Groupes</th>
+						<th data-hide="phone,tablet">Type</th>
 						<th>Enseignement</th>
-						<th>Profs</th>
-						<th>Salles</th>
-						<th>Heure de début</th>
-						<th>Durée</th>
-						<th>Effectué</th>
+						<th data-hide="phone,tablet">Profs</th>
+						<th data-hide="phone,tablet">Salles</th>
+						<th data-hide="phone,tablet">Heure de début</th>
+						<th data-hide="phone,tablet">Durée</th>
+						<th data-hide="phone,tablet">Effectué</th>
 					</tr>
 					{foreach from=$mesDS item=ds}
 						<tr>

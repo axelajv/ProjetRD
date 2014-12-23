@@ -1,12 +1,9 @@
-$(document).ready(function() {
-
-    // closeTag Bootstrap3.0
-    var closeTag = '<button type="button" class="close" data-dismiss="modal">' +
-        '<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>' +
-        '</button>';
+$(document).ready(function()
+{
 
     // connexion teacher
-    $('#teachConnect').submit(function(event) {
+    $('#teachConnect').submit(function(event)
+	{
 
         event.preventDefault();
 
@@ -14,61 +11,126 @@ $(document).ready(function() {
                 type: "POST",
                 url: "script/teachConnectScript.php",
                 data: {
-                    teachLogin: $("#teachConnect #inputLogin3").val(),
-                    teachPwd: $("#teachConnect #inputPassword3").val()
+                    teachLogin: $("#inputLoginEnseignement").val(),
+                    teachPwd: $("#inputPasswordEnseignement").val()
                 },
                 dataType: "json"
             })
-            .done(function(elem) {
-                if (elem.connexion === true) {
+            .done(function(elem)
+			{
+                if (elem.connexion === true)
+				{
                     // connexion réussie
-                    window.location = "index.php";
-                } else {
+                    window.location.replace('index.php');
+                } 
+				else
+				{
                     // connexion échouée
                     $("#retourLoginJs")
-                        .html(closeTag + elem.message)
-                        .addClass('alert alert-danger col-md-4 col-centered')
-                        .show("fast");
+                        .html("<span class='glyphicon glyphicon-warning-sign'></span> "  + elem.message)
+                        .addClass('alert alert-danger col-md-4 col-centered alert-dismissible')
+                        .show();
                 }
             })
-            .fail(function(elem) {
+            .fail(function(elem)
+			{
                 alert("Appel AJAX impossible");
             });
-
     });
 
     // connexion student
-    $('#studyConnect').submit(function(event) {
+    $('#studyConnect').submit(function(event)
+	{
 
         event.preventDefault();
 
         $.ajax({
                 type: "POST",
                 url: "script/studyConnectScript.php",
-                data: {
-                    studyLogin: $("#studyConnect #inputLoginEtudiant").val(),
+                data:
+				{
+                    studyLogin: $("#inputLoginEtudiant").val(),
                 },
                 dataType: "json"
             })
-            .done(function(elem) {
-                if (elem.connexion === true) {
+            .done(function(elem)
+			{
+                if (elem.connexion === true)
+				{
                     // connexion réussie
-                    window.location.reload();
-                } else {
+                    window.location.replace('index.php');
+                }
+				else
+				{
                     // connexion échouée
                     $("#retourLoginJs")
-                        .html(closeTag + elem.message)
-                        .addClass('alert alert-danger col-md-4 col-centered')
-                        .show("fast");
+                        .html("<span class='glyphicon glyphicon-warning-sign'></span> "  + elem.message)
+                        .addClass('alert alert-danger col-md-4 col-centered alert-dismissible')
+                        .show();
                 }
             })
-            .fail(function(elem) {
+            .fail(function(elem)
+			{
+                alert("Appel AJAX impossible");
+            });
+    });
+	
+	// connexion student
+    $('#modifyMdpForm').submit(function(event)
+	{
+        event.preventDefault();
+
+        $.ajax({
+                type: "POST",
+                url: "script/modifyMdp.php",
+                data:
+				{
+                    loginTeach: $("#inputLogin").val(),
+					oldMdp: $("#inputOldPassword").val(),
+					newMdp1: $("#inputNewPassword1").val(),
+					newMdp2: $("#inputNewPassword2").val()
+                },
+                dataType: "json"
+            })
+            .done(function(elem)
+			{
+                if (elem.connexion === true)
+				{
+                    // connexion réussie
+                    $("#retourLoginJs")
+                        .html("<span class='glyphicon glyphicon-ok-circle'></span> "  + elem.message)
+                        .addClass('alert alert-success col-md-4 col-centered alert-dismissible')
+                        .show();
+						
+					$("modifyMdp").modal('hide');
+                }
+				else
+				{
+                    // connexion échouée
+                    $("#modifyMdpRetour")
+                        .html("<span class='glyphicon glyphicon-warning-sign'></span> "  + elem.message)
+                        .addClass('alert alert-danger alert-dismissible')
+                        .show();
+                }
+            })
+            .fail(function(elem)
+			{
                 alert("Appel AJAX impossible");
             });
     });
 
-    // possibilité de masquer le message d'erreur
-    $('#loginTabContent').on("click", "#retourLoginJs", function()  {
-        $(this).html('').hide();
+    $('.btn-success').click(function()
+	{
+        $("#retourLoginJs").hide();
+    });
+	
+	 $('#modifyMdp .btn-danger').click(function()
+	{
+        $("#modifyMdpRetour").hide();
+    });
+	
+	 $('#modifyMdpClose').click(function()
+	{
+        $("#modifyMdpRetour").hide();
     });
 });
