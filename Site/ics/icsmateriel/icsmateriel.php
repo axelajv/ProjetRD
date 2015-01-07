@@ -253,7 +253,6 @@ while ($reservation_materiel = mysql_fetch_array($reservations_materiels) )
 
 	if(!$noData)
     {
-        echo "OK";
 		$nomfichier=$materiel['nom'].".ics";
 		$nomfichier=str_replace(" ","_",$nomfichier);
 
@@ -269,9 +268,10 @@ while ($reservation_materiel = mysql_fetch_array($reservations_materiels) )
 
 }
 
-if($noData)
-echo "NO_DATA";
-
+if ($noData) 
+	echo "NO_DATA";
+else
+	echo "OK";
 
 
 ?>
