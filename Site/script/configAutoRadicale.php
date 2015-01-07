@@ -5,6 +5,8 @@ include("../config/config.php");
 mysql_connect($serveur, $user, $pass);
 mysql_select_db($dernierebase);
 
+//choisir un dossier cible en commun avec l'equipe projet, ce choix est TEMPORAIRE
+//puisqu'il est impossible de les creer directement dans le dossier de config radicale
 $rights = fopen('../config/rights', 'w+');
 $users = fopen('../config/users', 'w+');
 
