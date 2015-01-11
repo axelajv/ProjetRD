@@ -275,7 +275,6 @@ foreach($dbh->query($ressources_salles) as $salle) {
 	*/
 	if(!$noData)
     {
-        echo "OK";
 		$nomfichier = $salle['nom'].".ics";
 		$nomfichier	= str_replace(" ","_",$nomfichier);
 		$nomfichier	= strtolower($nomfichier);
@@ -284,11 +283,11 @@ foreach($dbh->query($ressources_salles) as $salle) {
 		$uid = $annee . $mois . $jour . "T" . "000001Z-" . $i . "@ufrsitec.u-paris10.fr";
 		sendICSFile($nomfichier, $fichier, $SALLE, $uid);
 	}
-	else if($noData)
-		echo "NO_DATA";
 }
 
 //si on ne passe pas dans le boucle (ex: id incorect), on informe quand meme qu'il n'y a pas de donnée
-if($noData)
-echo "NO_DATA";
+if ($noData) 
+	echo "NO_DATA";
+else
+	echo "OK";
 ?>

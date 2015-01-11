@@ -376,7 +376,7 @@ foreach($dbh->query($ressources_etudiants) as $etudiant) {
 
 			$fichier.= "END:VCALENDAR";
 			if (!$noData) {
-				echo "OK";
+
 				if ($etudiant['nom'] != $etudiant['prenom']) {
 					$nomfichier = $etudiant['nom'] . "_" . $etudiant['prenom'] . ".ics";
 
@@ -407,5 +407,8 @@ foreach($dbh->query($ressources_etudiants) as $etudiant) {
 		}
 	}
 }
-if ($noData) echo "NO_DATA";
+if ($noData) 
+	echo "NO_DATA";
+else
+	echo "OK";
 ?>

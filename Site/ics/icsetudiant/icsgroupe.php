@@ -300,7 +300,6 @@ while ( $groupe = mysql_fetch_array($ressources_groupes) )
 
     if(!$noData)
     {
-        echo "OK";
         $nomfichier=$groupe['nom'].".ics";
         //$nomfichier=ereg_replace("[ ]","_",$nomfichier);
         $nomfichier=preg_replace('/\s/',"_",$nomfichier);
@@ -314,6 +313,8 @@ while ( $groupe = mysql_fetch_array($ressources_groupes) )
     }
 }
 
-if($noData)
-echo "NO_DATA";
+if ($noData) 
+    echo "NO_DATA";
+else
+    echo "OK";
 ?>
