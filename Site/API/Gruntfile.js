@@ -1,6 +1,6 @@
 module.exports = function(grunt) {
-
     grunt.initConfig({
+      pkg: grunt.file.readJSON('package.json'),
         jsbeautifier : {
             "default": {
                 src : ["../js/*.js", "../css/*.css"]
