@@ -15,13 +15,13 @@ $query = "SELECT IDENTIFIANT,'' as MDP,'ETUD' as TYPE FROM ressources_etudiants 
 foreach($dbh->query($query) as $user) {
 
 	if($user['TYPE']=='PROF'){
-		$col=".*";	
+		$col=".*";
 	}
 	else if($user['TYPE']=='ETUD'){
 		$col="(^Etudiants$)|(^Filieres$)|(^Salles$)";
 	}
 
-	fputs($users, $user['IDENTIFIANT'].":{SHA}".md5($motDePasseEtudiant)."\n");
+	fputs($users, $user['IDENTIFIANT'].":{SHA}".crypt($motDePasseEtudiant, base64_encode($motDePasseEtudiant))."\n");
 	fputs($rights, "user: ".$user['IDENTIFIANT']."\ncollection: ".$col."\npermission: r\n\n");
 }
 

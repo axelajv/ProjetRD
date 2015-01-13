@@ -23,7 +23,7 @@ if (isset($_POST['teachLogin']) && isset($_POST['teachPwd'])
 	while($find == FALSE && $ligne = $req->fetch())
 	{
 		// Si le mot de passe entré à la même valeur que celui de la base de données, on l'autorise a se connecter...
-		if(md5($_POST["teachPwd"]) == $ligne['motPasse'])
+		if(crypt($_POST['teachPwd'], base64_encode($_POST['teachPwd'])) == $ligne['motPasse'])
 		{
 			$find = TRUE;
 

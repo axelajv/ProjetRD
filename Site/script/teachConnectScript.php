@@ -15,7 +15,7 @@ if (isset($_POST['teachLogin']) && isset($_POST['teachPwd']) && !empty($_POST['t
 	// variables
 	$find 		= FALSE;
 	$teachLogin = $_POST['teachLogin'];
-	$teachPwd 	= md5($_POST['teachPwd']);
+	$teachPwd 	= crypt($_POST['teachPwd'], base64_encode($_POST['teachPwd']));
 
 	// si tous les champs sont remplis alors on vérifie l'existence en BDD
 	$req = $dbh->prepare('SELECT * FROM login_prof WHERE login = :teachLogin AND motPasse = :teachPwd');

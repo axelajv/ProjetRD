@@ -7,12 +7,12 @@ session_start();
 include('../config/config.php');
 
 if(isset($_POST['loginTeach']) && isset($_POST['oldMdp']) && isset($_POST['newMdp1']) && isset($_POST['newMdp2']) && !empty($_POST['loginTeach']) && !empty($_POST['oldMdp']) && !empty($_POST['newMdp1']) && !empty($_POST['newMdp2']))
-{   	       		
+{
 	if ($_POST['newMdp1'] == $_POST['newMdp2'])
 	{
 		$login=$_POST['loginTeach'];
-		$ancien_mot_passe=md5($_POST['oldMdp']);
-		$nouveau_mot_passe=md5($_POST['newMdp1']);
+		$ancien_mot_passe=crypt($_POST['oldMdp'], base64_encode($_POST['oldMdp']));
+		$nouveau_mot_passe=crypt($_POST['oldMdp'], base64_encode($_POST['oldMdp']));
 
 		$sql="SELECT * FROM login_prof WHERE login=".$dbh->quote($login, PDO::PARAM_STR)." AND motPasse=".$dbh->quote($ancien_mot_passe, PDO::PARAM_STR);
 		$req_login=$dbh->prepare($sql);
