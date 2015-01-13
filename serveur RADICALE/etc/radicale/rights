@@ -1,12 +1,623 @@
-# This means all users starting with "admin" may read and write any collection
-[admin]
-user: ^admin.*
-collection: .*
-permission: rw
-
-# This means all users starting with "read" may read any collection
-user: ^read.*
+# This means all users starting with "adminprof" may read any collection
+[adminprof]
+user: adminprof
 collection: .*
 permission: r
 
+# This means all users "nagoulm1" may read any collection
+[nagoulm1]
+user:nagoulm1
+collection: .*
+permission: r
 
+# This means all users "eangel1" may read any collection
+[eangel1]
+user:eangel1
+collection: .*
+permission: r
+
+# This means all users "tatmaca1" may read any collection
+[tatmaca1]
+user:tatmaca1
+collection: .*
+permission: r
+
+# This means all users "abaczko1" may read any collection
+[abaczko1]
+user:abaczko1
+collection: .*
+permission: r
+
+# This means all users "fbelard1" may read any collection
+[fbelard1]
+user:fbelard1
+collection: .*
+permission: r
+
+# This means all users "jbenzak1" may read any collection
+[jbenzak1]
+user:jbenzak1
+collection: .*
+permission: r
+
+# This means all users "xbernar1" may read any collection
+[xbernar1]
+user:xbernar1
+collection: .*
+permission: r
+
+# This means all users "lblin1" may read any collection
+[lblin1]
+user:lblin1
+collection: .*
+permission: r
+
+# This means all users "oboloka1" may read any collection
+[oboloka1]
+user:oboloka1
+collection: .*
+permission: r
+
+# This means all users "sbourli1" may read any collection
+[sbourli1]
+user:sbourli1
+collection: .*
+permission: r
+
+# This means all users "abradai1" may read any collection
+[abradai1]
+user:abradai1
+collection: .*
+permission: r
+
+# This means all users "rbrault1" may read any collection
+[rbrault1]
+user:rbrault1
+collection: .*
+permission: r
+
+# This means all users "pbrocha1" may read any collection
+[pbrocha1]
+user:pbrocha1
+collection: .*
+permission: r
+
+# This means all users "cbrouar1" may read any collection
+[cbrouar1]
+user:cbrouar1
+collection: .*
+permission: r
+
+# This means all users "nbrunel1" may read any collection
+[nbrunel1]
+user:nbrunel1
+collection: .*
+permission: r
+
+# This means all users "gburel1" may read any collection
+[gburel1]
+user:gburel1
+collection: .*
+permission: r
+
+# This means all users "acavall1" may read any collection
+[acavall1]
+user:acavall1
+collection: .*
+permission: r
+
+# This means all users "scerrit1" may read any collection
+[scerrit1]
+user:scerrit1
+collection: .*
+permission: r
+
+# This means all users "fchamme1" may read any collection
+[fchamme1]
+user:fchamme1
+collection: .*
+permission: r
+
+# This means all users "jchapel1" may read any collection
+[jchapel1]
+user:jchapel1
+collection: .*
+permission: r
+
+# This means all users "vchau1" may read any collection
+[vchau1]
+user:vchau1
+collection: .*
+permission: r
+
+# This means all users "echerka1" may read any collection
+[echerka1]
+user:echerka1
+collection: .*
+permission: r
+
+# This means all users "cchetta1" may read any collection
+[cchetta1]
+user:cchetta1
+collection: .*
+permission: r
+
+# This means all users "dcinzia1" may read any collection
+[dcinzia1]
+user:dcinzia1
+collection: .*
+permission: r
+
+# This means all users "dconan1" may read any collection
+[dconan1]
+user:dconan1
+collection: .*
+permission: r
+
+# This means all users "econdet1" may read any collection
+[econdet1]
+user:econdet1
+collection: .*
+permission: r
+
+# This means all users "dcourta1" may read any collection
+[dcourta1]
+user:dcourta1
+collection: .*
+permission: r
+
+# This means all users "acox1" may read any collection
+[acox1]
+user:acox1
+collection: .*
+permission: r
+
+# This means all users "fdalche1" may read any collection
+[fdalche1]
+user:fdalche1
+collection: .*
+permission: r
+
+# This means all users "adavid1" may read any collection
+[adavid1]
+user:adavid1
+collection: .*
+permission: r
+
+# This means all users "pdecler1" may read any collection
+[pdecler1]
+user:pdecler1
+collection: .*
+permission: r
+
+# This means all users "bdefude1" may read any collection
+[bdefude1]
+user:bdefude1
+collection: .*
+permission: r
+
+# This means all users "pdelann1" may read any collection
+[pdelann1]
+user:pdelann1
+collection: .*
+permission: r
+
+# This means all users "fdelapl1" may read any collection
+[fdelapl1]
+user:fdelapl1
+collection: .*
+permission: r
+
+# This means all users "jdelosm1" may read any collection
+[jdelosm1]
+user:jdelosm1
+collection: .*
+permission: r
+
+# This means all users "bdjafri1" may read any collection
+[bdjafri1]
+user:bdjafri1
+collection: .*
+permission: r
+
+# This means all users "pdossan1" may read any collection
+[pdossan1]
+user:pdossan1
+collection: .*
+permission: r
+
+# This means all users "cdubois1" may read any collection
+[cdubois1]
+user:cdubois1
+collection: .*
+permission: r
+
+# This means all users "jdupas1" may read any collection
+[jdupas1]
+user:jdupas1
+collection: .*
+permission: r
+
+# This means all users "ddupont1" may read any collection
+[ddupont1]
+user:ddupont1
+collection: .*
+permission: r
+
+# This means all users "melati1" may read any collection
+[melati1]
+user:melati1
+collection: .*
+permission: r
+
+# This means all users "mguilla1" may read any collection
+[mguilla1]
+user:mguilla1
+collection: .*
+permission: r
+
+# This means all users "dhanich1" may read any collection
+[dhanich1]
+user:dhanich1
+collection: .*
+permission: r
+
+# This means all users "lhannac1" may read any collection
+[lhannac1]
+user:lhannac1
+collection: .*
+permission: r
+
+# This means all users "hautre1" may read any collection
+[hautre1]
+user:hautre1
+collection: .*
+permission: r
+
+# This means all users "ghutzle1" may read any collection
+[ghutzle1]
+user:ghutzle1
+collection: .*
+permission: r
+
+# This means all users "jjanode1" may read any collection
+[jjanode1]
+user:jjanode1
+collection: .*
+permission: r
+
+# This means all users "ljouann1" may read any collection
+[ljouann1]
+user:ljouann1
+collection: .*
+permission: r
+
+# This means all users "hklaude1" may read any collection
+[hklaude1]
+user:hklaude1
+collection: .*
+permission: r
+
+# This means all users "nkowals1" may read any collection
+[nkowals1]
+user:nkowals1
+collection: .*
+permission: r
+
+# This means all users "ylabord1" may read any collection
+[ylabord1]
+user:ylabord1
+collection: .*
+permission: r
+
+# This means all users "dlahbib1" may read any collection
+[dlahbib1]
+user:dlahbib1
+collection: .*
+permission: r
+
+# This means all users "tlavall1" may read any collection
+[tlavall1]
+user:tlavall1
+collection: .*
+permission: r
+
+# This means all users "ylecorn1" may read any collection
+[ylecorn1]
+user:ylecorn1
+collection: .*
+permission: r
+
+# This means all users "cle1" may read any collection
+[cle1]
+user:cle1
+collection: .*
+permission: r
+
+# This means all users "fledoux1" may read any collection
+[fledoux1]
+user:fledoux1
+collection: .*
+permission: r
+
+# This means all users "ylegran1" may read any collection
+[ylegran1]
+user:ylegran1
+collection: .*
+permission: r
+
+# This means all users "bleland1" may read any collection
+[bleland1]
+user:bleland1
+collection: .*
+permission: r
+
+# This means all users "sleland1" may read any collection
+[sleland1]
+user:sleland1
+collection: .*
+permission: r
+
+# This means all users "nlim1" may read any collection
+[nlim1]
+user:nlim1
+collection: .*
+permission: r
+
+# This means all users "clouvea1" may read any collection
+[clouvea1]
+user:clouvea1
+collection: .*
+permission: r
+
+# This means all users "dlubin1" may read any collection
+[dlubin1]
+user:dlubin1
+collection: .*
+permission: r
+
+# This means all users "glucare1" may read any collection
+[glucare1]
+user:glucare1
+collection: .*
+permission: r
+
+# This means all users "plucas1" may read any collection
+[plucas1]
+user:plucas1
+collection: .*
+permission: r
+
+# This means all users "rmacnam1" may read any collection
+[rmacnam1]
+user:rmacnam1
+collection: .*
+permission: r
+
+# This means all users "tmellit1" may read any collection
+[tmellit1]
+user:tmellit1
+collection: .*
+permission: r
+
+# This means all users "amezine1" may read any collection
+[amezine1]
+user:amezine1
+collection: .*
+permission: r
+
+# This means all users "dmillot1" may read any collection
+[dmillot1]
+user:dmillot1
+collection: .*
+permission: r
+
+# This means all users "cmoulin1" may read any collection
+[cmoulin1]
+user:cmoulin1
+collection: .*
+permission: r
+
+# This means all users "amunier1" may read any collection
+[amunier1]
+user:amunier1
+collection: .*
+permission: r
+
+# This means all users "jmunier1" may read any collection
+[jmunier1]
+user:jmunier1
+collection: .*
+permission: r
+
+# This means all users "enadam1" may read any collection
+[enadam1]
+user:enadam1
+collection: .*
+permission: r
+
+# This means all users "knguyen1" may read any collection
+[knguyen1]
+user:knguyen1
+collection: .*
+permission: r
+
+# This means all users "vnguyen1" may read any collection
+[vnguyen1]
+user:vnguyen1
+collection: .*
+permission: r
+
+# This means all users "cniermo1" may read any collection
+[cniermo1]
+user:cniermo1
+collection: .*
+permission: r
+
+# This means all users "snollet1" may read any collection
+[snollet1]
+user:snollet1
+collection: .*
+permission: r
+
+# This means all users "fpapado1" may read any collection
+[fpapado1]
+user:fpapado1
+collection: .*
+permission: r
+
+# This means all users "jperrau1" may read any collection
+[jperrau1]
+user:jperrau1
+collection: .*
+permission: r
+
+# This means all users "ppetit1" may read any collection
+[ppetit1]
+user:ppetit1
+collection: .*
+permission: r
+
+# This means all users "dploix1" may read any collection
+[dploix1]
+user:dploix1
+collection: .*
+permission: r
+
+# This means all users "lpolign1" may read any collection
+[lpolign1]
+user:lpolign1
+collection: .*
+permission: r
+
+# This means all users "fpommer1" may read any collection
+[fpommer1]
+user:fpommer1
+collection: .*
+permission: r
+
+# This means all users "opons1" may read any collection
+[opons1]
+user:opons1
+collection: .*
+permission: r
+
+# This means all users "vprevos1" may read any collection
+[vprevos1]
+user:vprevos1
+collection: .*
+permission: r
+
+# This means all users "aprot1" may read any collection
+[aprot1]
+user:aprot1
+collection: .*
+permission: r
+
+# This means all users "bprum1" may read any collection
+[bprum1]
+user:bprum1
+collection: .*
+permission: r
+
+# This means all users "mrahoua1" may read any collection
+[mrahoua1]
+user:mrahoua1
+collection: .*
+permission: r
+
+# This means all users "drajche1" may read any collection
+[drajche1]
+user:drajche1
+collection: .*
+permission: r
+
+# This means all users "dregnau1" may read any collection
+[dregnau1]
+user:dregnau1
+collection: .*
+permission: r
+
+# This means all users "mrozenb1" may read any collection
+[mrozenb1]
+user:mrozenb1
+collection: .*
+permission: r
+
+# This means all users "asayed1" may read any collection
+[asayed1]
+user:asayed1
+collection: .*
+permission: r
+
+# This means all users "jsignol1" may read any collection
+[jsignol1]
+user:jsignol1
+collection: .*
+permission: r
+
+# This means all users "tsimon1" may read any collection
+[tsimon1]
+user:tsimon1
+collection: .*
+permission: r
+
+# This means all users "gsoubri1" may read any collection
+[gsoubri1]
+user:gsoubri1
+collection: .*
+permission: r
+
+# This means all users "ysoulab1" may read any collection
+[ysoulab1]
+user:ysoulab1
+collection: .*
+permission: r
+
+# This means all users "ctacone1" may read any collection
+[ctacone1]
+user:ctacone1
+collection: .*
+permission: r
+
+# This means all users "ftahi1" may read any collection
+[ftahi1]
+user:ftahi1
+collection: .*
+permission: r
+
+# This means all users "pthory1" may read any collection
+[pthory1]
+user:pthory1
+collection: .*
+permission: r
+
+# This means all users "fvermil1" may read any collection
+[fvermil1]
+user:fvermil1
+collection: .*
+permission: r
+
+# This means all users "oyedyny1" may read any collection
+[oyedyny1]
+user:oyedyny1
+collection: .*
+permission: r
+
+# This means all users "fzaidi1" may read any collection
+[fzaidi1]
+user:fzaidi1
+collection: .*
+permission: r
+
+# This means all users "fzehrao1" may read any collection
+[fzehrao1]
+user:fzehrao1
+collection: .*
+permission: r
+
+# This means all users "anicola1" may read any collection
+[anicola1]
+user:anicola1
+collection: .*
+permission: r
